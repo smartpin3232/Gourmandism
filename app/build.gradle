@@ -30,6 +30,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -80,4 +83,9 @@ dependencies {
 
     // Fragment
     implementation "androidx.fragment:fragment:$version_fragment"
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
 }

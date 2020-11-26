@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "414954363096",
+    "firebase_url": "https://gourmandism-1cdc0.firebaseio.com",
+    "project_id": "gourmandism-1cdc0",
+    "storage_bucket": "gourmandism-1cdc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414954363096:android:2e3415ccec69db2311dfad",
+        "android_client_info": {
+          "package_name": "com.louis.gourmandism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414954363096-76ag52c1u7s6bmhdm81k61aak6nl8dc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.louis.gourmandism",
+            "certificate_hash": "b48bd46f382b2ee88421808adb83a72b23a57c85"
+          }
+        },
+        {
+          "client_id": "414954363096-03am2lgln9tt9rblhfvgdfo35376g6v2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHy22LN8-nINOrJBKiA08UXSLkhdyA4Tg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414954363096-03am2lgln9tt9rblhfvgdfo35376g6v2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

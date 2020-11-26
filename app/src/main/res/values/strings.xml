@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Gourmandism</string>
+    <string name="Comment">最新評論</string>
+    <string name="home">HOME</string>
 </resources>
