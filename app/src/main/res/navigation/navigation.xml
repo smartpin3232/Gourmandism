@@ -11,11 +11,29 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home"/>
     <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.louis.gourmandism.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"/>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.louis.gourmandism.event.EventFragment"
+        android:label="EventFragment"
+        tools:layout="@layout/fragment_event"/>
+    <fragment
+        android:id="@+id/wishFragment"
+        android:name="com.louis.gourmandism.wish.WishFragment"
+        android:label="WishFragment"
+        tools:layout="@layout/fragment_wish"/>
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.louis.gourmandism.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
 
     <action android:id="@+id/action_global_homeFragment" app:destination="@id/homeFragment"/>
+    <action android:id="@+id/action_global_searchFragment" app:destination="@id/searchFragment"/>
+    <action android:id="@+id/action_global_eventFragment" app:destination="@id/eventFragment"/>
+    <action android:id="@+id/action_global_wishFragment" app:destination="@id/wishFragment"/>
     <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
 </navigation>

@@ -13,7 +13,7 @@
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_activity"
+        android:id="@+id/navigation_event"
         android:icon="@drawable/people_selector"
         android:title=""/>
 

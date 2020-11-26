@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" >
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/text_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -55,7 +55,7 @@
             android:background="@color/white"
             android:elevation="8dp"
             app:itemIconSize="@dimen/size_bottom_nav_icon"
-            app:itemIconTint="@drawable/bottom_nav_item_selector"
+            app:itemIconTint="@color/black_3f3a3a"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
