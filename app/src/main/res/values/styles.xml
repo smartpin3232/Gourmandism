@@ -7,4 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="detail_information">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/baloo_chettan</item>
+    </style>
+
 </resources>
