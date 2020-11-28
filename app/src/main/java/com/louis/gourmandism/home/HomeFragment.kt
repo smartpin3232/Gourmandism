@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.data.BrowseRecently
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.databinding.FragmentHomeBinding
 
-class HomeFragment :Fragment(){
+class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by lazy {
         ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -25,7 +28,7 @@ class HomeFragment :Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = FragmentHomeBinding.inflate(inflater,container,false)
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -77,12 +80,19 @@ class HomeFragment :Fragment(){
         db.collection("Comment").addSnapshotListener { value, e ->
             val commentList = mutableListOf<Comment>()
             value?.let {
-                it.forEach { data->
+                it.forEach { data ->
                     commentList.add(data.toObject(Comment::class.java))
                 }
                 adapter.submitList(commentList)
             }
         }
+
+        viewModel.navigationStatus.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalDetailFragment())
+                viewModel.onNavigated()
+            }
+        })
 
 
         return binding.root
