@@ -29,14 +29,11 @@
                 android:id="@+id/text_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/baloo_chettan"
-                android:gravity="center"
                 android:text="@{viewModel.currentFragmentType.value}"
-                android:textColor="@color/black_3f3a3a"
-                android:textSize="30sp"
+                tools:text="HOME"
                 tools:layout_editor_absoluteX="155dp"
-                tools:layout_editor_absoluteY="13dp" />
+                tools:layout_editor_absoluteY="13dp"
+                style="@style/toolbar_title_text" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
@@ -55,7 +52,7 @@
             android:id="@+id/bottomNavView"
             android:layout_width="0dp"
             android:layout_height="@dimen/height_bottom_nav_view_main"
-            android:background="@color/white"
+            android:background="@color/mainStyleColor"
             android:elevation="8dp"
             app:itemIconSize="@dimen/size_bottom_nav_icon"
             app:itemIconTint="@color/black_3f3a3a"

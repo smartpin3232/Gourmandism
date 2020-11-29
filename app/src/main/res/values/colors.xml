@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#9da6a9</color>
+    <color name="colorPrimaryDark">#cbae82</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="mainStyleColor">#cfd8dc</color>
-    <color name="bottomNavigationColor">#e0e0e0</color>
-
-<!--    <color name="secondColor">#ffbb93</color>-->
+    <color name="mainStyleColor">#ffe0b2</color>
+    <color name="fragmentBackground">#fff3e0</color>
 
     <color name="white">#ffffff</color>
 
