@@ -22,6 +22,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/text_title"
+                style="@style/toolbar_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Search"
+                app:layout_constraintBottom_toTopOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
@@ -45,21 +56,13 @@
                     android:drawableStart="@drawable/search_icon"
                     android:drawablePadding="15dp"
                     android:ems="10"
+                    android:importantForAutofill="no"
                     android:hint="@string/search_shop"
                     android:inputType="text"
                     android:padding="15dp" />
+
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/text_title"
-                style="@style/toolbar_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SEARCH"
-                app:layout_constraintBottom_toTopOf="@+id/cardView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,7 +76,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_search"
             tools:context=".search.SearchFragment" />
-        
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_tag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraint_search"
+            tools:listitem="@layout/item_tag" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

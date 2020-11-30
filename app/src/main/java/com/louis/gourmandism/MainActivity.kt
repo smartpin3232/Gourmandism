@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.louis.gourmandism.databinding.ActivityMainBinding
-import com.louis.gourmandism.home.HomeViewModel
 import com.louis.gourmandism.util.CurrentFragmentType
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,52 +26,62 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+
+
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         viewModel.currentFragmentType.value = CurrentFragmentType.HOME
+
         setupNavController()
     }
 
+
+
+    private fun setupNavController() {
+        this.findNavController(R.id.myNavHostFragment).addOnDestinationChangedListener { navController: NavController, _: NavDestination, _: Bundle? ->
+            viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
+                R.id.homeFragment -> CurrentFragmentType.HOME
+                R.id.searchFragment -> CurrentFragmentType.SEARCH
+                R.id.eventFragment -> CurrentFragmentType.EVENT
+                R.id.wishFragment -> CurrentFragmentType.WISH
+                R.id.profileFragment -> CurrentFragmentType.PROFILE
+                R.id.detailFragment -> CurrentFragmentType.DETAIL
+                else -> viewModel.currentFragmentType.value
+            }
+        }
+    }
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.HOME
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_search->{
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.SEARCH
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalSearchFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_event->{
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.EVENT
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalEventFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_wishList->{
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.WISH
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalWishFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.PROFILE
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
                 return@OnNavigationItemSelectedListener true
             }
             else->{
 
-                viewModel.currentFragmentType.value = CurrentFragmentType.HOME
                 findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalHomeFragment())
                 false
             }
         }
 
-    }
-    private fun setupNavController() {
     }
 }

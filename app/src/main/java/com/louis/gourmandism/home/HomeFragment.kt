@@ -83,6 +83,7 @@ class HomeFragment : Fragment() {
                 it.forEach { data ->
                     commentList.add(data.toObject(Comment::class.java))
                 }
+                commentList.sortByDescending { list->list.createdTime }
                 adapter.submitList(commentList)
             }
         }

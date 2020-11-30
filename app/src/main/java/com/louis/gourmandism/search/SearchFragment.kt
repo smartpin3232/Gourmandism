@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentSearchBinding
+import com.louis.gourmandism.home.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -33,12 +35,24 @@ class SearchFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
+    private val viewModel: SearchViewModel by lazy {
+        ViewModelProvider(this).get(SearchViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentSearchBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = this
+        
+        val adapter = SearchAdapter(viewModel)
+        binding.recyclerViewTag.adapter = adapter
+
+        val testTag = mutableListOf("炸物","火鍋","咖啡","黑暗料理","約會景點")
+        adapter.submitList(testTag)
+
         return binding.root
     }
 

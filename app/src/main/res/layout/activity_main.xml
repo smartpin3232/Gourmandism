@@ -36,7 +36,7 @@
                 style="@style/toolbar_title_text" />
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.fragment.app.FragmentContainerView
+        <fragment
             android:id="@+id/myNavHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"

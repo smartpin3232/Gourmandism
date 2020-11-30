@@ -14,8 +14,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background))
+                    .placeholder(R.drawable.no_picture)
+                    .error(R.drawable.no_picture))
             .into(imgView)
     }
 }

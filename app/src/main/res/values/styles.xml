@@ -20,4 +20,9 @@
         <item name="android:textSize">@dimen/toolbar_title_size</item>
     </style>
 
+    <style name="detail_header">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
