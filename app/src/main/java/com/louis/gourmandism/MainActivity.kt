@@ -2,6 +2,7 @@ package com.louis.gourmandism
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -9,6 +10,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.louis.gourmandism.databinding.ActivityMainBinding
+import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.util.CurrentFragmentType
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,9 +18,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+//    private val viewModel: MainViewModel by lazy {
+//        ViewModelProvider(this).get(MainViewModel::class.java)
+//    }
+    val viewModel by viewModels<MainViewModel> { getVmFactory() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

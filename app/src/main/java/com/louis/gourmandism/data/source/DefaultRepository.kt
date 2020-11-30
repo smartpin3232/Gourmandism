@@ -1,5 +1,7 @@
 package com.louis.gourmandism.data.source
 
+import com.louis.gourmandism.data.Comment
+import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.source.remote.RemoteDataSource
 
 /**
@@ -7,7 +9,11 @@ import com.louis.gourmandism.data.source.remote.RemoteDataSource
  *
  * Concrete implementation to load Publisher sources.
  */
-class DefaultRepository(private val remoteDataSource: RemoteDataSource){
+class DefaultRepository(private val remoteDataSource: DataSource,
+                        private val localDataSource: DataSource):Repository{
+    override suspend fun getComment(): Result<List<Comment>> {
+        return remoteDataSource.getComment()
+    }
 
 
 }

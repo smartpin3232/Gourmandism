@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,12 +16,14 @@ import com.louis.gourmandism.data.BrowseRecently
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.databinding.FragmentHomeBinding
+import com.louis.gourmandism.extension.getVmFactory
 
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by lazy {
-        ViewModelProvider(this).get(HomeViewModel::class.java)
-    }
+//    private val viewModel: HomeViewModel by lazy {
+//        ViewModelProvider(this).get(HomeViewModel::class.java)
+//    }
+    private val viewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +58,6 @@ class HomeFragment : Fragment() {
 //                 "Louis","Sylvie","Johnny"
 //             )
 //        )
-//
 
 //        var user = User(
 //            id = "003",
@@ -65,7 +67,6 @@ class HomeFragment : Fragment() {
 //            browseRecently = null,
 //            friendList = mutableListOf("002")
 //        )
-
 
 //        db.collection("Comment")
 //            .add(comment)
@@ -77,20 +78,15 @@ class HomeFragment : Fragment() {
 //            }
 
 
-        db.collection("Comment").addSnapshotListener { value, e ->
-            val commentList = mutableListOf<Comment>()
-            value?.let {
-                it.forEach { data ->
-                    commentList.add(data.toObject(Comment::class.java))
-                }
-                commentList.sortByDescending { list->list.createdTime }
-                adapter.submitList(commentList)
+        viewModel.commentList.observe(viewLifecycleOwner, Observer {
+            it?.let {list->
+               adapter.submitList(list)
             }
-        }
+        })
 
         viewModel.navigationStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(NavigationDirections.actionGlobalDetailFragment())
+                findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it))
                 viewModel.onNavigated()
             }
         })

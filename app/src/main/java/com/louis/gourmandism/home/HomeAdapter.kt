@@ -26,7 +26,7 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
         fun bind(item: Comment, viewModel: HomeViewModel) {
             binding.data = item
             binding.imageMain.setOnClickListener {
-                viewModel.navigationToDetail()
+                viewModel.navigationToDetail(item.shopId)
             }
             binding.executePendingBindings()
         }
