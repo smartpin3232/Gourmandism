@@ -1,13 +1,18 @@
 package com.louis.gourmandism.detail
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class DetailFragment : Fragment() {
@@ -19,9 +24,53 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentDetailBinding.inflate(inflater, container,false)
-        
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
+
+        id?.let {
+            viewModel.getShop(it)
+            viewModel.getComment(it)
+        }
+
+        val adapter = DetailAdapter(viewModel)
+        binding.recyclerViewDetailComment.adapter = adapter
+
+        viewModel.commentList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
+
+        viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) findNavController().popBackStack()
+            }
+        })
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        toggleFullScreen()
+        requireActivity().toolbar.visibility = View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        toggleFullScreen()
+        requireActivity().toolbar.visibility = View.VISIBLE
+    }
+
+    private fun toggleFullScreen() {
+        val window = requireActivity().window
+        if (window.decorView.systemUiVisibility == View.SYSTEM_UI_FLAG_VISIBLE) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        }
     }
 
 }

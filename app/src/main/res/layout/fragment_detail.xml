@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.detail.DetailViewModel" />
     </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".detail.DetailFragment">
-
         <ImageView
             android:id="@+id/image_main"
             android:layout_width="0dp"
@@ -20,9 +28,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
+            imageUrl="@{viewModel.shopInfo.image[0]}"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+        <ImageButton
+            android:id="@+id/button_detail_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/back"
+            android:onClick="@{() -> viewModel.leaveDetail()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
@@ -30,7 +48,12 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/baloo_chettan"
-            android:text="麵包工坊"
+            android:shadowColor="@color/black_3f3a3a"
+            android:shadowDx="0"
+            android:shadowDy="-5"
+            android:shadowRadius="1"
+            android:text="@{viewModel.shopInfo.name}"
+            tools:text="麵包工坊"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -46,7 +69,19 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_about"
-            tools:text="住址:" />
+            android:text="@string/address" />
+
+        <TextView
+            android:id="@+id/text_address_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            android:text="@{viewModel.shopInfo.location}"
+            tools:text="110台北市信義區基隆路一段178號"
+            app:layout_constraintBottom_toBottomOf="@+id/text_address"
+            app:layout_constraintStart_toEndOf="@+id/text_address"
+            app:layout_constraintTop_toTopOf="@+id/text_address" />
 
         <TextView
             android:id="@+id/text_business_time"
@@ -56,7 +91,20 @@
             style="@style/detail_information"
             app:layout_constraintStart_toStartOf="@+id/text_address"
             app:layout_constraintTop_toBottomOf="@+id/text_address"
-            tools:text="營業時間:" />
+            android:text="@string/business_time" />
+
+        <TextView
+            android:id="@+id/text_business_time_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            tools:text="09:00 ~ 22:00"
+            android:text="09:00 ~ 22:00"
+
+            app:layout_constraintBottom_toBottomOf="@+id/text_business_time"
+            app:layout_constraintStart_toEndOf="@+id/text_business_time"
+            app:layout_constraintTop_toTopOf="@+id/text_business_time" />
 
         <TextView
             android:id="@+id/text_phone"
@@ -66,7 +114,19 @@
             style="@style/detail_information"
             app:layout_constraintStart_toStartOf="@+id/text_business_time"
             app:layout_constraintTop_toBottomOf="@+id/text_business_time"
-            tools:text="電話:" />
+            android:text="@string/phone" />
+
+        <TextView
+            android:id="@+id/text_phone_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            tools:text="0912345678"
+            android:text="@{viewModel.shopInfo.phone}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_phone"
+            app:layout_constraintStart_toEndOf="@+id/text_phone"
+            app:layout_constraintTop_toTopOf="@+id/text_phone" />
 
         <TextView
             android:id="@+id/text_about"
@@ -76,31 +136,51 @@
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_main"
-            tools:text="關於店家"
+            android:text="@string/about"
             style="@style/detail_header" />
 
-        <TextView
-            android:id="@+id/text_star_average"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/round_layout"
-            android:paddingHorizontal="5dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/image_main"
-            app:layout_constraintStart_toStartOf="@+id/text_title"
-            tools:text="4.4" />
+            app:layout_constraintStart_toStartOf="@+id/text_title">
 
-        <TextView
-            android:id="@+id/text_status"
+            <TextView
+                android:id="@+id/text_star_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_layout"
+                android:paddingHorizontal="10dp"
+                android:text="@{String.valueOf(viewModel.shopInfo.star)}"
+                app:layout_constraintBottom_toBottomOf="@+id/image_main"
+                app:layout_constraintStart_toStartOf="@+id/text_title"
+                tools:text="4.4" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/round_layout"
-            android:paddingHorizontal="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_main"
-            app:layout_constraintStart_toStartOf="@+id/text_title"
-            tools:text="營業中" />
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+            app:layout_constraintStart_toEndOf="@+id/cardView2"
+            app:layout_constraintTop_toTopOf="@+id/cardView2">
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_layout"
+                android:paddingHorizontal="10dp"
+                android:text="@string/open"
+                tools:text="@string/open" />
+        </androidx.cardview.widget.CardView>
+
 
         <View
             android:id="@+id/view"
@@ -123,7 +203,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             style="@style/detail_header"
-            android:text="評論專區"
+            android:text="@string/comment_area"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -141,4 +221,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

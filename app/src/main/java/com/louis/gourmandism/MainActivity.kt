@@ -1,7 +1,10 @@
 package com.louis.gourmandism
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         viewModel.currentFragmentType.value = CurrentFragmentType.HOME
-
         setupNavController()
     }
 
@@ -87,4 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 }

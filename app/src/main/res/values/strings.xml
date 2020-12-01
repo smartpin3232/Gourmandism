@@ -7,4 +7,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_shop">搜尋餐廳...</string>
     <string name="Search">SEARCH</string>
+    <string name="address">住址:</string>
+    <string name="business_time">營業時間:</string>
+    <string name="phone">電話:</string>
+    <string name="about">關於店家</string>
+    <string name="comment_area">評論專區</string>
+    <string name="open">營業中</string>
 </resources>
