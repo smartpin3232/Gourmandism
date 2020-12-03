@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,12 +10,42 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".event.EventFragment">
+        tools:context=".event.EventFragment"
+        android:background="@color/fragmentBackground"
+        >
 
-        <TextView
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="eventFragment" />
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@color/black_3f3a3a"
+            app:tabSelectedTextColor="@color/black_3f3a3a"
+            app:tabTextColor="@color/black_3f3a3a"
+            app:tabBackground="@color/fragmentBackground"
+            app:tabTextAppearance="@style/tabText"
+            app:tabIndicatorHeight="2dp"
+            app:tabPaddingTop="12dp"
+            app:tabPaddingBottom="12dp"
+            />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+            android:background="@color/white">
+
+        </androidx.viewpager2.widget.ViewPager2>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

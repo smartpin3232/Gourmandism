@@ -12,10 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.louis.gourmandism.NavigationDirections
-import com.louis.gourmandism.data.BrowseRecently
-import com.louis.gourmandism.data.Comment
-import com.louis.gourmandism.data.Shop
-import com.louis.gourmandism.data.User
+import com.louis.gourmandism.data.*
 import com.louis.gourmandism.databinding.FragmentHomeBinding
 import com.louis.gourmandism.extension.getVmFactory
 
@@ -46,8 +43,9 @@ class HomeFragment : Fragment() {
 
         val db = FirebaseFirestore.getInstance()
 //        var comment = Comment(
-//             id= "Emil",
+//             hostId= "Emil",
 //             shopId= "test002",
+//             commentId= ""
 //             images= mutableListOf(
 //                 "https://lh3.googleusercontent.com/proxy/RJWzrV422_40u68Eg-P6th1Fop2slX0SQ65FmBr69BilP7rSbUJRBQPoVVmIWlNn8yxm-qMd1wvYCqkHl28EovKGYhQugNgmhKfqAf2KdyZJmDJZzLNbsg0A"
 //                 ,"https://top1cdn.top1health.com/cdn/am/21565/67151.jpg"
@@ -60,14 +58,18 @@ class HomeFragment : Fragment() {
 //             )
 //        )
 
-//        var user = User(
-////            id = "003",
-////            name = "Emil",
-////            location = "",
-////            currentPosition = "",
-////            browseRecently = null,
-////            friendList = mutableListOf("002")
-////        )
+//        val user = User(
+//            id = "003",
+//            name = "Emil",
+//            location = "",
+//            currentPosition = "",
+//            browseRecently = mutableListOf<BrowseRecently>(
+//                BrowseRecently(shopId = "test001",time = 0),
+//                BrowseRecently(shopId = "test002",time = 0)
+//            ),
+//            friendList = mutableListOf("002")
+//        )
+
 
 //        var  shop = Shop(
 //            id="test001",
@@ -81,15 +83,36 @@ class HomeFragment : Fragment() {
 //            star= 4.5.toFloat(),
 //            type= mutableListOf("飲料")
 //        )
-//
-//        db.collection("Shop")
-//            .add(shop)
-//            .addOnSuccessListener { documentReference ->
-//                Log.d("Dialog", "Success")
-//            }
-//            .addOnFailureListener { e ->
-//                Log.d("Dialog", "Error", e)
-//            }
+
+        val event = Event(
+            id = "001",
+            host = User(
+                id = "002",
+                name = "Gary",
+                location = "",
+                currentPosition = "",
+                browseRecently = mutableListOf<BrowseRecently>(
+                    BrowseRecently(shopId = "test001",time = 0),
+                    BrowseRecently(shopId = "test002",time = 0)
+            ),
+            friendList = mutableListOf("001")
+        ),
+            title = "Gary",
+            content = "快來一起吃~~快來一起吃~~快來一起吃~~快來一起吃~~快來一起吃~~",
+            shopId = "test001",
+            status = 0,
+            createTime = 0,
+            member = mutableListOf("Louis","Sylvie")
+        )
+
+        db.collection("Event")
+            .add(event)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Dialog", "Success")
+            }
+            .addOnFailureListener { e ->
+                Log.d("Dialog", "Error", e)
+            }
 
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {

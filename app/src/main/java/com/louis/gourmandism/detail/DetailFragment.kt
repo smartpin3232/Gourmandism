@@ -2,6 +2,7 @@ package com.louis.gourmandism.detail
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class DetailFragment : Fragment() {
@@ -30,7 +30,7 @@ class DetailFragment : Fragment() {
         val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
         id?.let {
-            viewModel.getShop(it)
+            viewModel.getShop(it,1)
             viewModel.getComment(it)
         }
 
@@ -53,20 +53,20 @@ class DetailFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         toggleFullScreen()
-        requireActivity().toolbar.visibility = View.GONE
     }
 
     override fun onStop() {
         super.onStop()
         toggleFullScreen()
-        requireActivity().toolbar.visibility = View.VISIBLE
     }
 
     private fun toggleFullScreen() {
         val window = requireActivity().window
         if (window.decorView.systemUiVisibility == View.SYSTEM_UI_FLAG_VISIBLE) {
             window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_IMMERSIVE or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
         } else {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE

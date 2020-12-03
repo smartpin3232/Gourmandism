@@ -9,7 +9,6 @@
 
     <style name="detail_information">
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@font/baloo_chettan</item>
     </style>
 
     <style name="toolbar_title_text">
@@ -21,8 +20,14 @@
     </style>
 
     <style name="detail_header">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tabText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.1</item>
     </style>
 
 </resources>

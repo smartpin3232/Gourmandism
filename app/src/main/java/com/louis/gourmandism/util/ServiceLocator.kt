@@ -22,11 +22,11 @@ object ServiceLocator {
     fun provideRepository(context: Context): Repository {
         synchronized(this) {
             return repository
-                ?: createPublisherRepository(context)
+                ?: createRepository(context)
         }
     }
 
-    private fun createPublisherRepository(context: Context): Repository {
+    private fun createRepository(context: Context): Repository {
         return DefaultRepository(
             RemoteDataSource,
             createLocalDataSource(context)

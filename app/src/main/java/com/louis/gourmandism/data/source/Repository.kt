@@ -1,12 +1,17 @@
 package com.louis.gourmandism.data.source
 
-import com.louis.gourmandism.data.Comment
-import com.louis.gourmandism.data.Result
-import com.louis.gourmandism.data.Shop
+import androidx.lifecycle.MutableLiveData
+import com.louis.gourmandism.data.*
 
 interface Repository {
 
-    suspend fun getComment(): Result<List<Comment>>
+    suspend fun getComment(userId: String,mode: Int): Result<List<Comment>>
 
-    suspend fun getShop(id: String): Result<List<Shop>>
+    suspend fun getShop(id: String,mode: Int): Result<List<Shop>>
+
+    suspend fun getEvent(): Result<List<Event>>
+
+    suspend fun getUser(id: String): Result<User>
+
+    fun getLiveComments(): MutableLiveData<List<Comment>>
 }

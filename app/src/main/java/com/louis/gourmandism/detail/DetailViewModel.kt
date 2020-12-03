@@ -33,9 +33,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     init {
 
     }
-    fun getShop(id: String){
+    fun getShop(id: String,mode: Int){
         coroutineScope.launch {
-            val result = repository.getShop(id)
+            val result = repository.getShop(id,mode)
             _shopInfo.value = when(result){
                 is Result.Success -> {
                     if(result.data.isNotEmpty())   {
@@ -55,7 +55,7 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
 
     fun getComment(id: String){
         coroutineScope.launch {
-            val result = repository.getComment()
+            val result = repository.getComment(id,0)
             _commentList.value = when(result){
                 is Result.Success -> {
                     if(result.data.isNotEmpty())   {

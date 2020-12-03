@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="com.louis.gourmandism.MainViewModel" />
+        <import type="android.view.View"/>
+        <import type="com.louis.gourmandism.util.CurrentFragmentType"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +22,7 @@
             android:layout_height="@dimen/height_toolbar"
             android:background="@color/mainStyleColor"
             android:elevation="8dp"
+            android:visibility="@{viewModel.currentFragmentType == CurrentFragmentType.DETAIL ||viewModel.currentFragmentType == CurrentFragmentType.SEARCH? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

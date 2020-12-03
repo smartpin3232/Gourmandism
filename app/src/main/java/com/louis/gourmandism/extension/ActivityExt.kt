@@ -6,6 +6,7 @@ import com.louis.gourmandism.factory.ViewModelFactory
 
 
 fun Activity.getVmFactory(): ViewModelFactory {
+
     val repository = (applicationContext as MyApplication).repository
     return ViewModelFactory(repository)
 }
