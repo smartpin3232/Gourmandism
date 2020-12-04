@@ -29,9 +29,9 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
         fun bind(item: Event, viewModel: EventItemViewModel) {
             binding.event = item
 
-//            val shop = viewModel.getShop(item.shopId)
-//            binding.shop = viewModel.shopInfo.value
-//            Log.d("aaa", "$shop")
+            val shop = viewModel.getShop(item.shopId)
+            binding.shop = viewModel.shopInfo.value
+            Log.d("aaa", "$shop")
 
 
 

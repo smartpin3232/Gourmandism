@@ -1,8 +1,6 @@
 package com.louis.gourmandism.detail
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,6 @@ class DetailFragment : Fragment() {
         val binding = FragmentDetailBinding.inflate(inflater, container,false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-
         val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
         id?.let {

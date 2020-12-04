@@ -22,7 +22,7 @@
             android:layout_height="150dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            imageUrl="@{shop.image[0]}"
+            imageUrl="@{event.host.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
@@ -36,6 +36,7 @@
             app:layout_constraintBottom_toTopOf="@+id/text_host"
             app:layout_constraintStart_toEndOf="@+id/image_main"
             app:layout_constraintTop_toTopOf="@+id/image_main"
+            android:text="@{shop.name}"
             tools:text="Gary 麵包工坊" />
 
         <TextView
@@ -48,6 +49,7 @@
             app:layout_constraintStart_toEndOf="@+id/text_host"
             app:layout_constraintTop_toTopOf="@+id/text_host"
             app:layout_constraintVertical_bias="0.0"
+            android:text="@{event.host.name}"
             tools:text="Gary" />
 
         <TextView
@@ -124,6 +126,7 @@
             app:layout_constraintStart_toEndOf="@+id/text_number_people"
             app:layout_constraintTop_toTopOf="@+id/text_number_people"
             app:layout_constraintVertical_bias="1.0"
+            android:text="@{String.valueOf(event.member.size()) + '/' + String.valueOf(8)}"
             tools:text="3/8" />
 
         <ImageView
