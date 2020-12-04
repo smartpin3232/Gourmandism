@@ -14,7 +14,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(imgUri)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.no_picture)
+                    .placeholder(R.drawable.home)
                     .error(R.drawable.no_picture))
             .into(imgView)
     }

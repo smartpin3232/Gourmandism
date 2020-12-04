@@ -101,7 +101,7 @@
             app:layout_constraintStart_toEndOf="@+id/text_time"
             app:layout_constraintStart_toStartOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="@+id/text_location"
-            android:text="@{shop.location}"
+            android:text="@{shop.address}"
             tools:text="台北市松山區99999號" />
 
         <TextView

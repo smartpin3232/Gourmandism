@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
-            android:text="@{viewModel.shopInfo.location}"
+            android:text="@{viewModel.shopInfo.address}"
             tools:text="110台北市信義區基隆路一段178號"
             app:layout_constraintBottom_toBottomOf="@+id/text_address"
             app:layout_constraintStart_toEndOf="@+id/text_address"

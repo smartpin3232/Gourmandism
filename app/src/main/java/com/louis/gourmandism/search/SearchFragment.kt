@@ -1,17 +1,28 @@
 package com.louis.gourmandism.search
 
-import android.app.ActionBar
-import android.app.Activity
-import android.content.Context
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,37 +31,32 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.louis.gourmandism.R
+import com.louis.gourmandism.bindImage
 import com.louis.gourmandism.databinding.FragmentSearchBinding
+import com.louis.gourmandism.extension.getVmFactory
 
 
 class SearchFragment : Fragment(){
 
-    private lateinit var mMap: GoogleMap
+    private val viewModel by viewModels<SearchViewModel> { getVmFactory() }
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var locationPermission = false
+    var PERMISSION_ID = 8787
+    private var myMap: GoogleMap? = null
+    private var lastKnownLocation: Location? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val inflater: LayoutInflater? = layoutInflater
-        val view: View = inflater?.inflate(R.layout.item_detail_comment_image, null) ?: View(null)
+        myMap = googleMap
+        getLocationPermission()
+
         //TextView resolutionTextView = view.findViewById(R.id.video_preview_item_tv); // 找到整个大布局内的一个textView控件
 
-        val sydney = LatLng(23.0, 120.0)
-        googleMap.addMarker(MarkerOptions()
-            .icon(BitmapDescriptorFactory.fromBitmap(context?.let { createDrawableFromView(it,view) }))
-            .position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        //將畫面移動到某個座標
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(23.0, 110.0)))
+//        googleMap.setMinZoomPreference(5.0f)
 
-    }
-
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this).get(SearchViewModel::class.java)
+        getDeviceLocation()
     }
 
     override fun onCreateView(
@@ -65,39 +71,136 @@ class SearchFragment : Fragment(){
         binding.recyclerViewTag.adapter = adapter
 
         val testTag = mutableListOf("炸物","火鍋","咖啡","黑暗料理","約會景點")
+
+        binding.textTitle.setOnClickListener {
+            Log.i("click","click")
+            getDeviceLocation()
+        }
+
         adapter.submitList(testTag)
+
+        viewModel.shopList.observe(viewLifecycleOwner, Observer {
+
+
+            it?.let {
+                for(item in it){
+
+                    val markerInflater: LayoutInflater? = layoutInflater
+                    val view: View = markerInflater?.inflate(R.layout.item_map_marker, null) ?: View(null)
+
+                    val location = LatLng(item.location!!.locationX, item.location!!.locationY)
+                    val title = item.name
+//                    val b =createCustomMarker("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRx47NcX3rUCKXCt4PAE1IPsusWNiOYDcsYQ&usqp=CAU")
+
+
+                   val a = view.findViewById<View>(R.id.image_marker) as ImageView
+                    bindImage(a, item.image?.get(0))
+
+//                    Glide.with(requireContext())
+//                        .load(item.image).fitCenter()
+//                        .into(view.findViewById<View>(R.id.image_marker) as ImageView)
+
+
+                    myMap?.let { map -> viewModel.setMapMarker(map, view, location, title,requireContext()) }
+
+                }
+                val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+                mapFragment?.getMapAsync(callback)
+            }
+        })
+
         return binding.root
     }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-
         mapFragment?.getMapAsync(callback)
+
+        // 2. init fusedLocationProviderClient and set LocationServices object
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
 
-    fun createDrawableFromView(context: Context, view: View): Bitmap? {
-        val displayMetrics = DisplayMetrics()
-        (context as Activity).windowManager.defaultDisplay
-            .getMetrics(displayMetrics)
-        view.layoutParams = ActionBar.LayoutParams(
-            ActionBar.LayoutParams.WRAP_CONTENT,
-            ActionBar.LayoutParams.WRAP_CONTENT
-        )
-        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels)
-        view.layout(
-            0, 0, displayMetrics.widthPixels,
-            displayMetrics.heightPixels
-        )
-        view.buildDrawingCache()
-        val bitmap = Bitmap.createBitmap(
-            view.measuredWidth,
-            view.measuredHeight, Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-        return bitmap
+    // 1. check Permission and get user get permission
+    private fun getLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            locationPermission = false
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            ), PERMISSION_ID)
+        } else {
+            locationPermission = true
+        }
+    }
+
+    // 3. set map UI isMyLocationButton Enabled
+    private fun updateLocationUI() {
+        myMap?.apply {
+            try {
+                if (locationPermission) {
+                    isMyLocationEnabled = true
+                    uiSettings.isMyLocationButtonEnabled = true
+                } else {
+                    isMyLocationEnabled = false
+                    uiSettings.isMyLocationButtonEnabled = false
+                }
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    // 4. get permission and update LocationUI: set map UI isMyLocationButton Enabled
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_ID -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locationPermission = true
+                    // set map UI isMyLocationButton Enabled
+                    updateLocationUI()
+                }
+            }
+        }
+    }
+
+    // 5. getDeviceLocation
+    private fun getDeviceLocation() {
+        try {
+            if (locationPermission) {
+                val locationRequest = fusedLocationProviderClient.lastLocation
+                locationRequest.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        lastKnownLocation = task.result
+                        if (lastKnownLocation != null) {
+
+                            myMap?.apply {
+                                addMarker(MarkerOptions()
+                                    .position(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
+                                    .title("It's ME!!")
+                                    .snippet("${lastKnownLocation!!.latitude}, ${lastKnownLocation!!.longitude}")
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+
+                                moveCamera(
+                                    CameraUpdateFactory.newLatLngZoom(
+                                        LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude), 10f))
+                            }
+                        }
+                    } else {
+                        myMap?.uiSettings?.isMyLocationButtonEnabled = false
+                    }
+                }
+            }
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
     }
 
 

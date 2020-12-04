@@ -106,4 +106,7 @@ dependencies {
 
     //ViewPager2
     implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+
+    // google location
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
 }

@@ -8,6 +8,7 @@ import com.louis.gourmandism.detail.DetailViewModel
 import com.louis.gourmandism.event.item.EventItemViewModel
 import com.louis.gourmandism.home.HomeViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
+import com.louis.gourmandism.search.SearchViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
@@ -31,6 +32,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(ProfileViewModel::class.java) ->
                     ProfileViewModel(repository)
+
+                isAssignableFrom(SearchViewModel::class.java) ->
+                    SearchViewModel(repository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
