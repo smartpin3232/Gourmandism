@@ -164,11 +164,11 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         val filteredList = mutableListOf<Shop>()
         for (shop in list) {
 
-            val name = shop.name ?: ""
+            val name = shop.name.toLowerCase(Locale.ROOT) ?: ""
             val tag = shop.type
 
             if (tag != null) {
-                if (name.contains(lowerCaseQueryString) || tag.any { it.contains(lowerCaseQueryString) }) {
+                if (name.contains(lowerCaseQueryString) || tag.any { it.toLowerCase(Locale.ROOT).contains(lowerCaseQueryString) }) {
                     filteredList.add(shop)
                 }
             }else{

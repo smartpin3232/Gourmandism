@@ -12,9 +12,9 @@ import com.louis.gourmandism.databinding.FragmentEventItemBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.home.HomeViewModel
 
-class EventItemFragment(val mode: Int) : Fragment() {
+class EventItemFragment(val status: Int) : Fragment() {
 
-    private val viewModel by viewModels<EventItemViewModel> { getVmFactory() }
+    private val viewModel by viewModels<EventItemViewModel> { getVmFactory(status) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +22,7 @@ class EventItemFragment(val mode: Int) : Fragment() {
     ): View? {
         val binding = FragmentEventItemBinding.inflate(inflater,container,false)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = EventItemAdapter(viewModel)
         binding.recyclerViewEvent.adapter = adapter
@@ -35,6 +35,5 @@ class EventItemFragment(val mode: Int) : Fragment() {
 
         return binding.root
     }
-
 
 }

@@ -9,7 +9,7 @@ interface Repository {
 
     suspend fun getShop(id: String,mode: Int): Result<List<Shop>>
 
-    suspend fun getEvent(): Result<List<Event>>
+    suspend fun getEvent(status: Int): Result<List<Event>>
 
     suspend fun getUser(id: String): Result<User>
 

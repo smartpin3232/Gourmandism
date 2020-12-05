@@ -97,9 +97,16 @@ object RemoteDataSource : DataSource {
                 }
         }
 
-    override suspend fun getEvent(): Result<List<Event>> = suspendCoroutine { continuation ->
-        FirebaseFirestore.getInstance()
-            .collection("Event")
+    override suspend fun getEvent(status: Int): Result<List<Event>> = suspendCoroutine { continuation ->
+
+        when(status){
+                0->{
+                    FirebaseFirestore.getInstance()
+                    .collection("Event").whereEqualTo("status",0)}
+
+                else -> {
+                    FirebaseFirestore.getInstance().collection("Event")}
+            }
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

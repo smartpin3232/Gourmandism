@@ -5,8 +5,8 @@ data class Event(
     var host: User? = null,
     var title: String = "",
     var content: String = "",
-    var shopId: String = "",
-    var status: Int = 0,
+    var shop: Shop? = null,
+    var status: Int = 0, //status   0: 未開團 , 1: 已完成
     var createTime: Long= 0,
     var member: MutableList<String>? = null
 )

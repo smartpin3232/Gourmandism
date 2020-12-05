@@ -12,8 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
-class EventItemViewModel(private val repository: Repository) : ViewModel() {
+class EventItemViewModel(private val repository: Repository, status: Int) : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -23,22 +24,22 @@ class EventItemViewModel(private val repository: Repository) : ViewModel() {
     val eventList : LiveData<List<Event>>
         get() = _eventList
 
-    private var _shopInfo = MutableLiveData<Shop>()
-
-    val shopInfo : LiveData<Shop>
-        get() = _shopInfo
-
     init {
-        getEvent()
+        getEvent(status)
     }
 
-    fun getEvent(){
+
+    private fun getEvent(status: Int){
+
         coroutineScope.launch {
 
-            val result = repository.getEvent()
+            val result = repository.getEvent(status)
             _eventList.value = when(result){
                 is Result.Success -> {
-                    result.data
+                    when(status){
+                        0->result.data
+                        else->filter(result.data,"Louis")
+                    }
                 }
                 else -> {
                     null
@@ -49,18 +50,22 @@ class EventItemViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getShop(id: String){
-        coroutineScope.launch {
-            val result = repository.getShop(id,1)
-            _shopInfo.value = when(result){
-                is Result.Success -> {
-                    result.data[0]
-                }
-                else -> {
-                    null
+    private fun filter(list: List<Event>, userId: String): List<Event> {
+
+        val lowerCaseQueryString = userId.toLowerCase(Locale.ROOT)
+        val filteredList = mutableListOf<Event>()
+
+        for (event in list) {
+
+            event.member.let { member->
+                if (member != null && member.any {it.toLowerCase(Locale.ROOT) == lowerCaseQueryString}) {
+                        filteredList.add(event)
                 }
             }
         }
+        return filteredList
     }
+
+
 
 }

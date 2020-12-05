@@ -13,14 +13,12 @@ import com.louis.gourmandism.databinding.FragmentEventBinding
 
 class EventFragment : Fragment() {
 
-    private lateinit var viewModel: EventViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentEventBinding.inflate(inflater, container, false)
 
+        val binding = FragmentEventBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
         val tabLayout = binding.tabLayout

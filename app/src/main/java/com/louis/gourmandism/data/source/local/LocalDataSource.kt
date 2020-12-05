@@ -19,7 +19,7 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getEvent(): Result<List<Event>> {
+    override suspend fun getEvent(status: Int): Result<List<Event>> {
         TODO("Not yet implemented")
     }
 

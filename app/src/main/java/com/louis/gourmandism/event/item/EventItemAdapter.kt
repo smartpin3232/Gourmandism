@@ -1,10 +1,7 @@
 package com.louis.gourmandism.event.item
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -28,12 +25,6 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
 
         fun bind(item: Event, viewModel: EventItemViewModel) {
             binding.event = item
-
-            val shop = viewModel.getShop(item.shopId)
-            binding.shop = viewModel.shopInfo.value
-            Log.d("aaa", "$shop")
-
-
 
             binding.executePendingBindings()
         }

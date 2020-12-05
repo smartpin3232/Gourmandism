@@ -19,8 +19,8 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getShop(id,mode)
     }
 
-    override suspend fun getEvent(): Result<List<Event>> {
-        return remoteDataSource.getEvent()
+    override suspend fun getEvent(status: Int): Result<List<Event>> {
+        return remoteDataSource.getEvent(status)
     }
 
     override suspend fun getUser(id: String): Result<User> {
