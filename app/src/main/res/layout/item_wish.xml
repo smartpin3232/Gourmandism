@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/image_main"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <data>
+        <variable
+            name="favorite"
+            type="com.louis.gourmandism.data.Favorite" />
+        <variable
+            name="user"
+            type="com.louis.gourmandism.data.User" />
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.wish.WishViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/text_list_name"
-        style="@style/detail_header"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/image_main"
-        app:layout_constraintTop_toBottomOf="@+id/image_main"
-        tools:text="炸物集合" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_host_name"
-        style="@style/detail_information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/round_layout"
-        android:paddingHorizontal="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_list_name"
-        app:layout_constraintTop_toBottomOf="@+id/text_list_name"
-        tools:text="Gary 分享的清單" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/image_main"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            imageUrl="@{favorite.shops[0].image[0]}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_list_name"
+            style="@style/detail_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{favorite.folderName}"
+            app:layout_constraintStart_toStartOf="@+id/image_main"
+            app:layout_constraintTop_toBottomOf="@+id/image_main"
+            tools:text="炸物集合" />
+
+        <TextView
+            android:id="@+id/text_host_name"
+            style="@style/detail_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/round_layout"
+            android:paddingHorizontal="5dp"
+            android:text="@{viewModel.user.name}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_list_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_list_name"
+            tools:text="Gary 分享的清單" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

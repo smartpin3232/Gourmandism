@@ -32,14 +32,14 @@ object RemoteDataSource : DataSource {
         return liveData
     }
 
-    override suspend fun getComment(id: String, mode: Int): Result<List<Comment>> =
+    override suspend fun getComment(userId: String, mode: Int): Result<List<Comment>> =
         suspendCoroutine { continuation ->
             val db = when (mode) {
                 0 -> FirebaseFirestore.getInstance()
                     .collection("Comment")
                 1 -> FirebaseFirestore.getInstance()
                     .collection("Comment")
-                    .whereEqualTo("hostId", id)
+                    .whereEqualTo("hostId", userId)
                 else -> FirebaseFirestore.getInstance()
                     .collection("Comment")
             }
@@ -72,7 +72,6 @@ object RemoteDataSource : DataSource {
                         .collection("Shop")
                         .whereEqualTo("id", id)
                 }
-
                 else -> {
                     FirebaseFirestore.getInstance()
                         .collection("Shop")
@@ -139,6 +138,29 @@ object RemoteDataSource : DataSource {
                         list.add(user)
                     }
                     continuation.resume(Result.Success(list.filter { it.id == id }[0]))
+
+                } else {
+                    task.exception?.let {
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                }
+            }
+    }
+
+    override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection("Favorite").whereEqualTo("userId",userId)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = mutableListOf<Favorite>()
+                    for (document in task.result!!) {
+                        Log.i("getFavorite", "$document")
+                        val favorite = document.toObject(Favorite::class.java)
+                        list.add(favorite)
+                    }
+                    continuation.resume(Result.Success(list))
 
                 } else {
                     task.exception?.let {

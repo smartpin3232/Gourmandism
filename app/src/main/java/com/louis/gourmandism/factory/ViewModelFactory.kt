@@ -10,6 +10,7 @@ import com.louis.gourmandism.home.HomeViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
 import com.louis.gourmandism.search.SearchViewModel
 import com.louis.gourmandism.wish.WishViewModel
+import com.louis.gourmandism.wish.detail.WishDetailViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(

@@ -13,5 +13,7 @@ interface DataSource {
 
     suspend fun getUser(id: String): Result<User>
 
+    suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>>
+
     fun getLiveComments(): MutableLiveData<List<Comment>>
 }

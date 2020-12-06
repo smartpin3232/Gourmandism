@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.databinding.FragmentWishBinding
+import com.louis.gourmandism.databinding.ItemWishBinding
 import com.louis.gourmandism.extension.getVmFactory
-import com.louis.gourmandism.home.HomeViewModel
 
 class WishFragment : Fragment() {
 
@@ -19,7 +21,21 @@ class WishFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentWishBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = this
 
+
+        val adapter = WishAdapter(viewModel)
+        binding.recyclerViewMyWishList.adapter = adapter
+
+        viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.submitList(it)
+            }
+        })
+
+        viewModel.favoriteData.observe(viewLifecycleOwner, Observer {
+            findNavController().navigate(WishFragmentDirections.actionGlobalWishDetailFragment(it))
+        })
 
         return binding.root
     }

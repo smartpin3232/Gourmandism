@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.wish.detail.WishDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".wish.detail.WishDetailFragment">
+
+
+        <TextView
+            android:id="@+id/text_list_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@{viewModel.favoriteInfo.folderName}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="炸物集合" />
+
+        <TextView
+            android:id="@+id/text_host_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:text="@{@string/from + String.valueOf(viewModel.user.name)}"
+            app:layout_constraintStart_toStartOf="@+id/text_list_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_list_name"
+            tools:text="from Gary" />
+
+        <TextView
+            android:id="@+id/text_follower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/text_host_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_host_name"
+            tools:text="@{String.valueOf(viewModel.favoriteInfo.attentionList.size()) + @string/follower}" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/gray_999999"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_follower" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_favorite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_favorite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3"
+            app:layout_constraintVertical_bias="0.571" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

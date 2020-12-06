@@ -27,6 +27,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getUser(id)
     }
 
+    override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> {
+        return remoteDataSource.getMyFavorite(userId)
+    }
+
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
         return remoteDataSource.getLiveComments()
     }

@@ -27,6 +27,10 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> {
+        TODO("Not yet implemented")
+    }
+
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
         TODO("Not yet implemented")
     }
