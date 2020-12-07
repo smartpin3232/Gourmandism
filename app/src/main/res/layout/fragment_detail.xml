@@ -16,231 +16,277 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".detail.DetailFragment">
-        <ImageView
-            android:id="@+id/image_main"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            imageUrl="@{viewModel.shopInfo.image[0]}"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-        <ImageButton
-            android:id="@+id/button_detail_close"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/back"
-            android:onClick="@{() -> viewModel.leaveDetail()}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="30dp"
-            android:fontFamily="@font/baloo_chettan"
-            android:shadowColor="@color/black_3f3a3a"
-            android:shadowDx="0"
-            android:shadowDy="-5"
-            android:shadowRadius="1"
-            android:text="@{viewModel.shopInfo.name}"
-            tools:text="麵包工坊"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/image_main"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/text_address"
-            style="@style/detail_information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_about"
-            android:text="@string/address" />
-
-        <TextView
-            android:id="@+id/text_address_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="18sp"
-            android:text="@{viewModel.shopInfo.address}"
-            tools:text="110台北市信義區基隆路一段178號"
-            app:layout_constraintBottom_toBottomOf="@+id/text_address"
-            app:layout_constraintStart_toEndOf="@+id/text_address"
-            app:layout_constraintTop_toTopOf="@+id/text_address" />
-
-        <TextView
-            android:id="@+id/text_business_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            style="@style/detail_information"
-            app:layout_constraintStart_toStartOf="@+id/text_address"
-            app:layout_constraintTop_toBottomOf="@+id/text_address"
-            android:text="@string/business_time" />
-
-        <TextView
-            android:id="@+id/text_business_time_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="18sp"
-            tools:text="09:00 ~ 22:00"
-            android:text="09:00 ~ 22:00"
-
-            app:layout_constraintBottom_toBottomOf="@+id/text_business_time"
-            app:layout_constraintStart_toEndOf="@+id/text_business_time"
-            app:layout_constraintTop_toTopOf="@+id/text_business_time" />
-
-        <TextView
-            android:id="@+id/text_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            style="@style/detail_information"
-            app:layout_constraintStart_toStartOf="@+id/text_business_time"
-            app:layout_constraintTop_toBottomOf="@+id/text_business_time"
-            android:text="@string/phone" />
-
-        <TextView
-            android:id="@+id/text_phone_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="0912345678"
-            android:text="@{viewModel.shopInfo.phone}"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_phone"
-            app:layout_constraintStart_toEndOf="@+id/text_phone"
-            app:layout_constraintTop_toTopOf="@+id/text_phone" />
-
-        <TextView
-            android:id="@+id/text_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_main"
-            android:text="@string/about"
-            style="@style/detail_header" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_main"
-            app:layout_constraintStart_toStartOf="@+id/text_title">
-
-            <TextView
-                android:id="@+id/text_star_average"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_layout"
-                android:paddingHorizontal="10dp"
-                android:text="@{@string/space + String.valueOf(viewModel.shopInfo.star)}"
-                app:layout_constraintBottom_toBottomOf="@+id/image_main"
-                app:layout_constraintStart_toStartOf="@+id/text_title"
-                tools:text="4.4" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-            app:layout_constraintStart_toEndOf="@+id/cardView2"
-            app:layout_constraintTop_toTopOf="@+id/cardView2">
-
-            <TextView
-                android:id="@+id/text_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_layout"
-                android:paddingHorizontal="10dp"
-                android:text="@string/open"
-                tools:text="@string/open" />
-        </androidx.cardview.widget.CardView>
-
-
-        <View
-            android:id="@+id/view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/gray_999999"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_phone">
+            android:layout_height="match_parent"
+            tools:context=".detail.DetailFragment">
 
-        </View>
+            <ImageView
+                android:id="@+id/image_main"
+                imageUrl="@{viewModel.shopInfo.image[0]}"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/text_comment_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            style="@style/detail_header"
-            android:text="@string/comment_area"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            <ImageButton
+                android:id="@+id/button_detail_close"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/back"
+                android:onClick="@{() -> viewModel.leaveDetail()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_detail_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_detail_comment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_comment_area" />
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/baloo_chettan"
+                android:shadowColor="@color/black_3f3a3a"
+                android:shadowDx="0"
+                android:shadowDy="-5"
+                android:shadowRadius="1"
+                android:text="@{viewModel.shopInfo.name}"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/image_main"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="麵包工坊" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_about"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_about"
-            app:srcCompat="@drawable/star2" />
+            <TextView
+                android:id="@+id/text_address"
+                style="@style/detail_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_about" />
 
-        <TextView
-            android:id="@+id/text_add_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/addComment"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_comment_area"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_comment_area" />
+            <TextView
+                android:id="@+id/text_address_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.shopInfo.address}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_address"
+                app:layout_constraintStart_toEndOf="@+id/text_address"
+                app:layout_constraintTop_toTopOf="@+id/text_address"
+                tools:text="110台北市信義區基隆路一段178號" />
+
+            <TextView
+                android:id="@+id/text_business_time"
+                style="@style/detail_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/business_time"
+                app:layout_constraintStart_toStartOf="@+id/text_address"
+                app:layout_constraintTop_toBottomOf="@+id/text_address" />
+
+            <TextView
+                android:id="@+id/text_business_time_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="09:00 ~ 22:00"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_business_time"
+
+                app:layout_constraintStart_toEndOf="@+id/text_business_time"
+                app:layout_constraintTop_toTopOf="@+id/text_business_time"
+                tools:text="09:00 ~ 22:00" />
+
+            <TextView
+                android:id="@+id/text_phone"
+                style="@style/detail_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/phone"
+                app:layout_constraintStart_toStartOf="@+id/text_business_time"
+                app:layout_constraintTop_toBottomOf="@+id/text_business_time" />
+
+            <TextView
+                android:id="@+id/text_phone_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.shopInfo.phone}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_phone"
+                app:layout_constraintStart_toEndOf="@+id/text_phone"
+                app:layout_constraintTop_toTopOf="@+id/text_phone"
+                tools:text="0912345678" />
+
+            <TextView
+                android:id="@+id/text_about"
+                style="@style/detail_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/about"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_main" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/image_main"
+                app:layout_constraintStart_toStartOf="@+id/text_title">
+
+                <TextView
+                    android:id="@+id/text_star_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_layout"
+                    android:paddingHorizontal="10dp"
+                    android:text="@{@string/space + String.valueOf(viewModel.shopInfo.star)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_main"
+                    app:layout_constraintStart_toStartOf="@+id/text_title"
+                    tools:text="4.4" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                app:layout_constraintStart_toEndOf="@+id/cardView2"
+                app:layout_constraintTop_toTopOf="@+id/cardView2">
+
+                <TextView
+                    android:id="@+id/text_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_layout"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/open"
+                    tools:text="@string/open" />
+            </androidx.cardview.widget.CardView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/gray_999999"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_add_wish_list">
+
+            </View>
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/gray_999999"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_phone">
+
+            </View>
+
+            <TextView
+                android:id="@+id/text_comment_area"
+                style="@style/detail_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/comment_area"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_detail_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_comment_area"
+                tools:listitem="@layout/item_detail_comment" />
+
+            <TextView
+                android:id="@+id/text_add_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/addComment"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_comment_area"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_comment_area" />
+
+            <TextView
+                android:id="@+id/text_add_wish_list"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:text="加入收藏"
+                android:textColor="@color/gray_999999"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/view5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <TextView
+                android:id="@+id/text_add_event"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="揪團"
+                android:textColor="@color/gray_999999"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/view5"
+                app:layout_constraintTop_toTopOf="@+id/text_add_wish_list" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/gray_999999"
+                app:layout_constraintBottom_toBottomOf="@+id/text_add_wish_list"
+                app:layout_constraintEnd_toStartOf="@+id/text_add_event"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/text_add_wish_list"
+                app:layout_constraintTop_toTopOf="@+id/text_add_wish_list" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

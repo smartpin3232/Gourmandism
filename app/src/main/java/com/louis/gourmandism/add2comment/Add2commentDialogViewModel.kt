@@ -53,7 +53,7 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
         )
 
         coroutineScope.launch {
-            val result = repository.setComment(commentInfo)
+            val result = repository.newComment(commentInfo)
             _setStatus.value = when(result){
                 is Result.Success -> {
                     result.data

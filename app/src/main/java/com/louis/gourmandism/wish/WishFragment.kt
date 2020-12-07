@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.databinding.FragmentWishBinding
 import com.louis.gourmandism.databinding.ItemWishBinding
 import com.louis.gourmandism.extension.getVmFactory
@@ -34,7 +35,7 @@ class WishFragment : Fragment() {
         })
 
         viewModel.favoriteData.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(WishFragmentDirections.actionGlobalWishDetailFragment(it))
+            findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
         })
 
         return binding.root

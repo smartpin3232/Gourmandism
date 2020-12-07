@@ -30,6 +30,10 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                 viewModel.toShop(item)
             }
 
+            binding.textAdd.setOnClickListener {
+                viewModel.joinGame(item.id,"001")
+            }
+
             binding.executePendingBindings()
         }
 

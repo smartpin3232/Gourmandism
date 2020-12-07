@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentDetailBinding
@@ -45,8 +46,9 @@ class DetailFragment : Fragment() {
         })
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
+
             it?.let {
-                if (it) findNavController().popBackStack()
+                if (it) findNavController().navigateUp()
             }
         })
 
@@ -55,6 +57,13 @@ class DetailFragment : Fragment() {
                 viewModel.shopInfo.value!!
             ))
         }
+
+        binding.textAddEvent.setOnClickListener {
+            findNavController().navigate(DetailFragmentDirections.actionGlobalNewEventFragment(
+                viewModel.shopInfo.value!!
+            ))
+        }
+
 
         return binding.root
     }

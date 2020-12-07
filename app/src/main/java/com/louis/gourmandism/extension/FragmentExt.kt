@@ -5,10 +5,7 @@ import com.louis.gourmandism.MyApplication
 import com.louis.gourmandism.add2comment.Add2commentDialogViewModel
 import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.data.Shop
-import com.louis.gourmandism.factory.Add2commentViewModelFactory
-import com.louis.gourmandism.factory.EventItemViewModelFactory
-import com.louis.gourmandism.factory.ViewModelFactory
-import com.louis.gourmandism.factory.WishDetailViewModelFactory
+import com.louis.gourmandism.factory.*
 import com.louis.gourmandism.wish.detail.WishDetailViewModel
 
 fun Fragment.getVmFactory(): ViewModelFactory {
@@ -33,4 +30,10 @@ fun Fragment.getVmFactory(shop: Shop): Add2commentViewModelFactory {
 
     val repository = (requireContext().applicationContext as MyApplication).repository
     return Add2commentViewModelFactory(repository, shop)
+}
+
+fun Fragment.getEventVmFactory(shop: Shop): NewEventViewModelFactory {
+
+    val repository = (requireContext().applicationContext as MyApplication).repository
+    return NewEventViewModelFactory(repository, shop)
 }

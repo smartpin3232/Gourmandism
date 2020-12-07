@@ -35,7 +35,7 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
                     it.tag = "true"
                 }
             }
-            binding.imageMain.setOnClickListener {
+            binding.textTitle.setOnClickListener {
                 viewModel.navigationToDetail(item.shopId)
             }
             binding.executePendingBindings()

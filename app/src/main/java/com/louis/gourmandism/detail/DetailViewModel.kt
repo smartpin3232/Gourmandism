@@ -38,17 +38,17 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         coroutineScope.launch {
             val result = repository.getShop(id,mode)
             _shopInfo.value = when(result){
-                is Result.Success -> {
-                    if(result.data.isNotEmpty())   {
-                        result.data[0]
-                    }else{
+                    is Result.Success -> {
+                        if(result.data.isNotEmpty())   {
+                            result.data[0]
+                        }else{
+                            null
+                        }
+                    }
+                    else -> {
+                        Log.i("getComment","Error")
                         null
                     }
-                }
-                else -> {
-                    Log.i("getComment","Error")
-                    null
-                }
             }
             Log.i("DetailViewModel","${_shopInfo}")
         }

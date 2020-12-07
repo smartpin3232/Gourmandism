@@ -1,6 +1,7 @@
 package com.louis.gourmandism.event.item
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,16 +25,21 @@ class EventItemFragment(val status: Int) : Fragment() {
     ): View? {
         val binding = FragmentEventItemBinding.inflate(inflater,container,false)
 
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = this
 
         val adapter = EventItemAdapter(viewModel)
         binding.recyclerViewEvent.adapter = adapter
 
-        viewModel.eventList.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                adapter.submitList(it)
-            }
+        viewModel.liveEventList.observe(viewLifecycleOwner, Observer {
+
+            adapter.submitList(it)
         })
+
+//        viewModel.eventList.observe(viewLifecycleOwner, Observer {
+//            it?.let{
+//                adapter.submitList(it)
+//            }
+//        })
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))

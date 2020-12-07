@@ -15,7 +15,11 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun setComment(comment: Comment): Result<Boolean> {
+    override suspend fun newComment(comment: Comment): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun joinGame(eventId: String,userId: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -24,6 +28,10 @@ class LocalDataSource(val context: Context) : DataSource {
     }
 
     override suspend fun getEvent(status: Int): Result<List<Event>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun newEvent(event: Event): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -36,6 +44,10 @@ class LocalDataSource(val context: Context) : DataSource {
     }
 
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLiveEvents(status: Int): MutableLiveData<List<Event>> {
         TODO("Not yet implemented")
     }
 

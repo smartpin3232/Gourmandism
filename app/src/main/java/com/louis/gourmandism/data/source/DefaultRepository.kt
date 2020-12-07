@@ -15,8 +15,12 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getComment(userId,mode)
     }
 
-    override suspend fun setComment(comment: Comment): Result<Boolean> {
-        return remoteDataSource.setComment(comment)
+    override suspend fun newComment(comment: Comment): Result<Boolean> {
+        return remoteDataSource.newComment(comment)
+    }
+
+    override suspend fun joinGame(eventId: String,userId: String): Result<Boolean> {
+        return remoteDataSource.joinGame(eventId,userId)
     }
 
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
@@ -25,6 +29,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
 
     override suspend fun getEvent(status: Int): Result<List<Event>> {
         return remoteDataSource.getEvent(status)
+    }
+
+    override suspend fun newEvent(event: Event): Result<Boolean> {
+        return remoteDataSource.newEvent(event)
     }
 
     override suspend fun getUser(id: String): Result<User> {
@@ -37,6 +45,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
 
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
         return remoteDataSource.getLiveComments()
+    }
+
+    override fun getLiveEvents(status: Int): MutableLiveData<List<Event>> {
+        return remoteDataSource.getLiveEvents(status)
     }
 
 
