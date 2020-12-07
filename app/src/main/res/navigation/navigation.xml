@@ -50,11 +50,21 @@
         android:id="@+id/wishDetailFragment"
         android:name="com.louis.gourmandism.wish.detail.WishDetailFragment"
         android:label="WishDetailFragment"
-        tools:layout="@layout/fragment_wish_detail" >
+        tools:layout="@layout/fragment_wish_detail">
         <argument
             android:name="favorite"
             app:argType="com.louis.gourmandism.data.Favorite" />
     </fragment>
+
+    <dialog
+        android:id="@+id/add2commentDialog"
+        android:name="com.louis.gourmandism.add2comment.Add2commentDialog"
+        android:label="Add2commentDialog"
+        tools:layout="@layout/dialog_add2comment">
+        <argument
+            android:name="shop"
+            app:argType="com.louis.gourmandism.data.Shop" />
+    </dialog>
 
     <action
         android:id="@+id/action_global_homeFragment"
@@ -85,5 +95,9 @@
     <action
         android:id="@+id/action_global_wishDetailFragment"
         app:destination="@id/wishDetailFragment" />
+
+    <action
+        android:id="@+id/action_global_add2commentDialog"
+        app:destination="@id/add2commentDialog" />
 
 </navigation>

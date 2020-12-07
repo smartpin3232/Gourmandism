@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.databinding.ItemHomeBinding
 
@@ -25,6 +26,15 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
 
         fun bind(item: Comment, viewModel: HomeViewModel) {
             binding.data = item
+            binding.imageFavorite.setOnClickListener {
+                if(it.tag == "true"){
+                    it.setBackgroundResource(R.drawable.good)
+                    it.tag = "false"
+                }else{
+                    it.setBackgroundResource(R.drawable.good_select)
+                    it.tag = "true"
+                }
+            }
             binding.imageMain.setOnClickListener {
                 viewModel.navigationToDetail(item.shopId)
             }

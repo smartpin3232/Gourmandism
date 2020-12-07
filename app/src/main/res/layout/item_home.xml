@@ -48,9 +48,10 @@
             imageUrl="@{data.images[0]}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:scaleType="matrix"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_image"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -60,13 +61,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/baloo_chettan"
             android:text="@{data.title}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_main"
             tools:text="店名" />
@@ -113,13 +115,13 @@
 
         <ImageView
             android:id="@+id/image_favorite"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_tag"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_tag"
-            app:srcCompat="@drawable/star2" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/good"
+            android:tag="false"
+            app:layout_constraintBottom_toBottomOf="@+id/text_title"
+            app:layout_constraintEnd_toEndOf="@+id/text_title"
+            app:layout_constraintTop_toTopOf="@+id/text_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

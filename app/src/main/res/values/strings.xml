@@ -27,4 +27,7 @@
     <string name="preview">最近瀏覽</string>
     <string name="from">from&#160;</string>
     <string name="follower">&#160;位追蹤者</string>
+    <string name="space">&#160;</string>
+    <string name="addComment">新增評論&#160;</string>
+    <string name="share_comment">分享評論</string>
 </resources>

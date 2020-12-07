@@ -24,6 +24,11 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
     val eventList : LiveData<List<Event>>
         get() = _eventList
 
+    private var _shopInfo = MutableLiveData<Shop>()
+
+    val shopInfo : LiveData<Shop>
+        get() = _shopInfo
+
     init {
         getEvent(status)
     }
@@ -66,6 +71,8 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         return filteredList
     }
 
-
+    fun toShop(item: Event){
+        _shopInfo.value = item.shop
+    }
 
 }

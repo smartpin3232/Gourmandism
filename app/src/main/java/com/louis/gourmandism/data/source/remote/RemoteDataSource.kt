@@ -1,5 +1,6 @@
 package com.louis.gourmandism.data.source.remote
 
+import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
@@ -61,6 +62,28 @@ object RemoteDataSource : DataSource {
                     }
                 }
         }
+
+    override suspend fun setComment(comment: Comment): Result<Boolean> = suspendCoroutine { continuation ->
+        val db = FirebaseFirestore.getInstance().collection("Comment")
+        val document = db.document()
+        comment.commentId = document.id
+
+        document
+            .set(comment)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    continuation.resume(Result.Success(true))
+                } else {
+                    task.exception?.let {
+
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail(""))
+                }
+            }
+    }
 
 
     override suspend fun getShop(id: String, mode: Int): Result<List<Shop>> =

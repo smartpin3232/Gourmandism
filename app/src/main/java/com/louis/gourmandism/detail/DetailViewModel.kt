@@ -33,6 +33,7 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     init {
 
     }
+
     fun getShop(id: String,mode: Int){
         coroutineScope.launch {
             val result = repository.getShop(id,mode)

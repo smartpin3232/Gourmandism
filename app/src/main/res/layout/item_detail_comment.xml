@@ -69,7 +69,7 @@
             android:layout_height="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/image_user"
             app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:srcCompat="@drawable/star_select" />
+            app:srcCompat="@drawable/tasty_select" />
 
         <TextView
             android:id="@+id/text_comment"
@@ -79,7 +79,8 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="5"
-            android:text="從你來到這裏的那一刻起，這個幽靜的鄉村就散發出一種不同的氣息。當然，一切都是經過深思熟慮和準備的。你的體驗從你下車的那一刻開始。這裏的氣氛很輕鬆，你可以在這裏漫步，看看這裏供應的各種美味的物品。房間很豪華。服務也很棒。但這並不能描述這家餐廳的感覺，那種感覺就像你周圍的整個世界都深呼吸，之後再發出最大的嘆息，然後讓人得到全新境界的放鬆。"
+            tools:text="從你來到這裏的那一刻起，這個幽靜的鄉村就散發出一種不同的氣息。當然，一切都是經過深思熟慮和準備的。你的體驗從你下車的那一刻開始。這裏的氣氛很輕鬆，你可以在這裏漫步，看看這裏供應的各種美味的物品。房間很豪華。服務也很棒。但這並不能描述這家餐廳的感覺，那種感覺就像你周圍的整個世界都深呼吸，之後再發出最大的嘆息，然後讓人得到全新境界的放鬆。"
+            android:text="@{data.content}"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/image_user"

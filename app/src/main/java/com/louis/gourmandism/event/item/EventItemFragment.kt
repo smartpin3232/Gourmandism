@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentEventItemBinding
+import com.louis.gourmandism.event.EventFragmentDirections
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.home.HomeViewModel
 
@@ -31,6 +33,10 @@ class EventItemFragment(val status: Int) : Fragment() {
             it?.let{
                 adapter.submitList(it)
             }
+        })
+
+        viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
+            findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))
         })
 
         return binding.root

@@ -15,6 +15,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getComment(userId,mode)
     }
 
+    override suspend fun setComment(comment: Comment): Result<Boolean> {
+        return remoteDataSource.setComment(comment)
+    }
+
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
         return remoteDataSource.getShop(id,mode)
     }

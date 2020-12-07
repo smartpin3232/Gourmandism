@@ -2,7 +2,10 @@ package com.louis.gourmandism.extension
 
 import androidx.fragment.app.Fragment
 import com.louis.gourmandism.MyApplication
+import com.louis.gourmandism.add2comment.Add2commentDialogViewModel
 import com.louis.gourmandism.data.Favorite
+import com.louis.gourmandism.data.Shop
+import com.louis.gourmandism.factory.Add2commentViewModelFactory
 import com.louis.gourmandism.factory.EventItemViewModelFactory
 import com.louis.gourmandism.factory.ViewModelFactory
 import com.louis.gourmandism.factory.WishDetailViewModelFactory
@@ -24,4 +27,10 @@ fun Fragment.getVmFactory(favorite: Favorite): WishDetailViewModelFactory {
 
     val repository = (requireContext().applicationContext as MyApplication).repository
     return WishDetailViewModelFactory(repository, favorite)
+}
+
+fun Fragment.getVmFactory(shop: Shop): Add2commentViewModelFactory {
+
+    val repository = (requireContext().applicationContext as MyApplication).repository
+    return Add2commentViewModelFactory(repository, shop)
 }

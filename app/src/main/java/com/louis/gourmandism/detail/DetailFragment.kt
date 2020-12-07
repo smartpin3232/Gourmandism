@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.R
+import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
 
@@ -33,7 +34,8 @@ class DetailFragment : Fragment() {
             viewModel.getComment(it)
         }
 
-        paddingPicture(binding.textStarAverage, R.drawable.star2)
+        paddingPicture(binding.textStarAverage, R.drawable.tasty_select,0)
+        paddingPicture(binding.textAddComment, R.drawable.comment,2)
 
         val adapter = DetailAdapter(viewModel)
         binding.recyclerViewDetailComment.adapter = adapter
@@ -47,6 +49,12 @@ class DetailFragment : Fragment() {
                 if (it) findNavController().popBackStack()
             }
         })
+
+        binding.textAddComment.setOnClickListener {
+            findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2commentDialog(
+                viewModel.shopInfo.value!!
+            ))
+        }
 
         return binding.root
     }
@@ -74,10 +82,16 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun paddingPicture(tv: TextView, pic: Int) {
+    private fun paddingPicture(tv: TextView, pic: Int, direction: Int) {
         val drawable1 = resources.getDrawable(pic)
-        drawable1.setBounds(0, 0, 40, 40) //第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        tv.setCompoundDrawables(drawable1, null, null, null) //只放左边
+        drawable1.setBounds(0, 0, 50, 50)
+        when(direction){
+            0->tv.setCompoundDrawables(drawable1, null, null, null)
+            1->tv.setCompoundDrawables(null, drawable1, null, null)
+            2->tv.setCompoundDrawables(null, null, drawable1, null)
+            else->tv.setCompoundDrawables(null, null, null, drawable1)
+        }
+
     }
 
 }

@@ -85,19 +85,6 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         }
     }
 
-
-    fun getShopList(): MutableList<Location> {
-
-        val shopList = mutableListOf<Location>(
-            Location(23.0, 110.0),
-            Location(24.0, 120.0),
-            Location(25.0, 130.0),
-            Location(26.0, 100.0),
-            Location(27.0, 140.0)
-        )
-        return shopList
-    }
-
     fun setMapMarker(
         googleMap: GoogleMap,
         context:Context,

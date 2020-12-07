@@ -15,6 +15,10 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun setComment(comment: Comment): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
         TODO("Not yet implemented")
     }

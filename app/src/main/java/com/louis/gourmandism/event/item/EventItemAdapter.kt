@@ -26,6 +26,10 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
         fun bind(item: Event, viewModel: EventItemViewModel) {
             binding.event = item
 
+            binding.textShopInfo.setOnClickListener {
+                viewModel.toShop(item)
+            }
+
             binding.executePendingBindings()
         }
 
