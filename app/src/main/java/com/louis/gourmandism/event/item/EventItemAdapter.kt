@@ -2,11 +2,13 @@ package com.louis.gourmandism.event.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.databinding.ItemEventBinding
+import kotlinx.android.synthetic.main.item_event.view.*
 
 class EventItemAdapter(private val viewModel: EventItemViewModel) :
     ListAdapter<Event, EventItemAdapter.ViewHolder>(DiffCallback()) {
@@ -30,8 +32,25 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                 viewModel.toShop(item)
             }
 
+            if(item.member?.any { it == "001" }!!){
+                binding.textAdd.text = "退出"
+            }else{
+                binding.textAdd.text = "加入"
+            }
+
+
             binding.textAdd.setOnClickListener {
-                viewModel.joinGame(item.id,"001")
+                if (binding.textAdd.text == "加入"){
+                    if(item.member!!.size >= item.memberLimit){
+                        viewModel.toast()
+                    }else{
+                        binding.textAdd.text = "退出"
+                        viewModel.joinGame(item.id,"001",0)
+                    }
+                }else{
+                    binding.textAdd.text = "加入"
+                    viewModel.joinGame(item.id,"001",1)
+                }
             }
 
             binding.executePendingBindings()

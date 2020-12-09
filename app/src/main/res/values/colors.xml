@@ -9,8 +9,13 @@
 
     <color name="white">#ffffff</color>
 
+    <color name="gray_646464">#646464</color>
+    <color name="gray_777777">#777777</color>
+    <color name="gray_888888">#888888</color>
     <color name="gray_999999">#999999</color>
     <color name="gray_cccccc">#cccccc</color>
+
+    <color name="red_d0021b">#d0021b</color>
 
     <color name="black_3f3a3a">#3f3a3a</color>
 

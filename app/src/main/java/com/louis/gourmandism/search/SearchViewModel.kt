@@ -32,6 +32,12 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     init {
         getShopList("",0)
     }
@@ -41,9 +47,15 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
     val shopList: LiveData<List<Shop>>
         get() = _shopList
 
+    private var _filterShopList = MutableLiveData<List<Shop>>()
+    val filterShopList: LiveData<List<Shop>>
+        get() = _filterShopList
+
     private var _shop = MutableLiveData<Shop>()
     val shop: LiveData<Shop>
         get() = _shop
+
+    private var tagStatus: String = ""
 
     fun getShopList(id: String,mode: Int){
         coroutineScope.launch {
@@ -165,5 +177,15 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
             }
         }
         return filteredList
+    }
+
+    fun markerSet(tag: String){
+        if(tagStatus == tag){
+            _filterShopList.value = _shopList.value
+            tagStatus = ""
+        }else{
+            _filterShopList.value = filter(_shopList.value!!,tag)
+            tagStatus = tag
+        }
     }
 }

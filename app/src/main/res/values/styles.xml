@@ -9,6 +9,7 @@
 
     <style name="detail_information">
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/gray_888888</item>
     </style>
 
     <style name="toolbar_title_text">
@@ -22,6 +23,7 @@
     <style name="detail_header">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_777777</item>
     </style>
 
     <style name="tabText">

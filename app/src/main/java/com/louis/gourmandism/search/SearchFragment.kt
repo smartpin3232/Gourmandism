@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.louis.gourmandism.R
+import com.louis.gourmandism.data.Shop
 
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
@@ -49,6 +50,7 @@ class SearchFragment : Fragment(){
         getLocationPermission()
 
         updateLocationUI()
+
         //將畫面移動到某個座標
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(23.0, 110.0)))
 
@@ -91,18 +93,13 @@ class SearchFragment : Fragment(){
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
-        val testTag = mutableListOf("炸物","火鍋","咖啡","黑暗料理","約會景點")
+        val testTag = mutableListOf("麵包","火鍋","咖啡","黑暗料理","冷飲")
         adapter.submitList(testTag)
 
         //點擊取得當前位置
         binding.textTitle.setOnClickListener {
             getDeviceLocation()
             viewModel.getShopList("",0)
-        }
-
-        binding.cardShopInfo.setOnClickListener {
-            findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
-            Log.i("cardView","click")
         }
 
         viewModel.shopList.observe(viewLifecycleOwner, Observer {
@@ -116,21 +113,35 @@ class SearchFragment : Fragment(){
             }
         })
 
-        binding.editSearch.addTextChangedListener {
-//            Log.i("edit",it.toString())
-            viewModel.shopList.value?.let {shopList->
+        viewModel.filterShopList.observe(viewLifecycleOwner, Observer {
+            resetMarker(it)
+        })
 
+        binding.cardShopInfo.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
+            Log.i("cardView","click")
+        }
+
+        binding.editSearch.addTextChangedListener {
+
+            viewModel.shopList.value?.let {shopList->
                 val filterList = viewModel.filter(shopList ,it.toString())
-                myMap?.clear()
-                for (item in filterList) {
-                    myMap?.let { map -> viewModel.setMapMarker(map,requireContext(),layoutInflater,item) }
-                }
-                mapFragment?.getMapAsync(callback)
+                resetMarker(filterList)
             }
         }
 
         return binding.root
     }
+
+    private fun resetMarker(filterList: List<Shop>){
+        myMap?.clear()
+
+        for (item in filterList) {
+            myMap?.let { map -> viewModel.setMapMarker(map,requireContext(),layoutInflater,item) }
+        }
+        mapFragment?.getMapAsync(callback)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

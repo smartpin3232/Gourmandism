@@ -31,7 +31,7 @@ class NewEventDialog : BottomSheetDialogFragment() {
         val binding = DialogNewEventBinding.inflate(inflater,container,false)
 
         binding.textGo.setOnClickListener {
-            viewModel.newEvent(binding.editContent.text.toString())
+            viewModel.newEvent(binding.editContent.text.toString(),binding.editNumber.text.toString())
         }
 
         viewModel.event.observe(viewLifecycleOwner, Observer {

@@ -56,6 +56,16 @@
             app:argType="com.louis.gourmandism.data.Favorite" />
     </fragment>
 
+    <fragment
+        android:id="@+id/commentFragment"
+        android:name="com.louis.gourmandism.comment.CommentFragment"
+        android:label="CommentFragment"
+        tools:layout="@layout/fragment_comment">
+        <argument
+            android:name="comment"
+            app:argType="com.louis.gourmandism.data.Comment" />
+    </fragment>
+
     <dialog
         android:id="@+id/newEventFragment"
         android:name="com.louis.gourmandism.event.create.NewEventDialog"
@@ -78,33 +88,27 @@
 
     <action
         android:id="@+id/action_global_homeFragment"
-        app:destination="@id/homeFragment"
-/>
+        app:destination="@id/homeFragment" />
 
     <action
         android:id="@+id/action_global_searchFragment"
-        app:destination="@id/searchFragment"
-        />
+        app:destination="@id/searchFragment" />
 
     <action
         android:id="@+id/action_global_eventFragment"
-        app:destination="@id/eventFragment"
-         />
+        app:destination="@id/eventFragment" />
 
     <action
         android:id="@+id/action_global_wishFragment"
-        app:destination="@id/wishFragment"
-       />
+        app:destination="@id/wishFragment" />
 
     <action
         android:id="@+id/action_global_profileFragment"
-        app:destination="@id/profileFragment"
-         />
+        app:destination="@id/profileFragment" />
 
     <action
         android:id="@+id/action_global_detailFragment"
-        app:destination="@id/detailFragment"
-  />
+        app:destination="@id/detailFragment" />
 
     <action
         android:id="@+id/action_global_wishDetailFragment"
@@ -117,5 +121,9 @@
     <action
         android:id="@+id/action_global_newEventFragment"
         app:destination="@id/newEventFragment" />
+
+    <action
+        android:id="@+id/action_global_commentFragment"
+        app:destination="@id/commentFragment" />
 
 </navigation>

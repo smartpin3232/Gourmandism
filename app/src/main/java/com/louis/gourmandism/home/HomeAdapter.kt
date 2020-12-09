@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.databinding.ItemHomeBinding
+import com.louis.gourmandism.login.UserManager
 
 class HomeAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Comment, HomeAdapter.ViewHolder>(DiffCallback()) {
@@ -26,18 +27,37 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
 
         fun bind(item: Comment, viewModel: HomeViewModel) {
             binding.data = item
-            binding.imageFavorite.setOnClickListener {
-                if(it.tag == "true"){
-                    it.setBackgroundResource(R.drawable.good)
-                    it.tag = "false"
+
+            item.like?.let {
+                if(it.any {likeList-> likeList == UserManager.userToken }){
+                    binding.imageFavorite.tag = true
+                    binding.imageFavorite.setBackgroundResource(R.drawable.good_select)
                 }else{
-                    it.setBackgroundResource(R.drawable.good_select)
-                    it.tag = "true"
+                    binding.imageFavorite.tag = false
+                    binding.imageFavorite.setBackgroundResource(R.drawable.good)
                 }
             }
+
+
+            binding.imageFavorite.setOnClickListener {
+                if(it.tag == true){
+                    it.tag = false
+                    viewModel.setLike(item.commentId,0)
+                    it.setBackgroundResource(R.drawable.good)
+                }else{
+                    it.tag = true
+                    viewModel.setLike(item.commentId,1)
+                    it.setBackgroundResource(R.drawable.good_select)
+                }
+            }
+            binding.textComment.setOnClickListener {
+                viewModel.navigateToComment(item)
+            }
+
             binding.textTitle.setOnClickListener {
                 viewModel.navigationToDetail(item.shopId)
             }
+
             binding.executePendingBindings()
         }
 

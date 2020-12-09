@@ -30,4 +30,5 @@
     <string name="space">&#160;</string>
     <string name="addComment">新增評論&#160;</string>
     <string name="share_comment">分享評論</string>
+    <string name="divider">&#160;/&#160;</string>
 </resources>

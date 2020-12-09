@@ -36,47 +36,30 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
     val joinStatus: LiveData<Boolean>
         get() = _joinStatus
 
-    init {
-//        getEvent(status)
-        getLiveEvent(status)
-    }
+    private var _toastStatus = MutableLiveData<Boolean>()
+
+    val toastStatus: LiveData<Boolean>
+        get() = _toastStatus
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
+    init {
+        getLiveEvent(status)
+    }
 
-//    private fun getEvent(status: Int){
-//
-//        coroutineScope.launch {
-//
-//            val result = repository.getEvent(status)
-//            _eventList.value = when(result){
-//                is Result.Success -> {
-//                    when(status){
-//                        0->result.data
-//                        else->filter(result.data,"Louis")
-//                    }
-//                }
-//                else -> {
-//                    null
-//                }
-//            }
-//
-//
-//        }
-//    }
 
     private fun getLiveEvent(status: Int) {
         liveEventList = repository.getLiveEvents(status)
     }
 
 
-    fun joinGame(eventId: String, userId: String) {
+    fun joinGame(eventId: String, userId: String,status: Int) {
         coroutineScope.launch {
 
-            val result = repository.joinGame(eventId, userId)
+            val result = repository.joinGame(eventId, userId, status)
             _joinStatus.value = when (result) {
                 is Result.Success -> {
                     result.data
@@ -90,22 +73,10 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         }
     }
 
-
-    private fun filter(list: List<Event>, userId: String): List<Event> {
-
-        val lowerCaseQueryString = userId.toLowerCase(Locale.ROOT)
-        val filteredList = mutableListOf<Event>()
-
-        for (event in list) {
-
-            event.member.let { member ->
-                if (member != null && member.any { it.toLowerCase(Locale.ROOT) == lowerCaseQueryString }) {
-                    filteredList.add(event)
-                }
-            }
-        }
-        return filteredList
+    fun toast(){
+        _toastStatus.value = true
     }
+
 
     fun toShop(item: Event) {
         _shopInfo.value = item.shop

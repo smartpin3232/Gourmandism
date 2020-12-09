@@ -1,8 +1,11 @@
 package com.louis.gourmandism.add2comment
 
+import android.media.Image
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
@@ -37,6 +40,12 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     val star: LiveData<Float>
         get() = _star
 
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     init {
 
     }
@@ -62,6 +71,15 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
                     null
                 }
             }
+        }
+    }
+
+    fun setStar(list: MutableList<ImageView>,amount: Int){
+        for (i in 0 until list.size){
+            list[i].setBackgroundResource(R.drawable.tasty)
+        }
+        for (i in 0 until amount){
+            list[i].setBackgroundResource(R.drawable.tasty_select)
         }
     }
 

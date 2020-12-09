@@ -1,15 +1,15 @@
-package com.louis.gourmandism.search
+package com.louis.gourmandism.comment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.louis.gourmandism.databinding.ItemTagBinding
+import com.louis.gourmandism.databinding.ItemCommentImageBinding
+import com.louis.gourmandism.profile.ProfileViewModel
 
-
-class SearchAdapter(private val viewModel: SearchViewModel) :
-    ListAdapter<String, SearchAdapter.ViewHolder>(DiffCallback()) {
+class CommentAdapter(private val viewModel: CommentViewModel) :
+    ListAdapter<String, CommentAdapter.ViewHolder>(ProfileDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -20,15 +20,11 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ItemTagBinding) :
+    class ViewHolder private constructor(val binding: ItemCommentImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: String, viewModel: SearchViewModel) {
-            binding.tag = item
-
-            binding.textType.setOnClickListener {
-                viewModel.markerSet(item)
-            }
+        fun bind(item: String, viewModel: CommentViewModel) {
+            binding.imageResource = item
 
             binding.executePendingBindings()
         }
@@ -37,14 +33,14 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             fun from(parent: ViewGroup): ViewHolder {
 
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemTagBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemCommentImageBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
     }
 }
 
-class DiffCallback : DiffUtil.ItemCallback<String>() {
+class ProfileDiffCallback : DiffUtil.ItemCallback<String>() {
     override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
         return oldItem == newItem
     }

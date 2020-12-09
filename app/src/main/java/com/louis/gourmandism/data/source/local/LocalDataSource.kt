@@ -19,7 +19,11 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun joinGame(eventId: String,userId: String): Result<Boolean> {
+    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun joinGame(eventId: String,userId: String,status: Int): Result<Boolean> {
         TODO("Not yet implemented")
     }
 

@@ -29,6 +29,10 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     val user: LiveData<User>
         get() = _user
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
     init {
 

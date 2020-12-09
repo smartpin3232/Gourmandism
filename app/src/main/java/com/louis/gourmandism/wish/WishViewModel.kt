@@ -34,6 +34,11 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
     val favoriteData : LiveData<Favorite>
         get() = _favoriteData
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     init {
         getMyFavorite("003")
     }

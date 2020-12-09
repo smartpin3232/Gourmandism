@@ -28,17 +28,23 @@ class NewEventViewModel(private val repository: Repository, private val shop: Sh
     val profile : LiveData<User>
         get() = _profile
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     init {
         getProfile("001")
     }
 
-    fun newEvent(context: String){
+    fun newEvent(context: String,memberLimit: String){
         val eventInfo = Event(
             host =_profile.value,
             content = context,
             shop = shop,
             status = 0,
-            member= mutableListOf(_profile.value?.name!!)
+            member= mutableListOf(_profile.value?.name!!),
+            memberLimit = memberLimit.toInt()
         )
         coroutineScope.launch {
             val result = repository.newEvent(eventInfo)

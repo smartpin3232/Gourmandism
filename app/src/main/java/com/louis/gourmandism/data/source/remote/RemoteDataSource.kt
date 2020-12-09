@@ -187,7 +187,7 @@ object RemoteDataSource : DataSource {
 
             else -> {
                 FirebaseFirestore.getInstance().collection("Event")
-                    .whereArrayContains("member","001")
+                    .whereArrayContains("member", "001")
             }
         }
 //            .orderBy("createTime", Query.Direction.DESCENDING)
@@ -234,6 +234,26 @@ object RemoteDataSource : DataSource {
             }
     }
 
+//    override suspend fun createUser(user: User): Result<Boolean> =
+//        suspendCoroutine { continuation ->
+//            val db = FirebaseFirestore.getInstance().collection("User")
+//            val document = db.document()
+//            document
+//                .set(user)
+//                .addOnCompleteListener { task ->
+//                    if (task.isSuccessful) {
+//                        continuation.resume(Result.Success(true))
+//                    } else {
+//                        task.exception?.let {
+//
+//                            continuation.resume(Result.Error(it))
+//                            return@addOnCompleteListener
+//                        }
+//                        continuation.resume(Result.Fail(""))
+//                    }
+//                }
+//        }
+
     override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> =
         suspendCoroutine { continuation ->
             FirebaseFirestore.getInstance()
@@ -258,13 +278,16 @@ object RemoteDataSource : DataSource {
                 }
         }
 
-    override suspend fun joinGame(eventId: String, userId: String): Result<Boolean> =
+    override suspend fun joinGame(eventId: String, userId: String, status: Int): Result<Boolean> =
         suspendCoroutine { continuation ->
             val db = FirebaseFirestore.getInstance().collection("Event")
             val document = db.document(eventId)
 
-            document
-                .update("member", FieldValue.arrayUnion(userId))
+            if (status == 0) {
+                document.update("member", FieldValue.arrayUnion(userId))
+            } else {
+                document.update("member", FieldValue.arrayRemove(userId))
+            }
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
@@ -280,5 +303,29 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("Comment")
+            val document = db.document(commentId)
+
+            if (status != 0) {
+                document.update("like", FieldValue.arrayUnion(userId))
+            } else {
+                document.update("like", FieldValue.arrayRemove(userId))
+            }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
 
 }

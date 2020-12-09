@@ -1,5 +1,7 @@
 package com.louis.gourmandism.home
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,9 +20,6 @@ import com.louis.gourmandism.extension.getVmFactory
 
 class HomeFragment : Fragment() {
 
-    //    private val viewModel: HomeViewModel by lazy {
-//        ViewModelProvider(this).get(HomeViewModel::class.java)
-//    }
     private val viewModel by viewModels<HomeViewModel> { getVmFactory() }
 
     override fun onCreateView(
@@ -161,8 +160,11 @@ class HomeFragment : Fragment() {
 //                Log.d("Dialog", "Error", e)
 //            }
 
-
-
+//        fun saveData() {
+//            val data = context?.getSharedPreferences("user_data",  Context.MODE_PRIVATE)
+//            val editor = data?.edit()
+//            editor?.putString("user_token","001")?.apply()
+//        }
 
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
@@ -175,6 +177,12 @@ class HomeFragment : Fragment() {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it))
                 viewModel.onNavigated()
+            }
+        })
+
+        viewModel.toCommentStatus.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalCommentFragment(it))
             }
         })
 

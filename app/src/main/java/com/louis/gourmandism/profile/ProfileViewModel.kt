@@ -25,7 +25,10 @@ class ProfileViewModel(private val repository : Repository) : ViewModel(){
     val comment : LiveData<List<Comment>>
         get() = _comment
 
-
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
     init {
         getProfile("002")

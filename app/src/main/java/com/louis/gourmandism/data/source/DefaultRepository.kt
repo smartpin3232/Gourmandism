@@ -12,19 +12,23 @@ import com.louis.gourmandism.data.source.remote.RemoteDataSource
 class DefaultRepository(private val remoteDataSource: DataSource,
                         private val localDataSource: DataSource):Repository{
     override suspend fun getComment(userId: String,mode: Int): Result<List<Comment>> {
-        return remoteDataSource.getComment(userId,mode)
+        return remoteDataSource.getComment(userId, mode)
     }
 
     override suspend fun newComment(comment: Comment): Result<Boolean> {
         return remoteDataSource.newComment(comment)
     }
 
-    override suspend fun joinGame(eventId: String,userId: String): Result<Boolean> {
-        return remoteDataSource.joinGame(eventId,userId)
+    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> {
+        return remoteDataSource.setlike(commentId, userId, status)
+    }
+
+    override suspend fun joinGame(eventId: String,userId: String,status: Int): Result<Boolean> {
+        return remoteDataSource.joinGame(eventId, userId, status)
     }
 
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
-        return remoteDataSource.getShop(id,mode)
+        return remoteDataSource.getShop(id ,mode)
     }
 
     override suspend fun getEvent(status: Int): Result<List<Event>> {

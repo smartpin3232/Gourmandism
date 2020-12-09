@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.comment.CommentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".comment.CommentFragment">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/user_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                app:civ_border_width="0dp"
+                imageUrl="@{viewModel.profile.image}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/text_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewModel.profile.name}"
+                tools:text="Gary"
+                android:fontFamily="@font/baloo_chettan"
+                app:layout_constraintBottom_toBottomOf="@+id/user_image"
+                app:layout_constraintStart_toEndOf="@+id/user_image"
+                app:layout_constraintTop_toTopOf="@+id/user_image" />
+
+
+        <ImageView
+            android:id="@+id/image_level_one"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/tasty"
+            app:layout_constraintStart_toStartOf="@+id/user_image"
+            app:layout_constraintTop_toBottomOf="@+id/user_image" />
+
+        <ImageView
+            android:id="@+id/image_level_two"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tasty"
+            app:layout_constraintBottom_toBottomOf="@+id/image_level_one"
+            app:layout_constraintStart_toEndOf="@+id/image_level_one"
+            app:layout_constraintTop_toTopOf="@+id/image_level_one" />
+
+        <ImageView
+            android:id="@+id/image_level_three"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tasty"
+            app:layout_constraintBottom_toBottomOf="@+id/image_level_two"
+            app:layout_constraintStart_toEndOf="@+id/image_level_two"
+            app:layout_constraintTop_toTopOf="@+id/image_level_two" />
+
+        <ImageView
+            android:id="@+id/image_level_four"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tasty"
+            app:layout_constraintBottom_toBottomOf="@+id/image_level_three"
+            app:layout_constraintStart_toEndOf="@+id/image_level_three"
+            app:layout_constraintTop_toTopOf="@+id/image_level_three" />
+
+        <ImageView
+            android:id="@+id/image_level_five"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tasty"
+            app:layout_constraintBottom_toBottomOf="@+id/image_level_four"
+            app:layout_constraintStart_toEndOf="@+id/image_level_four"
+            app:layout_constraintTop_toTopOf="@+id/image_level_four" />
+
+        <TextView
+            android:id="@+id/text_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/round_layout"
+            android:text="@{viewModel.commentInfo.content}"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:minLines="7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_level_one"
+            tools:text="快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~" />
+
+        <TextView
+                android:id="@+id/text_post_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="一天前"
+                app:layout_constraintBottom_toBottomOf="@+id/text_user_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_user_name" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_comment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_comment"
+            tools:listitem="@layout/item_comment_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

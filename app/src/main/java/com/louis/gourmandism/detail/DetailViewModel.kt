@@ -30,6 +30,11 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     val leaveDetail: LiveData<Boolean>
         get() = _leaveDetail
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     init {
 
     }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -41,8 +42,13 @@ class EventItemFragment(val status: Int) : Fragment() {
 //            }
 //        })
 
+
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))
+        })
+
+        viewModel.toastStatus.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(),"人數已滿",Toast.LENGTH_SHORT).show()
         })
 
         return binding.root

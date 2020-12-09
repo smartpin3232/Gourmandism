@@ -118,7 +118,6 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/good"
-            android:tag="false"
             app:layout_constraintBottom_toBottomOf="@+id/text_title"
             app:layout_constraintEnd_toEndOf="@+id/text_title"
             app:layout_constraintTop_toTopOf="@+id/text_title" />

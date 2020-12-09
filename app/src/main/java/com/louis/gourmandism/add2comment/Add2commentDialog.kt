@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -23,13 +24,17 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.custom_dialog)
     }
 
-    private val viewModel by viewModels<Add2commentDialogViewModel> { getVmFactory(Add2commentDialogArgs.fromBundle(requireArguments()).shop) }
+    private val viewModel by viewModels<Add2commentDialogViewModel> {
+        getVmFactory(
+            Add2commentDialogArgs.fromBundle(requireArguments()).shop
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DialogAdd2commentBinding.inflate(inflater,container,false)
+        val binding = DialogAdd2commentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -42,7 +47,16 @@ class Add2commentDialog : BottomSheetDialogFragment() {
             this.dismiss()
         })
 
-
+        viewModel.star.observe(viewLifecycleOwner, Observer {
+            val images = mutableListOf<ImageView>(
+                binding.imageLevelOne,
+                binding.imageLevelTwo,
+                binding.imageLevelThree,
+                binding.imageLevelFour,
+                binding.imageLevelFive
+            )
+            viewModel.setStar(images,it.toInt())
+        })
 
         return binding.root
     }
