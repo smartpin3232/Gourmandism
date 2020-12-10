@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.databinding.ItemEventBinding
+import com.louis.gourmandism.login.UserManager
 import kotlinx.android.synthetic.main.item_event.view.*
 
 class EventItemAdapter(private val viewModel: EventItemViewModel) :
@@ -32,7 +33,7 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                 viewModel.toShop(item)
             }
 
-            if(item.member?.any { it == "001" }!!){
+            if(item.member?.any { it == UserManager.userToken }!!){
                 binding.textAdd.text = "退出"
             }else{
                 binding.textAdd.text = "加入"
@@ -45,11 +46,11 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                         viewModel.toast()
                     }else{
                         binding.textAdd.text = "退出"
-                        viewModel.joinGame(item.id,"001",0)
+                        viewModel.joinGame(item.id,0)
                     }
                 }else{
                     binding.textAdd.text = "加入"
-                    viewModel.joinGame(item.id,"001",1)
+                    viewModel.joinGame(item.id,1)
                 }
             }
 

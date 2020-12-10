@@ -8,6 +8,7 @@ import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -56,19 +57,20 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
     }
 
 
-    fun joinGame(eventId: String, userId: String,status: Int) {
+    fun joinGame(eventId: String, status: Int) {
         coroutineScope.launch {
 
-            val result = repository.joinGame(eventId, userId, status)
-            _joinStatus.value = when (result) {
-                is Result.Success -> {
-                    result.data
-                }
-                else -> {
-                    null
+            UserManager.userToken?.let {
+                val result = repository.joinGame(eventId, it, status)
+                _joinStatus.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
                 }
             }
-
 
         }
     }

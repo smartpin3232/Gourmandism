@@ -1,11 +1,9 @@
-package com.louis.gourmandism.comment
+package com.louis.gourmandism.login
 
-import android.widget.ImageView
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.louis.gourmandism.R
-import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
@@ -14,18 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class CommentViewModel(private val repository: Repository, private val comment: Comment) :ViewModel() {
+class LoginViewModel(private val repository: Repository) : ViewModel(){
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    var commentInfo = MutableLiveData<Comment>().apply {
-        value = comment
-    }
+    private var _createStatus = MutableLiveData<Boolean>()
 
-    private var _profile = MutableLiveData<User>()
-    val profile : LiveData<User>
-        get() = _profile
+    val createStatus : LiveData<Boolean>
+        get() = _createStatus
 
     override fun onCleared() {
         super.onCleared()
@@ -36,10 +31,15 @@ class CommentViewModel(private val repository: Repository, private val comment: 
 
     }
 
-    fun getProfile(id: String){
+    fun createUser(googleUid: String, name: String, photo: Uri?){
         coroutineScope.launch {
-            val result = repository.getUser(id)
-            _profile.value = when(result){
+            val userInfo = User(
+                id = googleUid,
+                name = name,
+                image = photo.toString()
+            )
+            val result = repository.createUser(userInfo)
+            _createStatus.value = when(result){
                 is Result.Success -> {
                     result.data
                 }
@@ -50,10 +50,5 @@ class CommentViewModel(private val repository: Repository, private val comment: 
         }
     }
 
-    fun setStar(list: MutableList<ImageView>, amount: Int){
 
-        for (i in 0 until amount){
-            list[i].setBackgroundResource(R.drawable.tasty_select)
-        }
-    }
 }

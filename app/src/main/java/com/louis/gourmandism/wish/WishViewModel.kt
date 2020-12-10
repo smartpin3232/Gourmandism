@@ -8,6 +8,7 @@ import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import com.squareup.okhttp.Dispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,17 +22,17 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
 
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
 
-    val myFavorite : LiveData<MutableList<Favorite>>
+    val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
     private var _user = MutableLiveData<User>()
 
-    val user : LiveData<User>
+    val user: LiveData<User>
         get() = _user
 
     private var _favoriteData = MutableLiveData<Favorite>()
 
-    val favoriteData : LiveData<Favorite>
+    val favoriteData: LiveData<Favorite>
         get() = _favoriteData
 
     override fun onCleared() {
@@ -40,42 +41,47 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
     }
 
     init {
-        getMyFavorite("003")
+        getMyFavorite()
     }
 
-    private fun getMyFavorite(userId: String){
+    private fun getMyFavorite() {
         coroutineScope.launch {
-            val result = repository.getMyFavorite(userId)
-            _myFavorite.value = when(result){
+            UserManager.userToken?.let {
+                val result = repository.getMyFavorite(it)
+                _myFavorite.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+
+        }
+    }
+
+    fun getProfile(userId: String) {
+        coroutineScope.launch {
+
+            val result = repository.getUser(userId)
+            _user.value = when (result) {
                 is Result.Success -> {
+                    Log.i("UserViewModel", result.data.name)
                     result.data
                 }
                 else -> {
                     null
                 }
             }
+
+
         }
     }
 
-    fun getProfile(id: String){
-        coroutineScope.launch {
-            val result = repository.getUser(id)
-            _user.value = when(result){
-                is Result.Success -> {
-                    Log.i("UserViewModel",result.data.name)
-                    result.data
-                }
-                else -> {
-                    null
-                }
-            }
-        }
-    }
-
-    fun navigateToDetail(favorite: Favorite){
+    fun navigateToDetail(favorite: Favorite) {
         _favoriteData.value = favorite
     }
-
 
 
 }

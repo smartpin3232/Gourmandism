@@ -39,6 +39,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.newEvent(event)
     }
 
+    override suspend fun createUser(user: User): Result<Boolean> {
+        return remoteDataSource.createUser(user)
+    }
+
     override suspend fun getUser(id: String): Result<User> {
         return remoteDataSource.getUser(id)
     }

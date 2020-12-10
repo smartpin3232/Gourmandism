@@ -31,6 +31,7 @@ class WishAdapter(private val viewModel: WishViewModel) :
             binding.imageMain.setOnClickListener {
                 viewModel.navigateToDetail(favorite)
             }
+
             viewModel.getProfile(favorite.userId)
             viewModel.user.value?.name?.let { Log.i("UserAdapter", it) }
 

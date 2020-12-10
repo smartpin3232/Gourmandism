@@ -19,6 +19,8 @@ interface DataSource {
 
     suspend fun newEvent(event: Event): Result<Boolean>
 
+    suspend fun createUser(user: User): Result<Boolean>
+
     suspend fun getUser(id: String): Result<User>
 
     suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>>

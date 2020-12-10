@@ -40,7 +40,7 @@ class ProfileFragment : Fragment(){
 
         viewModel.profile.observe(viewLifecycleOwner, Observer {
             it?.let {
-                it.browseRecently?.let { it1 -> viewModel.getShop(it1) }
+                it.browseRecently?.let { data -> viewModel.getShop(data) }
             }
         })
 

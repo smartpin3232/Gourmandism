@@ -7,6 +7,7 @@ import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.detail.DetailViewModel
 import com.louis.gourmandism.event.item.EventItemViewModel
 import com.louis.gourmandism.home.HomeViewModel
+import com.louis.gourmandism.login.LoginViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
 import com.louis.gourmandism.search.SearchViewModel
 import com.louis.gourmandism.wish.WishViewModel
@@ -37,6 +38,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(WishViewModel::class.java) ->
                     WishViewModel(repository)
+
+                isAssignableFrom(LoginViewModel::class.java) ->
+                    LoginViewModel(repository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

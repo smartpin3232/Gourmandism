@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity">
+        tools:context=".login.LoginActivity">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"

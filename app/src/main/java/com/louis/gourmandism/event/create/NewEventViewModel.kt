@@ -9,6 +9,7 @@ import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,7 +35,7 @@ class NewEventViewModel(private val repository: Repository, private val shop: Sh
     }
 
     init {
-        getProfile("001")
+        getProfile()
     }
 
     fun newEvent(context: String,memberLimit: String){
@@ -59,15 +60,17 @@ class NewEventViewModel(private val repository: Repository, private val shop: Sh
         }
     }
 
-    private fun getProfile(id: String){
+    private fun getProfile(){
         coroutineScope.launch {
-            val result = repository.getUser(id)
-            _profile.value = when(result){
-                is Result.Success -> {
-                    result.data
-                }
-                else -> {
-                    null
+            UserManager.userToken?.let {
+                val result = repository.getUser(it)
+                _profile.value = when(result){
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
                 }
             }
         }

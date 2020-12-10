@@ -56,13 +56,15 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
 
     fun setLike(commentId: String, status: Int){
         coroutineScope.launch {
-            val result = UserManager.userToken?.let { repository.setlike(commentId, it,status) }
-            _likeStatus.value = when(result){
-                is Result.Success -> {
-                    result.data
-                }
-                else -> {
-                    null
+            UserManager.userToken?.let {
+                val result = repository.setlike(commentId, it, status)
+                _likeStatus.value = when(result){
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
                 }
             }
         }

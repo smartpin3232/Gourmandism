@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.louis.gourmandism.data.BrowseRecently
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.ItemProfilePreviewBinding
 

@@ -39,6 +39,10 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun createUser(user: User): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getUser(id: String): Result<User> {
         TODO("Not yet implemented")
     }

@@ -1,6 +1,5 @@
 package com.louis.gourmandism.add2comment
 
-import android.media.Image
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +9,7 @@ import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -54,11 +54,11 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     fun setComment(comment: String){
 
         val commentInfo = Comment(
-            hostId = "002",
-            shopId = _shopInfo.value?.id!!,
-            title = _shopInfo.value?.name!!,
+            hostId = UserManager.userToken.toString(),
+            shopId = shopInfo.value?.id!!,
+            title = shopInfo.value?.name!!,
             content = comment,
-            star = _star.value!!
+            star = star.value!!
         )
 
         coroutineScope.launch {

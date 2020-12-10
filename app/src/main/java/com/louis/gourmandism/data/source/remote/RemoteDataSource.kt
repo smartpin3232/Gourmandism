@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.DataSource
+import com.louis.gourmandism.login.UserManager
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -187,7 +188,7 @@ object RemoteDataSource : DataSource {
 
             else -> {
                 FirebaseFirestore.getInstance().collection("Event")
-                    .whereArrayContains("member", "001")
+                    .whereArrayContains("member", UserManager.userToken.toString())
             }
         }
 //            .orderBy("createTime", Query.Direction.DESCENDING)
@@ -234,25 +235,25 @@ object RemoteDataSource : DataSource {
             }
     }
 
-//    override suspend fun createUser(user: User): Result<Boolean> =
-//        suspendCoroutine { continuation ->
-//            val db = FirebaseFirestore.getInstance().collection("User")
-//            val document = db.document()
-//            document
-//                .set(user)
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        continuation.resume(Result.Success(true))
-//                    } else {
-//                        task.exception?.let {
-//
-//                            continuation.resume(Result.Error(it))
-//                            return@addOnCompleteListener
-//                        }
-//                        continuation.resume(Result.Fail(""))
-//                    }
-//                }
-//        }
+    override suspend fun createUser(user: User): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("User")
+            val document = db.document(user.id)
+            document
+                .set(user)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
 
     override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> =
         suspendCoroutine { continuation ->

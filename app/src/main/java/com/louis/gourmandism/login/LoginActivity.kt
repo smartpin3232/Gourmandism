@@ -1,4 +1,4 @@
-package com.louis.gourmandism
+package com.louis.gourmandism.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,9 +18,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.louis.gourmandism.MainActivity
+import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.ActivityLoginBinding
 import com.louis.gourmandism.extension.getVmFactory
-import com.louis.gourmandism.login.UserManager
 
 private const val RC_SIGN_IN = 20
 
@@ -30,11 +32,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     // FirebaseAuth
     private lateinit var auth: FirebaseAuth
-    val viewModel by viewModels<MainViewModel> { getVmFactory() }
+    val viewModel by viewModels<LoginViewModel> { getVmFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_login
+        )
         // Initialize Firebase Auth
         auth = Firebase.auth
         // Configure Google Sign In
@@ -47,10 +51,20 @@ class LoginActivity : AppCompatActivity() {
         binding.signInButton.setOnClickListener{
             signIn(mGoogleSignInClient)
         }
+
+        viewModel.createStatus.observe(this, Observer {
+            val intent = Intent(this, MainActivity::class.java)
+            val bundle = Bundle()
+            bundle.putBoolean("loginStatus",true)
+            intent.putExtra("bundle",bundle)
+            startActivity(intent)
+        })
     }
     private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivityForResult(signInIntent,
+            RC_SIGN_IN
+        )
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -74,15 +88,10 @@ class LoginActivity : AppCompatActivity() {
                 // displayName, email, and profile photo Url
                 // Check if user's email is verified: isEmailVerified
                 UserManager.userToken = firebaseUser.uid
-
+                viewModel.createUser(firebaseUser.uid,firebaseUser.displayName!!,firebaseUser.photoUrl)
             }
-            Log.d("firebaseUser", "name = ${firebaseUser?.displayName}, email = ${firebaseUser?.email}, uid = ${firebaseUser?.uid}")
 
-            val intent = Intent(this, MainActivity::class.java)
-            val bundle = Bundle()
-            bundle.putBoolean("loginStatus",true)
-            intent.putExtra("bundle",bundle)
-            startActivity(intent)
+            Log.d("firebaseUser", "name = ${firebaseUser?.displayName}, email = ${firebaseUser?.email}, uid = ${firebaseUser?.uid}")
 
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
