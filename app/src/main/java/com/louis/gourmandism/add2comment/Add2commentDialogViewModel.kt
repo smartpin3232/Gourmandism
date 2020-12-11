@@ -8,6 +8,7 @@ import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
+import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
@@ -41,20 +42,39 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
         get() = _star
 
 
+    private var _profile = MutableLiveData<User>()
+    val profile: LiveData<User>
+        get() = _profile
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
     init {
-
+        getProfile()
     }
 
+    private fun getProfile() {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.getUser(it)
+                _profile.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+        }
+    }
 
     fun setComment(comment: String){
 
         val commentInfo = Comment(
-            hostId = UserManager.userToken.toString(),
+            host = profile.value,
             shopId = shopInfo.value?.id!!,
             title = shopInfo.value?.name!!,
             content = comment,

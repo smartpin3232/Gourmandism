@@ -19,7 +19,7 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> {
+    override suspend fun setLike(commentId: String, userId: String, status: Int): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -28,6 +28,10 @@ class LocalDataSource(val context: Context) : DataSource {
     }
 
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun newShop(shop: Shop): Result<Boolean> {
         TODO("Not yet implemented")
     }
 

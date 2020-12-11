@@ -13,6 +13,12 @@ import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -33,16 +39,6 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    init {
-        getShopList("",0)
-    }
-
-
     private var _shopList = MutableLiveData<List<Shop>>()
     val shopList: LiveData<List<Shop>>
         get() = _shopList
@@ -56,6 +52,17 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         get() = _shop
 
     private var tagStatus: String = ""
+
+    var testStatus=  MutableLiveData<Boolean>()
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    init {
+        getShopList("",0)
+    }
 
     fun getShopList(id: String,mode: Int){
         coroutineScope.launch {
@@ -99,33 +106,36 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
 
     fun setMapMarker(
         googleMap: GoogleMap,
-        context:Context,
-        layoutInflater:LayoutInflater,
-        item: Shop
+        item: Shop,
+        activity: Activity
     ) {
         coroutineScope.launch {
-            val markerInflater: LayoutInflater? = layoutInflater
-            val view: View = markerInflater?.inflate(R.layout.item_map_marker, null) ?: View(null)
 
             val location = LatLng(item.location!!.locationX, item.location!!.locationY)
             val title = item.name
 
-            val markerView = view.findViewById<View>(R.id.image_marker) as ImageView
-            bindImage(markerView, item.image?.get(0))
-            googleMap.addMarker(
-                MarkerOptions()
-                    .icon(
-                        BitmapDescriptorFactory.fromBitmap(
-                            createDrawableFromView(
-                                context,
-                                view
-                            )
-                        )
-                    )
-                    .position(location).title(title)
-            ).tag = item.id
-
-            delay(1000)
+            Glide.with(activity)
+                .asBitmap()
+                .load(when(item.image.isNullOrEmpty()){
+                    true->R.drawable.camera
+                    else -> item.image?.get(0)
+                })
+                .apply(
+                    RequestOptions().transform(CenterCrop(), RoundedCorners(10))
+                )
+                .into( object : SimpleTarget<Bitmap>(100, 100) {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        googleMap.addMarker(
+                            MarkerOptions()
+                                .icon(
+                                    BitmapDescriptorFactory.fromBitmap(
+                                        resource
+                                    )
+                                )
+                                .position(location).title(title)
+                        ).tag = item.id
+                    }
+                })
         }
     }
 

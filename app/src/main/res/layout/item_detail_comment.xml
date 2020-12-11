@@ -16,7 +16,7 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image_user"
-            imageUrl="@{data.images[0]}"
+            imageUrl="@{data.host.image}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{data.hostId}"
+            android:text="@{data.host.name}"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/image_user"

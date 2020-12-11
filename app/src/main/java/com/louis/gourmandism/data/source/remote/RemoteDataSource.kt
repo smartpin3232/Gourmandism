@@ -145,6 +145,29 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun newShop(shop: Shop): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("Shop")
+            val document = db.document()
+
+            shop.id = document.id
+            document
+                .set(shop)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
     override suspend fun getEvent(status: Int): Result<List<Event>> =
         suspendCoroutine { continuation ->
 
@@ -304,7 +327,7 @@ object RemoteDataSource : DataSource {
                 }
         }
 
-    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> =
+    override suspend fun setLike(commentId: String, userId: String, status: Int): Result<Boolean> =
         suspendCoroutine { continuation ->
             val db = FirebaseFirestore.getInstance().collection("Comment")
             val document = db.document(commentId)

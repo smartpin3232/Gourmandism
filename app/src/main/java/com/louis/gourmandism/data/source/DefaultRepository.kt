@@ -19,8 +19,8 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.newComment(comment)
     }
 
-    override suspend fun setlike(commentId: String, userId: String, status: Int): Result<Boolean> {
-        return remoteDataSource.setlike(commentId, userId, status)
+    override suspend fun setLike(commentId: String, userId: String, status: Int): Result<Boolean> {
+        return remoteDataSource.setLike(commentId, userId, status)
     }
 
     override suspend fun joinGame(eventId: String,userId: String,status: Int): Result<Boolean> {
@@ -29,6 +29,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
 
     override suspend fun getShop(id: String,mode: Int): Result<List<Shop>> {
         return remoteDataSource.getShop(id ,mode)
+    }
+
+    override suspend fun newShop(shop: Shop): Result<Boolean> {
+        return remoteDataSource.newShop(shop)
     }
 
     override suspend fun getEvent(status: Int): Result<List<Event>> {

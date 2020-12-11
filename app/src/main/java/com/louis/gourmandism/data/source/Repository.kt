@@ -9,11 +9,13 @@ interface Repository {
 
     suspend fun newComment(comment: Comment): Result<Boolean>
 
-    suspend fun setlike(commentId: String,userId: String,status: Int): Result<Boolean>
+    suspend fun setLike(commentId: String,userId: String,status: Int): Result<Boolean>
 
     suspend fun joinGame(eventId: String,userId: String,status: Int): Result<Boolean>
 
     suspend fun getShop(id: String,mode: Int): Result<List<Shop>>
+
+    suspend fun newShop(shop: Shop): Result<Boolean>
 
     suspend fun getEvent(status: Int): Result<List<Event>>
 

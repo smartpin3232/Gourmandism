@@ -66,6 +66,16 @@
             app:argType="com.louis.gourmandism.data.Comment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/newShopFragment"
+        android:name="com.louis.gourmandism.search.create.NewShopFragment"
+        android:label="NewShopFragment"
+        tools:layout="@layout/fragment_new_shop">
+        <argument
+            android:name="location"
+            app:argType="com.louis.gourmandism.data.Location" />
+    </fragment>
+
     <dialog
         android:id="@+id/newEventFragment"
         android:name="com.louis.gourmandism.event.create.NewEventDialog"
@@ -125,5 +135,9 @@
     <action
         android:id="@+id/action_global_commentFragment"
         app:destination="@id/commentFragment" />
+
+    <action
+        android:id="@+id/action_global_newShopFragment"
+        app:destination="@id/newShopFragment" />
 
 </navigation>
