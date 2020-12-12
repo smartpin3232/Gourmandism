@@ -1,42 +1,37 @@
-package com.louis.gourmandism.wish
+package com.louis.gourmandism.add2wish
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.data.Favorite
-import com.louis.gourmandism.databinding.ItemWishBinding
-import com.louis.gourmandism.login.UserManager
+import com.louis.gourmandism.databinding.ItemAdd2wishBinding
 
-
-class WishAdapter(private val viewModel: WishViewModel) :
-    ListAdapter<Favorite, WishAdapter.ViewHolder>(DiffCallback()) {
+class Add2wishAdapter(private val viewModel: Add2wishViewModel) :
+    ListAdapter<Favorite, Add2wishAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item, viewModel,holder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ItemWishBinding) :
+    class ViewHolder private constructor(val binding: ItemAdd2wishBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
-        fun bind(favorite: Favorite, viewModel: WishViewModel) {
-            binding.favorite = favorite
-
-            binding.imageMain.setOnClickListener {
-                viewModel.navigateToDetail(favorite)
+        fun bind(
+            item: Favorite,
+            viewModel: Add2wishViewModel,
+            holder: ViewHolder
+        ) {
+            binding.item = item
+            holder.itemView.setOnClickListener {
+                viewModel.setWish(item.id,1)
             }
-
-            binding.textHostName.text = "From " + UserManager.user.value?.name
-
             binding.executePendingBindings()
         }
 
@@ -44,7 +39,7 @@ class WishAdapter(private val viewModel: WishViewModel) :
             fun from(parent: ViewGroup): ViewHolder {
 
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemWishBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemAdd2wishBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

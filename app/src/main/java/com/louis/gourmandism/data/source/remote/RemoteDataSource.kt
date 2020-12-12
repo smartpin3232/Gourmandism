@@ -38,15 +38,15 @@ object RemoteDataSource : DataSource {
     override suspend fun getComment(userId: String, mode: Int): Result<List<Comment>> =
         suspendCoroutine { continuation ->
             val db = when (mode) {
-                0 -> FirebaseFirestore.getInstance()
-                    .collection("Comment")
+
                 1 -> FirebaseFirestore.getInstance()
-                    .collection("Comment")
-                    .whereEqualTo("hostId", userId)
+                    .collection("Comment").whereEqualTo("host.id",userId)
+
                 else -> FirebaseFirestore.getInstance()
                     .collection("Comment")
+
             }
-            db.get()
+                .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val list = mutableListOf<Comment>()
@@ -110,7 +110,6 @@ object RemoteDataSource : DataSource {
                     }
                 }
         }
-
 
     override suspend fun getShop(id: String, mode: Int): Result<List<Shop>> =
         suspendCoroutine { continuation ->
@@ -287,8 +286,21 @@ object RemoteDataSource : DataSource {
                     if (task.isSuccessful) {
                         val list = mutableListOf<Favorite>()
                         for (document in task.result!!) {
-                            Log.i("getFavorite", "$document")
+
                             val favorite = document.toObject(Favorite::class.java)
+
+//                            favorite.shops?.let {
+//
+//                                FirebaseFirestore.getInstance()
+//                                    .collection("Shop").whereArrayContains("id",it)
+//                                    .get()
+//                                    .addOnCompleteListener { task2->
+//                                        if(task2.isSuccessful){
+//                                            favorite.shopsInfo?.addAll(task2.result.toObjects(Shop::class.java))
+//                                        }
+//                                    }
+//                            }
+
                             list.add(favorite)
                         }
                         continuation.resume(Result.Success(list))
@@ -352,4 +364,28 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun setWish(folderId: String, shopId: String, status: Int): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("Favorite")
+            val document = db.document(folderId)
+
+            if (status != 0) {
+                document.update("shops", FieldValue.arrayUnion(shopId))
+            } else {
+                document.update("shops", FieldValue.arrayRemove(shopId))
+            }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
 }

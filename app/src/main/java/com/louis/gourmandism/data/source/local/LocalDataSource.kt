@@ -55,6 +55,10 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun setWish(folderId: String, shopId: String, status: Int): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
         TODO("Not yet implemented")
     }

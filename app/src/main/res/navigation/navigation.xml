@@ -77,6 +77,16 @@
     </fragment>
 
     <dialog
+        android:id="@+id/add2wishFragment"
+        android:name="com.louis.gourmandism.add2wish.Add2wishFragment"
+        android:label="Add2wishFragment"
+        tools:layout="@layout/dialog_add2wish">
+        <argument
+            android:name="shopId"
+            app:argType="string" />
+    </dialog>
+
+    <dialog
         android:id="@+id/newEventFragment"
         android:name="com.louis.gourmandism.event.create.NewEventDialog"
         android:label="NewEventFragment"
@@ -139,5 +149,9 @@
     <action
         android:id="@+id/action_global_newShopFragment"
         app:destination="@id/newShopFragment" />
+
+    <action
+        android:id="@+id/action_global_add2wishFragment"
+        app:destination="@id/add2wishFragment" />
 
 </navigation>

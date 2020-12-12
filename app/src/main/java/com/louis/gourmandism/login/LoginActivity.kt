@@ -53,11 +53,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.createStatus.observe(this, Observer {
-            val intent = Intent(this, MainActivity::class.java)
-            val bundle = Bundle()
-            bundle.putBoolean("loginStatus",true)
-            intent.putExtra("bundle",bundle)
-            startActivity(intent)
+
+            startActivity(Intent(this, MainActivity::class.java))
         })
     }
     private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
@@ -68,50 +65,33 @@ class LoginActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            val task =
-                GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account =
-                completedTask.getResult(ApiException::class.java)
-            account.idToken?.let { firebaseAuthWithGoogle(it) }
-            // Signed in successfully, show authenticated UI.
-            val firebaseUser = Firebase.auth.currentUser
-            firebaseUser?.let {
-                // displayName, email, and profile photo Url
-                // Check if user's email is verified: isEmailVerified
-                UserManager.userToken = firebaseUser.uid
-                viewModel.createUser(firebaseUser.uid,firebaseUser.displayName!!,firebaseUser.photoUrl)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
             }
-
-            Log.d("firebaseUser", "name = ${firebaseUser?.displayName}, email = ${firebaseUser?.email}, uid = ${firebaseUser?.uid}")
-
-        } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
     }
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "signInWithCredential:success")
+                // Sign in success, intent to main activity with the signed-in user's information
                 val user = auth.currentUser
-
+                if (user != null) {
+                    UserManager.userToken = user.uid
+                    viewModel.createUser(user.uid, user.displayName.toString(), user.photoUrl)
+                }
             } else {
                 // If sign in fails, display a message to the user.
-                Toast.makeText(applicationContext, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "signInWithCredential:failure", task.exception)
+                Log.w(TAG,"signInWithCredential:failure", task.exception)
             }
         }
     }
+
 }

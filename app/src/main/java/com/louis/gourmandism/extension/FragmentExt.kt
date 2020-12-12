@@ -50,3 +50,9 @@ fun Fragment.newShopVmFactory(location: Location): NewShopViewModelFactory {
     val repository = (requireContext().applicationContext as MyApplication).repository
     return NewShopViewModelFactory(repository, location)
 }
+
+fun Fragment.add2wishVmFactory(shopId: String): Add2wishViewModelFactory {
+
+    val repository = (requireContext().applicationContext as MyApplication).repository
+    return Add2wishViewModelFactory(repository, shopId)
+}

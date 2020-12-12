@@ -64,6 +64,12 @@ class DetailFragment : Fragment() {
             ))
         }
 
+        binding.textAddWishList.setOnClickListener {
+            id?.let {
+                findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2wishFragment(it))
+            }
+        }
+
 
         return binding.root
     }

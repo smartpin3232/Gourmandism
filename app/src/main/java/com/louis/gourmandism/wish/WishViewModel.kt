@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.data.Result
+import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
@@ -25,15 +26,25 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
     val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
+    private var _newFavorite = MutableLiveData<MutableList<Favorite>>()
+
+    val newFavorite: LiveData<MutableList<Favorite>>
+        get() = _newFavorite
+
+
     private var _user = MutableLiveData<User>()
 
     val user: LiveData<User>
         get() = _user
 
-    private var _favoriteData = MutableLiveData<Favorite>()
+    private var _navigationData = MutableLiveData<Favorite>()
 
-    val favoriteData: LiveData<Favorite>
-        get() = _favoriteData
+    val navigationData: LiveData<Favorite>
+        get() = _navigationData
+
+    private val _shop = MutableLiveData<List<Shop>>()
+    val shop: LiveData<List<Shop>>
+        get() = _shop
 
     override fun onCleared() {
         super.onCleared()
@@ -42,6 +53,7 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
 
     init {
         getMyFavorite()
+//        getShop()
     }
 
     private fun getMyFavorite() {
@@ -61,26 +73,34 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getProfile(userId: String) {
+    fun getShop() {
         coroutineScope.launch {
-
-            val result = repository.getUser(userId)
-            _user.value = when (result) {
+            val result = repository.getShop("", 0)
+            _shop.value = when (result) {
                 is Result.Success -> {
-                    Log.i("UserViewModel", result.data.name)
                     result.data
                 }
                 else -> {
                     null
                 }
             }
-
-
         }
     }
 
+    fun getNewFavorite() : MutableList<Favorite>?{
+        val favoriteShopList = myFavorite.value
+            for (favorite in favoriteShopList!!) {
+                favorite.shopsInfo = mutableListOf()
+                for (shopId in favorite.shops!!){
+                    val shop = shop.value!!.filter { a-> a.id == shopId }[0].copy()
+                    favorite.shopsInfo!!.add(shop)
+                }
+            }
+        return favoriteShopList
+    }
+
     fun navigateToDetail(favorite: Favorite) {
-        _favoriteData.value = favorite
+        _navigationData.value = favorite
     }
 
 

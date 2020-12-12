@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val loginStatus = intent.getBundleExtra("bundle")?.getBoolean("loginStatus")
-        if (UserManager.userToken==null && loginStatus==null
+//        val loginStatus = intent.getBundleExtra("bundle")?.getBoolean("loginStatus")
+        if (UserManager.userToken == null
         ) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

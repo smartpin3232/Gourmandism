@@ -84,6 +84,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_recommend_list"
                 tools:listitem="@layout/item_wish" />
 
+            <TextView
+                android:id="@+id/text_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="新增清單"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_my_wish_list"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_my_wish_list" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

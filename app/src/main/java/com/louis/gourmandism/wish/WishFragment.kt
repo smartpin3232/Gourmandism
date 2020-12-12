@@ -29,14 +29,22 @@ class WishFragment : Fragment() {
         binding.recyclerViewMyWishList.adapter = adapter
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
+            viewModel.getShop()
+
+        })
+
+        viewModel.shop.observe(viewLifecycleOwner, Observer {
             it?.let{
-                adapter.submitList(it)
+               adapter.submitList(viewModel.getNewFavorite())
             }
         })
 
-        viewModel.favoriteData.observe(viewLifecycleOwner, Observer {
+
+
+        viewModel.navigationData.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
         })
+
 
         return binding.root
     }

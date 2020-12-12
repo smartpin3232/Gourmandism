@@ -27,6 +27,8 @@ interface Repository {
 
     suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>>
 
+    suspend fun setWish(folderId: String, shopId: String, status: Int) : Result<Boolean>
+
     fun getLiveComments(): MutableLiveData<List<Comment>>
 
     fun getLiveEvents(status: Int): MutableLiveData<List<Event>>

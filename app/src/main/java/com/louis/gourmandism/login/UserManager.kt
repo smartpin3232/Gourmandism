@@ -11,10 +11,8 @@ object UserManager {
     private const val USER_DATA = "user_data"
     private const val USER_TOKEN = "user_token"
 
-    private val _user = MutableLiveData<User>()
+    val user = MutableLiveData<User>()
 
-    val user: LiveData<User>
-        get() = _user
 
     var userToken: String? = null
         get() = MyApplication.instance
@@ -44,7 +42,7 @@ object UserManager {
 
     fun clear() {
         userToken = null
-        _user.value = null
+        user.value = null
     }
 
 }

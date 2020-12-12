@@ -13,7 +13,7 @@ class WishDetailAdapter(private val viewModel: WishDetailViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item, viewModel,holder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,10 +23,11 @@ class WishDetailAdapter(private val viewModel: WishDetailViewModel) :
     class ViewHolder private constructor(val binding: ItemFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(shop: Shop, viewModel: WishDetailViewModel) {
+        fun bind(shop: Shop, viewModel: WishDetailViewModel,holder: ViewHolder) {
             binding.shop = shop
-
-
+            holder.itemView.setOnClickListener {
+                viewModel.navigateToDetail(shop)
+            }
             binding.executePendingBindings()
         }
 

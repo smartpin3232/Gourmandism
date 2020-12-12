@@ -55,6 +55,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getMyFavorite(userId)
     }
 
+    override suspend fun setWish(folderId: String, shopId: String, status: Int): Result<Boolean> {
+        return remoteDataSource.setWish(folderId, shopId, status)
+    }
+
     override fun getLiveComments(): MutableLiveData<List<Comment>> {
         return remoteDataSource.getLiveComments()
     }

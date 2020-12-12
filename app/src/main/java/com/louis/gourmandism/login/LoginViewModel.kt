@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.louis.gourmandism.data.Location
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
@@ -34,6 +35,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel(){
     fun createUser(googleUid: String, name: String, photo: Uri?){
         coroutineScope.launch {
             val userInfo = User(
+                browseRecently = mutableListOf(),
                 id = googleUid,
                 name = name,
                 image = photo.toString()
