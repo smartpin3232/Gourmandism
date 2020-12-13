@@ -38,7 +38,7 @@ class CommentFragment : Fragment() {
 
         viewModel.commentInfo.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.images)
-            viewModel.getProfile(it.host?.id!!)
+            viewModel.getProfile(it.host!!.id)
             viewModel.setStar(images,it.star.toInt())
         })
 

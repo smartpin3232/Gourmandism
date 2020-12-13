@@ -62,6 +62,7 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
                 val result = repository.getMyFavorite(it)
                 _myFavorite.value = when (result) {
                     is Result.Success -> {
+                        Log.i("favorite",result.data.toString())
                         result.data
                     }
                     else -> {
@@ -89,13 +90,17 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
 
     fun getNewFavorite() : MutableList<Favorite>?{
         val favoriteShopList = myFavorite.value
-            for (favorite in favoriteShopList!!) {
-                favorite.shopsInfo = mutableListOf()
-                for (shopId in favorite.shops!!){
-                    val shop = shop.value!!.filter { a-> a.id == shopId }[0].copy()
-                    favorite.shopsInfo!!.add(shop)
+            favoriteShopList?.let {
+
+                for (favorite in it) {
+                    favorite.shopsInfo = mutableListOf()
+                    for (shopId in favorite.shops!!){
+                        val shop = shop.value!!.filter { a-> a.id == shopId }[0].copy()
+                        favorite.shopsInfo!!.add(shop)
+                    }
                 }
             }
+
         return favoriteShopList
     }
 

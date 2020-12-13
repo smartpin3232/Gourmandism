@@ -280,7 +280,8 @@ object RemoteDataSource : DataSource {
     override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> =
         suspendCoroutine { continuation ->
             FirebaseFirestore.getInstance()
-                .collection("Favorite").whereEqualTo("userId", userId)
+                .collection("Favorite")
+                .whereEqualTo("userId", userId)
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -288,7 +289,6 @@ object RemoteDataSource : DataSource {
                         for (document in task.result!!) {
 
                             val favorite = document.toObject(Favorite::class.java)
-
 //                            favorite.shops?.let {
 //
 //                                FirebaseFirestore.getInstance()
@@ -303,6 +303,7 @@ object RemoteDataSource : DataSource {
 
                             list.add(favorite)
                         }
+                        list.sortBy { it.createdTime }
                         continuation.resume(Result.Success(list))
 
                     } else {
@@ -377,6 +378,30 @@ object RemoteDataSource : DataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
+    override suspend fun newWishList(favorite: Favorite): Result<Boolean> =
+        suspendCoroutine { continuation ->
+
+            val db = FirebaseFirestore.getInstance().collection("Favorite")
+                .document()
+                favorite.id = db.id
+
+                db.set(favorite)
+                .addOnCompleteListener { task ->
+
+//                    task.result.update("id", task.result.id)
+                    if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
                     } else {
                         task.exception?.let {

@@ -29,6 +29,8 @@ interface DataSource {
 
     suspend fun setWish(folderId: String, shopId: String, status: Int) : Result<Boolean>
 
+    suspend fun newWishList(favorite: Favorite): Result<Boolean>
+
     fun getLiveComments(): MutableLiveData<List<Comment>>
 
     fun getLiveEvents(status: Int): MutableLiveData<List<Event>>

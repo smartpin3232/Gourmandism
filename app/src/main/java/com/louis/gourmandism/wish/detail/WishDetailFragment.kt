@@ -43,7 +43,9 @@ class WishDetailFragment : Fragment() {
         viewModel.shop.observe(viewLifecycleOwner, Observer {
 
             viewModel.favoriteInfo.value?.shops?.let {
-                adapter.submitList(viewModel.getNewShop(it))
+                if(viewModel.getNewShop(it).size > 0){
+                    adapter.submitList(viewModel.getNewShop(it))
+                }
             }
         })
 

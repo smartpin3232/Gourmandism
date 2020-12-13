@@ -12,5 +12,6 @@ data class Favorite(
     var shops: MutableList<String>? = null,
     var shopsInfo: MutableList<Shop>? = null,
     var type: Int = 0, //是否分享 0私有 1共用
-    var attentionList: MutableList<String>? = null //userId
+    var attentionList: MutableList<String>? = null, //userId
+    var createdTime: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now()
 ): Parcelable

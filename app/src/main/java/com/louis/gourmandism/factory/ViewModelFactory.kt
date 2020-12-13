@@ -11,6 +11,7 @@ import com.louis.gourmandism.login.LoginViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
 import com.louis.gourmandism.search.SearchViewModel
 import com.louis.gourmandism.wish.WishViewModel
+import com.louis.gourmandism.wish.create.NewWishListDialogViewModel
 import com.louis.gourmandism.wish.detail.WishDetailViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -41,6 +42,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(LoginViewModel::class.java) ->
                     LoginViewModel(repository)
+
+                isAssignableFrom(NewWishListDialogViewModel::class.java) ->
+                    NewWishListDialogViewModel(repository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

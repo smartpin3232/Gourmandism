@@ -106,6 +106,12 @@
             app:argType="com.louis.gourmandism.data.Shop" />
     </dialog>
 
+    <dialog
+        android:id="@+id/newWishListDialog"
+        android:name="com.louis.gourmandism.wish.create.NewWishListDialog"
+        android:label="NewWishListDialog"
+        tools:layout="@layout/dialog_new_wish_list"/>
+
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment" />
@@ -153,5 +159,9 @@
     <action
         android:id="@+id/action_global_add2wishFragment"
         app:destination="@id/add2wishFragment" />
+
+    <action
+        android:id="@+id/action_global_newWishListDialog"
+        app:destination="@id/newWishListDialog" />
 
 </navigation>

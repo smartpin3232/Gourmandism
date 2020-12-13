@@ -35,9 +35,14 @@ class WishFragment : Fragment() {
 
         viewModel.shop.observe(viewLifecycleOwner, Observer {
             it?.let{
-               adapter.submitList(viewModel.getNewFavorite())
+
+                adapter.submitList(viewModel.getNewFavorite())
             }
         })
+
+        binding.textNew.setOnClickListener {
+            findNavController().navigate(NavigationDirections.actionGlobalNewWishListDialog())
+        }
 
 
 
