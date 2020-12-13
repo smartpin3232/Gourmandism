@@ -11,12 +11,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogNewWishListBinding
 import com.louis.gourmandism.extension.getVmFactory
 
 class NewWishListDialog : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<NewWishListDialogViewModel> { getVmFactory() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.custom_dialog)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

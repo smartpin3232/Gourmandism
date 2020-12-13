@@ -75,6 +75,7 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
 
         val commentInfo = Comment(
             host = profile.value,
+            images = mutableListOf(),
             shopId = shopInfo.value?.id!!,
             title = shopInfo.value?.name!!,
             content = comment,

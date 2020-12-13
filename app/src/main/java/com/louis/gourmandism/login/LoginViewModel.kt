@@ -36,6 +36,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel(){
         coroutineScope.launch {
             val userInfo = User(
                 browseRecently = mutableListOf(),
+                friendList = mutableListOf(),
                 id = googleUid,
                 name = name,
                 image = photo.toString()

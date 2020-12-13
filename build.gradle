@@ -15,6 +15,7 @@ buildscript {
         version_fragment = "1.2.5"
     }
     repositories {
+        mavenCentral()
         google()
         jcenter()
     }
@@ -33,6 +34,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
