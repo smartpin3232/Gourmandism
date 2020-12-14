@@ -223,9 +223,6 @@ object RemoteDataSource : DataSource {
                     val event = document.toObject(Event::class.java)
                     list.add(event)
                 }
-//                if(status != 0){
-//                    list.filter { it. }
-//                }
 
                 liveData.value = list
                 Log.i("liveData", liveData.value.toString())

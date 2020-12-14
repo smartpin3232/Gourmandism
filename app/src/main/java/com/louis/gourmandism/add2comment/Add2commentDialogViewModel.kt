@@ -1,5 +1,6 @@
 package com.louis.gourmandism.add2comment
 
+import android.net.Uri
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -46,6 +47,8 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     val profile: LiveData<User>
         get() = _profile
 
+    var imageUri = MutableLiveData<String>()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -71,11 +74,16 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
         }
     }
 
-    fun setComment(comment: String){
+    fun setComment(comment: String, imageUri: String?){
+
+        val imageArray = mutableListOf<String>()
+        imageUri?.let {
+            imageArray.add(it)
+        }
 
         val commentInfo = Comment(
             host = profile.value,
-            images = mutableListOf(),
+            images = imageArray,
             shopId = shopInfo.value?.id!!,
             title = shopInfo.value?.name!!,
             content = comment,

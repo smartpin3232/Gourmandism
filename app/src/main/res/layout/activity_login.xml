@@ -51,19 +51,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/ic_login"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/sign_in_button"
-            app:layout_constraintEnd_toStartOf="@+id/text_login"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-            app:layout_constraintTop_toTopOf="@+id/sign_in_button"
-            app:srcCompat="@drawable/google_icon" />
-
         <TextView
             android:id="@+id/text_login"
             android:layout_width="wrap_content"
@@ -73,11 +60,22 @@
             android:text="SIGN IN"
             android:textColor="@color/black_3f3a3a"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ic_login"
+            app:layout_constraintBottom_toBottomOf="@+id/sign_in_button"
             app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.173"
             app:layout_constraintStart_toEndOf="@+id/ic_login"
-            app:layout_constraintTop_toTopOf="@+id/ic_login" />
+            app:layout_constraintTop_toTopOf="@+id/sign_in_button" />
+
+        <ImageView
+            android:id="@+id/ic_login"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="88dp"
+            app:layout_constraintBottom_toBottomOf="@+id/sign_in_button"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/sign_in_button"
+            app:layout_constraintTop_toTopOf="@+id/sign_in_button"
+            app:srcCompat="@drawable/google_icon" />
 
         <TextView
             android:id="@+id/title"

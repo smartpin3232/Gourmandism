@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".add2comment.Add2commentDialog"
-        android:background="@drawable/bottom_sheet_round_corner">
+        android:background="@drawable/bottom_sheet_round_corner"
+        android:backgroundTint="@color/mainStyleColor">
 
 
         <TextView
@@ -90,8 +91,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/round_layout2"
             android:ems="10"
-            android:hint="您的評論..."
+            android:hint="  您的評論..."
             android:minLines="5"
             android:textColor="@color/gray_999999"
             android:textSize="16sp"
@@ -103,34 +105,44 @@
             android:id="@+id/image_camera"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:src="@drawable/camera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content" />
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="@+id/edit_comment_content"
+            app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_888888"
+            app:layout_constraintBottom_toTopOf="@+id/text_send"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </View>
 
         <TextView
             android:id="@+id/text_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="@string/share_comment"
             android:textColor="@color/gray_999999"
-            android:textSize="18sp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_camera" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-        <ImageView
-            android:id="@+id/image_test"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_camera"
-            app:layout_constraintStart_toEndOf="@+id/image_camera"
-            app:layout_constraintTop_toTopOf="@+id/image_camera"
-            tools:srcCompat="@tools:sample/avatars" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/image_camera"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

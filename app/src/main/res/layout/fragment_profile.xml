@@ -197,7 +197,7 @@
                 android:background="@drawable/round_layout"
                 android:ems="10"
                 android:gravity="top"
-                android:hint=" 自我介紹"
+                android:hint=" Say something about you"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"

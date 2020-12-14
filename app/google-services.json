@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "776568137049-8j3g63a9u10up0nbp7nrpp55kchi20su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.louis.gourmandism",
+            "certificate_hash": "b48bd46f382b2ee88421808adb83a72b23a57c85"
+          }
+        },
+        {
           "client_id": "776568137049-dlk2ga1lrkm49261iavpe1s5p8v52lqq.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -28,6 +28,7 @@ private const val RC_SIGN_IN = 20
 
 
 class LoginActivity : AppCompatActivity() {
+
     private val TAG = this.javaClass.name
     private lateinit var binding: ActivityLoginBinding
     // FirebaseAuth
@@ -57,12 +58,14 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         })
     }
+
     private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent,
             RC_SIGN_IN
         )
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
@@ -77,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
