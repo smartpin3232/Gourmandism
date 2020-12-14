@@ -410,4 +410,28 @@ object RemoteDataSource : DataSource {
                     }
                 }
         }
+
+    override suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean> =
+        suspendCoroutine { continuation ->
+
+            val db = FirebaseFirestore.getInstance().collection("User")
+            val document = db.document(userId)
+                document.update("browseRecently", FieldValue.arrayUnion(browseRecently))
+
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
+
 }

@@ -5,28 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.louis.gourmandism.add2wish.Add2wishViewModel
+import com.louis.gourmandism.databinding.ItemAdd2commentBinding
 
-import com.louis.gourmandism.databinding.ItemDetailCommentImageBinding
 
-class Add2commentAdapter(private val viewModel: Add2wishViewModel) :
+class Add2commentAdapter(private val viewModel: Add2commentDialogViewModel) :
     ListAdapter<String, Add2commentAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel,holder)
+        holder.bind(item, viewModel, holder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(val binding: ItemDetailCommentImageBinding) :
+    class ViewHolder private constructor(val binding: ItemAdd2commentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             item: String,
-            viewModel: Add2wishViewModel,
+            viewModel: Add2commentDialogViewModel,
             holder: ViewHolder
         ) {
             binding.data = item
@@ -38,7 +37,7 @@ class Add2commentAdapter(private val viewModel: Add2wishViewModel) :
             fun from(parent: ViewGroup): ViewHolder {
 
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemDetailCommentImageBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemAdd2commentBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }

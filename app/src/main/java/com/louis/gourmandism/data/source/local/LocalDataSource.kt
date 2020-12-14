@@ -71,5 +71,9 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 
 }

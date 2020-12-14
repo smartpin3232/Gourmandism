@@ -48,6 +48,7 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
         get() = _profile
 
     var imageUri = MutableLiveData<String>()
+    var imagesUri = MutableLiveData<MutableList<String>>()
 
     override fun onCleared() {
         super.onCleared()

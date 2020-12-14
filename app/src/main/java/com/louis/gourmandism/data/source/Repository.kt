@@ -35,5 +35,7 @@ interface Repository {
 
     fun getLiveEvents(status: Int): MutableLiveData<List<Event>>
 
+    suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>
 
+//    fun getBrowserHistory(): MutableLiveData<List<Event>>
 }

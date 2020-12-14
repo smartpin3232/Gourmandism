@@ -34,4 +34,6 @@ interface DataSource {
     fun getLiveComments(): MutableLiveData<List<Comment>>
 
     fun getLiveEvents(status: Int): MutableLiveData<List<Event>>
+
+    suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>
 }

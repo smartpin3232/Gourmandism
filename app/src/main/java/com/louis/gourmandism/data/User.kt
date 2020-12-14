@@ -11,5 +11,6 @@ data class User(
     var image: String = "",
     var currentPosition: String = "",
     var browseRecently: MutableList<BrowseRecently>? = null,
-    var friendList: MutableList<String>? = null
+    var friendList: MutableList<String>? = null,
+    var selectTags: MutableList<String>? = null
 ): Parcelable

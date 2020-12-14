@@ -30,7 +30,9 @@ class DetailFragment : Fragment() {
         binding.viewModel = viewModel
         val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
+
         id?.let {
+            viewModel.setBrowserHistory(it)
             viewModel.getShop(it,1)
             viewModel.getComment(it)
         }

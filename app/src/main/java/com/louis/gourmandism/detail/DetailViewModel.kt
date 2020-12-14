@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.louis.gourmandism.data.BrowseRecently
 import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,6 +31,10 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     private val _leaveDetail = MutableLiveData<Boolean>()
     val leaveDetail: LiveData<Boolean>
         get() = _leaveDetail
+
+    private val _browserStatus = MutableLiveData<Boolean>()
+    val browserStatus: LiveData<Boolean>
+        get() = _browserStatus
 
     override fun onCleared() {
         super.onCleared()
@@ -76,6 +82,24 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                 }
             }
             Log.i("DetailViewModel","${_shopInfo}")
+        }
+    }
+
+    fun setBrowserHistory(shopId: String){
+
+        val browseRecently = BrowseRecently(
+            shopId = shopId
+        )
+        coroutineScope.launch {
+            val result = repository.setBrowserHistory(UserManager.userToken.toString(),browseRecently)
+            _browserStatus.value = when(result){
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    null
+                }
+            }
         }
     }
 

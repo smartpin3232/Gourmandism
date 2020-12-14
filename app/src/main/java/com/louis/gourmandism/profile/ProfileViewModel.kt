@@ -81,10 +81,12 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
             _shop.value = when (result) {
                 is Result.Success -> {
                     Log.i("getUserComment", "${result.data}")
+                    list.sortByDescending { it.time }
                     val shopList = mutableListOf<Shop>()
                     for ((id) in list) {
                         shopList.addAll(result.data.filter { it.id == id })
                     }
+
                     shopList
                 }
                 else -> {

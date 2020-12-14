@@ -114,6 +114,7 @@ class SearchFragment : Fragment(){
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
+
         val testTag = mutableListOf("麵包","火鍋","咖啡")
         adapter.submitList(testTag)
 

@@ -71,5 +71,9 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getLiveEvents(status)
     }
 
+    override suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>{
+        return remoteDataSource.setBrowserHistory(userId, browseRecently)
+    }
+
 
 }

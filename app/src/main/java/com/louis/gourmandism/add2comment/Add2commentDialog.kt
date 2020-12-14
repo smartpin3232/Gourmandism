@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.R
@@ -53,6 +52,9 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        val adapter = Add2commentAdapter(viewModel)
+        binding.recyclerViewAddCommentImage.adapter = adapter
+
         val storageFirebase = FirebaseStorage.getInstance().reference
 
         binding.textSend.setOnClickListener {
@@ -65,6 +67,7 @@ class Add2commentDialog : BottomSheetDialogFragment() {
             }
 
         }
+
 
         viewModel.imageUri.observe(viewLifecycleOwner, Observer {
             val comment = binding.editCommentContent.text.toString()

@@ -106,9 +106,9 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/camera"
-            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_add_comment_image"
             app:layout_constraintEnd_toEndOf="@+id/edit_comment_content"
-            app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+            app:layout_constraintTop_toTopOf="@+id/recycler_view_add_comment_image" />
 
         <View
             android:id="@+id/view2"
@@ -133,16 +133,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_add_comment_image" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recycler_view_add_comment_image"
+            android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toStartOf="@+id/image_camera"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content"
+            tools:listitem="@layout/item_detail_comment_image"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

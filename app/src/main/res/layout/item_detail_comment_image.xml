@@ -30,7 +30,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 imageUrl="@{data}"
                 android:scaleType="centerCrop"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                />
 
         </androidx.cardview.widget.CardView>
 
