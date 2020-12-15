@@ -27,7 +27,11 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             binding.tag = item
 
             binding.textType.setOnClickListener {
-                viewModel.markerSet(item)
+                if(item == "新增"){
+                    viewModel.addSelectTag()
+                }else{
+                    viewModel.markerSet(item)
+                }
             }
 
             binding.executePendingBindings()

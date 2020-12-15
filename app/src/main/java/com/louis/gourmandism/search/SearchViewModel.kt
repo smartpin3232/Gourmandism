@@ -55,6 +55,8 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
 
     var testStatus=  MutableLiveData<Boolean>()
 
+    var selectTagList = MutableLiveData<MutableList<String>>()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -62,6 +64,7 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
 
     init {
         getShopList("",0)
+        getUserSelectTag()
     }
 
     fun getShopList(id: String,mode: Int){
@@ -102,6 +105,17 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
             }
 
         }
+    }
+
+    fun getUserSelectTag(){
+        val testTag = mutableListOf("麵包","咖啡")
+        selectTagList.value = testTag
+    }
+
+    fun addSelectTag(){
+        val list = selectTagList.value
+        list?.add("火鍋")
+        selectTagList.value = list
     }
 
     fun setMapMarker(

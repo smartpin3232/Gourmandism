@@ -28,25 +28,31 @@ class WishFragment : Fragment() {
         val adapter = WishAdapter(viewModel)
         binding.recyclerViewMyWishList.adapter = adapter
 
-        viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
-            viewModel.getShop()
+        val adapter2 = WishAdapter(viewModel)
+        binding.recyclerViewShareWishList.adapter = adapter2
 
+        viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
+
+            viewModel.getShop()
         })
 
         viewModel.shop.observe(viewLifecycleOwner, Observer {
-            it?.let{
 
+            it?.let{
                 adapter.submitList(viewModel.getNewFavorite())
+                adapter2.submitList(viewModel.getShareFavorite())
             }
         })
 
         binding.textNew.setOnClickListener {
+
             findNavController().navigate(NavigationDirections.actionGlobalNewWishListDialog())
         }
 
 
 
         viewModel.navigationData.observe(viewLifecycleOwner, Observer {
+
             findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
         })
 

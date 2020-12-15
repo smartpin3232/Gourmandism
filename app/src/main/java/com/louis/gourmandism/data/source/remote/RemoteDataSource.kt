@@ -278,7 +278,7 @@ object RemoteDataSource : DataSource {
         suspendCoroutine { continuation ->
             FirebaseFirestore.getInstance()
                 .collection("Favorite")
-                .whereEqualTo("userId", userId)
+//                .whereEqualTo("userId", userId)
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

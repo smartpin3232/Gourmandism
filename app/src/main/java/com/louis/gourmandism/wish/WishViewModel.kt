@@ -88,8 +88,8 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getNewFavorite() : MutableList<Favorite>?{
-        val favoriteShopList = myFavorite.value
+    fun getNewFavorite() : List<Favorite>?{
+        val favoriteShopList = myFavorite.value!!.filter { it.userId == UserManager.userToken }
             favoriteShopList?.let {
 
                 for (favorite in it) {
@@ -100,6 +100,24 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
                     }
                 }
             }
+
+        return favoriteShopList
+    }
+
+    fun getShareFavorite() : List<Favorite>?{
+        val favoriteShopList = myFavorite.value?.filter {
+            it.type == 1 && it.attentionList!!.any {attention-> attention == UserManager.userToken }
+        }
+        favoriteShopList?.let {
+
+            for (favorite in it) {
+                favorite.shopsInfo = mutableListOf()
+                for (shopId in favorite.shops!!){
+                    val shop = shop.value!!.filter { a-> a.id == shopId }[0].copy()
+                    favorite.shopsInfo!!.add(shop)
+                }
+            }
+        }
 
         return favoriteShopList
     }

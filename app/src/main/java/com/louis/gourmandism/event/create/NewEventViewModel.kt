@@ -21,6 +21,8 @@ class NewEventViewModel(private val repository: Repository, private val shop: Sh
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    val date = MutableLiveData<Long>()
+
     private var _event = MutableLiveData<Boolean>()
     val event: LiveData<Boolean>
         get() = _event
@@ -44,6 +46,7 @@ class NewEventViewModel(private val repository: Repository, private val shop: Sh
             content = context,
             shop = shop,
             status = 0,
+            time = date.value!!,
             member= mutableListOf(_profile.value?.name!!),
             memberLimit = memberLimit.toInt()
         )

@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class BrowseRecently(
     var shopId: String = "",
-    var time: com.google.firebase.Timestamp = com.google.firebase.Timestamp.now()
+    var time: Long = 0
 ):Parcelable

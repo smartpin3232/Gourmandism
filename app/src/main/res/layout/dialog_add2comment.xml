@@ -21,21 +21,21 @@
             android:id="@+id/text_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{viewModel.shopInfo.name}"
             android:textColor="@color/black_3f3a3a"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{viewModel.shopInfo.name}"
             tools:text="Gary 麵包工坊" />
 
         <ImageView
             android:id="@+id/image_level_one"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/tasty"
             android:onClick="@{()->viewModel.getStar(1)}"
             app:layout_constraintStart_toStartOf="@+id/text_shop_name"
@@ -90,10 +90,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/round_layout2"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_layout_5"
             android:ems="10"
-            android:hint="  您的評論..."
+            android:gravity="start"
+            android:hint=" 您的評論..."
             android:minLines="5"
             android:textColor="@color/gray_999999"
             android:textSize="16sp"
@@ -105,48 +106,56 @@
             android:id="@+id/image_camera"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@drawable/camera"
-            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_add_comment_image"
-            app:layout_constraintEnd_toEndOf="@+id/edit_comment_content"
-            app:layout_constraintTop_toTopOf="@+id/recycler_view_add_comment_image" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/gray_888888"
-            app:layout_constraintBottom_toTopOf="@+id/text_send"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </View>
-
-        <TextView
-            android:id="@+id/text_send"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
             android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/share_comment"
-            android:textColor="@color/gray_999999"
-            android:textSize="25sp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_add_comment_image" />
+            app:layout_constraintStart_toStartOf="@+id/edit_comment_content"
+            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content"
+            app:srcCompat="@drawable/add_photo_color" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_add_comment_image"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toStartOf="@+id/image_camera"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_comment_content"
-            tools:listitem="@layout/item_detail_comment_image"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_camera"
+            tools:listitem="@layout/item_detail_comment_image" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/share_comment"
+                android:textColor="@color/black_3f3a3a"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_send"
+                app:layout_constraintStart_toEndOf="@+id/text_send"
+                app:layout_constraintTop_toTopOf="@+id/text_send"
+                app:srcCompat="@drawable/forward" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

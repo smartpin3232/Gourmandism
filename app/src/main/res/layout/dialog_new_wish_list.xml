@@ -23,6 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="新增收藏清單"
+            android:textColor="@color/black_3f3a3a"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,9 +35,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/round_layout2"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/round_layout_5"
+            android:gravity="start"
             android:hint="  輸入清單名稱..."
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,23 +55,35 @@
 <!--            app:layout_constraintStart_toStartOf="parent"-->
 <!--            tools:layout_editor_absoluteY="90dp" />-->
 
-        <TextView
-            android:id="@+id/text_new"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/round_layout_3"
-            android:gravity="center"
-            android:text="新增"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edit_list_name"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toStartOf="@+id/edit_list_name"
-            app:layout_constraintTop_toBottomOf="@+id/edit_list_name"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="新增"
+                android:textColor="@color/black_3f3a3a"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_new"
+                app:layout_constraintStart_toEndOf="@+id/text_new"
+                app:layout_constraintTop_toTopOf="@+id/text_new"
+                app:srcCompat="@drawable/forward" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

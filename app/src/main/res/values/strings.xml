@@ -32,4 +32,7 @@
     <string name="share_comment">分享評論</string>
     <string name="divider">&#160;/&#160;</string>
     <string name="addToWish">收藏到清單</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

@@ -114,9 +114,15 @@ class SearchFragment : Fragment(){
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
+        viewModel.selectTagList.observe(viewLifecycleOwner, Observer {
+            val list = mutableListOf<String>()
+            list.addAll(it)
+            list.add("新增")
+            adapter.submitList(list)
+            adapter.notifyDataSetChanged()
+        })
 
-        val testTag = mutableListOf("麵包","火鍋","咖啡")
-        adapter.submitList(testTag)
+
 
         //點擊取得當前位置
         binding.textTitle.setOnClickListener {

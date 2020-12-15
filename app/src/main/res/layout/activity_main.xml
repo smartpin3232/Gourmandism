@@ -11,6 +11,11 @@
         <import type="com.louis.gourmandism.util.CurrentFragmentType"/>
     </data>
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +27,7 @@
             android:layout_height="@dimen/height_toolbar"
             android:background="@color/mainStyleColor"
             android:elevation="8dp"
+            android:gravity="center"
             android:visibility="@{viewModel.currentFragmentType == CurrentFragmentType.DETAIL ||viewModel.currentFragmentType == CurrentFragmentType.SEARCH? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -67,5 +73,18 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/drawerNavView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/drawer_menu"
+            app:itemIconSize="36dp"
+            app:itemTextColor="@color/black_3f3a3a"
+            app:itemShapeFillColor="@color/gray_cccccc"
+            android:background="@color/mainStyleColor" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
 

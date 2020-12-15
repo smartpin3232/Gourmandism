@@ -21,6 +21,7 @@ class MainViewModel(private val repository: Repository) : ViewModel(){
 
     val currentFragmentType = MutableLiveData<CurrentFragmentType>()
 
+
     init {
         getProfile()
     }

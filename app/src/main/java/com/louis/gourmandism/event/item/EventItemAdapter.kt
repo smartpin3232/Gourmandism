@@ -10,6 +10,8 @@ import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.databinding.ItemEventBinding
 import com.louis.gourmandism.login.UserManager
 import kotlinx.android.synthetic.main.item_event.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EventItemAdapter(private val viewModel: EventItemViewModel) :
     ListAdapter<Event, EventItemAdapter.ViewHolder>(DiffCallback()) {
@@ -28,6 +30,9 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
 
         fun bind(item: Event, viewModel: EventItemViewModel) {
             binding.event = item
+
+            val dateString = SimpleDateFormat("MM/dd/yyyy HH:mm").format(Date(item.time))
+            binding.textTime.text = "時間: " + dateString
 
             binding.textShopInfo.setOnClickListener {
                 viewModel.toShop(item)
