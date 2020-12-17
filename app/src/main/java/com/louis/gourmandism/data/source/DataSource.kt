@@ -36,4 +36,6 @@ interface DataSource {
     fun getLiveEvents(status: Int): MutableLiveData<List<Event>>
 
     suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>
+
+    suspend fun setSelectTag(userId: String, tag: String): Result<Boolean>
 }

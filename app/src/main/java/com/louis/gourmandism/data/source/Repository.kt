@@ -37,5 +37,5 @@ interface Repository {
 
     suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>
 
-//    fun getBrowserHistory(): MutableLiveData<List<Event>>
+    suspend fun setSelectTag(userId: String, tag: String): Result<Boolean>
 }

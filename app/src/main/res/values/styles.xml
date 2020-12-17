@@ -43,4 +43,9 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+    <style name="bottomSheetDialogStyle">
+        <item name="android:background">@drawable/bottom_sheet_round_corner</item>
+        <item name="android:backgroundTint">@color/mainStyleColor</item>
+    </style>
+
 </resources>

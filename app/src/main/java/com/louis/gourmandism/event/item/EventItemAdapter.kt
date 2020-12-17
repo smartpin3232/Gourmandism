@@ -1,5 +1,6 @@
 package com.louis.gourmandism.event.item
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -28,11 +29,12 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
     class ViewHolder private constructor(val binding: ItemEventBinding) :
         RecyclerView.ViewHolder(binding.root){
 
+        @SuppressLint("SimpleDateFormat")
         fun bind(item: Event, viewModel: EventItemViewModel) {
             binding.event = item
 
             val dateString = SimpleDateFormat("MM/dd/yyyy HH:mm").format(Date(item.time))
-            binding.textTime.text = "時間: " + dateString
+            binding.textTime.text = "時間: $dateString"
 
             binding.textShopInfo.setOnClickListener {
                 viewModel.toShop(item)

@@ -1,22 +1,26 @@
 package com.louis.gourmandism
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.louis.gourmandism.databinding.ActivityMainBinding
 import com.louis.gourmandism.databinding.NavDrawerBinding
@@ -47,9 +51,18 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+//        applicationContext.startService(Intent(applicationContext, GourmandismService::class.java))
+
 
         binding.textToolbarTitle.setOnClickListener {
-            UserManager.clear()
+//            UserManager.clear()
+            createNotificationChannel()
+            val intent = Intent().apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+            val builder = createBuilder(pendingIntent,"balabala")
+            if (builder != null) {
+                NotificationManagerCompat.from(applicationContext).notify(0, builder.build())
+            }
         }
 
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
@@ -57,7 +70,30 @@ class MainActivity : AppCompatActivity() {
         setupNavController()
         setupDrawer()
     }
+    private var channelId = "123"
+    private fun createBuilder(pendingIntent: PendingIntent, ContentText : String): NotificationCompat.Builder? {
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.home)
+            .setContentTitle("揪團通知")
+            .setContentText(ContentText)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+        return builder
+    }
 
+    private fun createNotificationChannel() {
+        val name = "Event"
+        val descriptionText = "Event"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(channelId, name, importance).apply {
+            description = descriptionText
+        }
+        // Register the channel with the system
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
 
     private fun setupNavController() {
         this.findNavController(R.id.myNavHostFragment)

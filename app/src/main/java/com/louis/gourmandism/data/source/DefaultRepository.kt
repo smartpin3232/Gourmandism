@@ -75,5 +75,9 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.setBrowserHistory(userId, browseRecently)
     }
 
+    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> {
+        return remoteDataSource.setSelectTag(userId, tag)
+    }
+
 
 }

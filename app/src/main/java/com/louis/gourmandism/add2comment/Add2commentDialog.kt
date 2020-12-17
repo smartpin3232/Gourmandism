@@ -31,6 +31,8 @@ class Add2commentDialog : BottomSheetDialogFragment() {
     private val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0
     lateinit var binding: DialogAdd2commentBinding
     private var filePath: String = ""
+    private val uris = mutableListOf<String>()
+    private val localImageList = mutableListOf<String>()
 
     private val viewModel by viewModels<Add2commentDialogViewModel> {
         getVmFactory(
@@ -59,19 +61,28 @@ class Add2commentDialog : BottomSheetDialogFragment() {
 
         binding.textSend.setOnClickListener {
 
-            if(filePath == ""){
+            if(localImageList.isNullOrEmpty()){
                 val comment = binding.editCommentContent.text.toString()
                 viewModel.setComment(comment,null)
             }else{
-                uploadImg(storageFirebase)
+                for(localImage in viewModel.localImages.value!!){
+                    uploadImg(storageFirebase, localImage)
+                }
             }
 
         }
 
+        viewModel.localImages.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+            adapter.notifyDataSetChanged()
+        })
 
-        viewModel.imageUri.observe(viewLifecycleOwner, Observer {
-            val comment = binding.editCommentContent.text.toString()
-            viewModel.setComment(comment,it)
+        viewModel.imagesUri.observe(viewLifecycleOwner, Observer {
+            if(it.size == viewModel.localImages.value?.size){
+
+                val comment = binding.editCommentContent.text.toString()
+                viewModel.setComment(comment,it)
+            }
         })
 
         viewModel.setStatus.observe(viewLifecycleOwner, Observer {
@@ -97,17 +108,17 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    private fun uploadImg(storageFirebase: StorageReference) {
+    private fun uploadImg(storageFirebase: StorageReference, localFile: String) {
 
         val metadata = StorageMetadata.Builder()
             .setContentDisposition("food")
             .setContentType("image")
             .build()
 
-        val file = Uri.fromFile(File(filePath))
+        val file = Uri.fromFile(File(localFile))
         val storageRef = storageFirebase.child(file.lastPathSegment ?: "")
         val uploadTask = storageRef.putFile(file,metadata)
-
+//        val uploadTask=storageRef.listAll()
         uploadTask
             .addOnSuccessListener {
                 downloadImg(storageRef)
@@ -133,10 +144,8 @@ class Add2commentDialog : BottomSheetDialogFragment() {
             return
         }
         ref.downloadUrl.addOnSuccessListener {
-
-            Log.i("downloadImg", "Success")
-            viewModel.imageUri.value = it.toString()
-
+            uris.add(it.toString())
+            viewModel.imagesUri.value = uris
         }.addOnFailureListener {
                 exception -> Log.i("downloadImg", "${exception}")
         }
@@ -194,10 +203,10 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         when (resultCode) {
             Activity.RESULT_OK -> {
                 filePath = ImagePicker.getFilePath(data) ?: ""
+                localImageList.add(filePath)
+                viewModel.localImages.value = localImageList
                 if (filePath.isNotEmpty()) {
-                    val imgPath = filePath
-                    Toast.makeText(this.requireContext(), imgPath, Toast.LENGTH_SHORT).show()
-//                    Glide.with(this.requireContext()).load(filePath).into(binding.imageTest)
+
                 } else {
                     Toast.makeText(this.requireContext(), "Upload failed", Toast.LENGTH_SHORT)
                         .show()

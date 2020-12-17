@@ -26,6 +26,14 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
     val comment: LiveData<List<Comment>>
         get() = _comment
 
+    private var _shop = MutableLiveData<MutableList<Shop>>()
+    val shop: LiveData<MutableList<Shop>>
+        get() = _shop
+
+    private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
+    val myFavorite: LiveData<MutableList<Favorite>>
+        get() = _myFavorite
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -34,6 +42,7 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
     init {
         getProfile()
         getUserComment()
+        getMyFavorite()
     }
 
     private fun getProfile() {
@@ -70,10 +79,6 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private var _shop = MutableLiveData<MutableList<Shop>>()
-    val shop: LiveData<MutableList<Shop>>
-        get() = _shop
-
 
     fun getShop(list: MutableList<BrowseRecently>) {
         coroutineScope.launch {
@@ -95,6 +100,44 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
         }
+    }
+
+    private fun getMyFavorite() {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.getMyFavorite(it)
+                _myFavorite.value = when (result) {
+                    is Result.Success -> {
+                        Log.i("favorite",result.data.toString())
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+
+        }
+    }
+
+    fun getLikeAmount(commentList: List<Comment>): Int{
+        var likeAmount = 0
+        for(comment in commentList){
+            comment.like?.let {
+                likeAmount += it.size
+            }
+        }
+        return likeAmount
+    }
+
+    fun getForkAmount(favoriteList: List<Favorite>): Int{
+        var forkAmount = 0
+        for(favorite in favoriteList){
+            favorite.attentionList?.let {
+                forkAmount += it.size
+            }
+        }
+        return forkAmount
     }
 
 }

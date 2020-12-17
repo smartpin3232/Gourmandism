@@ -40,7 +40,6 @@
 
             </com.github.florent37.shapeofview.shapes.BubbleView>
 
-
             <TextView
                 android:id="@+id/text_location"
                 android:layout_width="wrap_content"
@@ -51,19 +50,6 @@
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
                 app:layout_constraintTop_toBottomOf="@+id/text_user_name"
                 tools:text="台北市信義區" />
-            <!--        android:text="@{viewModel.profile.location}"-->
-
-            <!--        <View-->
-            <!--            android:id="@+id/view2"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="1dp"-->
-            <!--            android:layout_marginStart="8dp"-->
-            <!--            android:layout_marginTop="16dp"-->
-            <!--            android:layout_marginEnd="8dp"-->
-            <!--            android:background="@color/gray_cccccc"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintTop_toBottomOf="@+id/user_image"/>-->
 
             <TextView
                 android:id="@+id/text_user_name"
@@ -71,6 +57,7 @@
                 android:layout_height="34dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="@{viewModel.profile.name}"
+                android:includeFontPadding="false"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/text_location"
@@ -150,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="12"
+                    tools:text="12"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -180,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="33"
+                    tools:text="33"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_share"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -227,6 +214,18 @@
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/button_add_friend"
                 app:layout_constraintTop_toTopOf="@+id/button_add_friend" />
+
+            <TextView
+                android:id="@+id/button_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/round_layout_3"
+                android:text="編輯"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/text_user_name"
+                app:layout_constraintStart_toEndOf="@+id/text_user_name"
+                app:layout_constraintTop_toTopOf="@+id/text_user_name" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

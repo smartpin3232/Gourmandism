@@ -77,6 +77,12 @@
     </fragment>
 
     <dialog
+        android:id="@+id/newTagDialog"
+        android:name="com.louis.gourmandism.search.create.NewTagDialog"
+        android:label="NewTagDialog"
+        tools:layout="@layout/dialog_new_tag" />
+
+    <dialog
         android:id="@+id/add2wishFragment"
         android:name="com.louis.gourmandism.add2wish.Add2wishFragment"
         android:label="Add2wishFragment"
@@ -86,7 +92,7 @@
             app:argType="string" />
     </dialog>
 
-    <dialog
+    <fragment
         android:id="@+id/newEventFragment"
         android:name="com.louis.gourmandism.event.create.NewEventDialog"
         android:label="NewEventFragment"
@@ -94,7 +100,7 @@
         <argument
             android:name="shop"
             app:argType="com.louis.gourmandism.data.Shop" />
-    </dialog>
+    </fragment>
 
     <dialog
         android:id="@+id/add2commentDialog"
@@ -110,7 +116,7 @@
         android:id="@+id/newWishListDialog"
         android:name="com.louis.gourmandism.wish.create.NewWishListDialog"
         android:label="NewWishListDialog"
-        tools:layout="@layout/dialog_new_wish_list"/>
+        tools:layout="@layout/dialog_new_wish_list" />
 
     <action
         android:id="@+id/action_global_homeFragment"
@@ -163,5 +169,9 @@
     <action
         android:id="@+id/action_global_newWishListDialog"
         app:destination="@id/newWishListDialog" />
+
+    <action
+        android:id="@+id/action_global_newTagDialog"
+        app:destination="@id/newTagDialog" />
 
 </navigation>

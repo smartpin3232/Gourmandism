@@ -107,8 +107,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edit_comment_content"
             app:layout_constraintTop_toBottomOf="@+id/edit_comment_content"
             app:srcCompat="@drawable/add_photo_color" />
@@ -117,13 +115,13 @@
             android:id="@+id/recycler_view_add_comment_image"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:orientation="horizontal"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_camera"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_camera"
             app:layout_constraintTop_toTopOf="@+id/image_camera"
             tools:listitem="@layout/item_detail_comment_image" />
 

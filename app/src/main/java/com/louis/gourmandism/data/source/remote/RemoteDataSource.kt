@@ -433,5 +433,26 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> =
+        suspendCoroutine { continuation ->
+
+            val db = FirebaseFirestore.getInstance().collection("User")
+            val document = db.document(userId)
+            document.update("selectTags", FieldValue.arrayUnion(tag))
+
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
 
 }

@@ -35,6 +35,13 @@ class ProfileFragment : Fragment(){
         viewModel.comment.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
+                binding.textLikeAmount.text = viewModel.getLikeAmount(it).toString()
+            }
+        })
+
+        viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.textShareAmount.text = viewModel.getForkAmount(it).toString()
             }
         })
 

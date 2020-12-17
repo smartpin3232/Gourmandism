@@ -29,10 +29,11 @@ import com.louis.gourmandism.data.Location
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.*
 import java.util.*
 
-class SearchViewModel(private val repository: Repository) :ViewModel(){
+class SearchViewModel(private val repository: Repository) : ViewModel() {
 
 
     private val viewModelJob = Job()
@@ -51,9 +52,13 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
     val shop: LiveData<Shop>
         get() = _shop
 
+    private var _navigateToNewTag = MutableLiveData<Boolean>()
+    val navigateToNewTag: LiveData<Boolean>
+        get() = _navigateToNewTag
+
     private var tagStatus: String = ""
 
-    var testStatus=  MutableLiveData<Boolean>()
+    var testStatus = MutableLiveData<Boolean>()
 
     var selectTagList = MutableLiveData<MutableList<String>>()
 
@@ -63,23 +68,23 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
     }
 
     init {
-        getShopList("",0)
+        getShopList("", 0)
         getUserSelectTag()
     }
 
-    fun getShopList(id: String,mode: Int){
+    fun getShopList(id: String, mode: Int) {
         coroutineScope.launch {
-            val result = repository.getShop(id,0)
-            _shopList.value = when(result){
+            val result = repository.getShop(id, 0)
+            _shopList.value = when (result) {
                 is Result.Success -> {
-                    if(result.data.isNotEmpty())   {
+                    if (result.data.isNotEmpty()) {
                         result.data
-                    }else{
+                    } else {
                         null
                     }
                 }
                 else -> {
-                    Log.i("getShop","Error")
+                    Log.i("getShop", "Error")
                     null
                 }
             }
@@ -87,19 +92,19 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         }
     }
 
-    fun getShop(id: String,mode: Int){
+    fun getShop(id: String, mode: Int) {
         coroutineScope.launch {
-            val result = repository.getShop(id,mode)
-            _shop.value = when(result){
+            val result = repository.getShop(id, mode)
+            _shop.value = when (result) {
                 is Result.Success -> {
-                    if(result.data.isNotEmpty())   {
+                    if (result.data.isNotEmpty()) {
                         result.data[0]
-                    }else{
+                    } else {
                         null
                     }
                 }
                 else -> {
-                    Log.i("getShop","Error")
+                    Log.i("getShop", "Error")
                     null
                 }
             }
@@ -107,15 +112,15 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         }
     }
 
-    fun getUserSelectTag(){
-        val testTag = mutableListOf("麵包","咖啡")
-        selectTagList.value = testTag
+    fun getUserSelectTag() {
+        val newTag = mutableListOf<String>()
+        UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
+        selectTagList.value = newTag
     }
 
-    fun addSelectTag(){
-        val list = selectTagList.value
-        list?.add("火鍋")
-        selectTagList.value = list
+    fun addSelectTag() {
+
+        _navigateToNewTag.value = true
     }
 
     fun setMapMarker(
@@ -130,15 +135,20 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
 
             Glide.with(activity)
                 .asBitmap()
-                .load(when(item.image.isNullOrEmpty()){
-                    true->R.drawable.camera
-                    else -> item.image?.get(0)
-                })
+                .load(
+                    when (item.image.isNullOrEmpty()) {
+                        true -> R.drawable.camera
+                        else -> item.image?.get(0)
+                    }
+                )
                 .apply(
                     RequestOptions().transform(CenterCrop(), RoundedCorners(10))
                 )
-                .into( object : SimpleTarget<Bitmap>(100, 100) {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                .into(object : SimpleTarget<Bitmap>(100, 100) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         googleMap.addMarker(
                             MarkerOptions()
                                 .icon(
@@ -191,10 +201,12 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
             val tag = shop.type
 
             if (tag != null) {
-                if (name.contains(lowerCaseQueryString) || tag.any { it.toLowerCase(Locale.ROOT).contains(lowerCaseQueryString) }) {
+                if (name.contains(lowerCaseQueryString) || tag.any {
+                        it.toLowerCase(Locale.ROOT).contains(lowerCaseQueryString)
+                    }) {
                     filteredList.add(shop)
                 }
-            }else{
+            } else {
                 if (name.contains(lowerCaseQueryString)) {
                     filteredList.add(shop)
                 }
@@ -203,12 +215,12 @@ class SearchViewModel(private val repository: Repository) :ViewModel(){
         return filteredList
     }
 
-    fun markerSet(tag: String){
-        if(tagStatus == tag){
+    fun markerSet(tag: String) {
+        if (tagStatus == tag) {
             _filterShopList.value = _shopList.value
             tagStatus = ""
-        }else{
-            _filterShopList.value = filter(_shopList.value!!,tag)
+        } else {
+            _filterShopList.value = filter(_shopList.value!!, tag)
             tagStatus = tag
         }
     }

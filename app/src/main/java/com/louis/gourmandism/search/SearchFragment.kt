@@ -1,6 +1,7 @@
 package com.louis.gourmandism.search
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 
 import android.location.Location
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -32,6 +34,8 @@ import com.louis.gourmandism.data.Shop
 
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
+import com.louis.gourmandism.login.UserManager
+import com.louis.gourmandism.search.create.NewTagDialog
 
 
 class SearchFragment : Fragment(){
@@ -45,6 +49,16 @@ class SearchFragment : Fragment(){
     private var lastKnownLocation: Location? = null
 
     var clickMarker : Marker? = null
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("SearchFragment","onPause")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("SearchFragment","onStart")
+    }
 
     private val callback = OnMapReadyCallback { googleMap ->
         myMap = googleMap
@@ -122,8 +136,6 @@ class SearchFragment : Fragment(){
             adapter.notifyDataSetChanged()
         })
 
-
-
         //點擊取得當前位置
         binding.textTitle.setOnClickListener {
             getDeviceLocation()
@@ -140,7 +152,14 @@ class SearchFragment : Fragment(){
             }
         })
 
+        UserManager.user.observe(viewLifecycleOwner, Observer {
+            viewModel.getUserSelectTag()
+        })
 
+        viewModel.navigateToNewTag.observe(viewLifecycleOwner, Observer {
+
+           findNavController().navigate(SearchFragmentDirections.actionGlobalNewTagDialog())
+        })
 
         viewModel.filterShopList.observe(viewLifecycleOwner, Observer {
             resetMarker(it)

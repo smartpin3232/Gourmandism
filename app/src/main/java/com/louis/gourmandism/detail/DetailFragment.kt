@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.navigateUp
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentDetailBinding
@@ -30,6 +31,8 @@ class DetailFragment : Fragment() {
         binding.viewModel = viewModel
         val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
+        val bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomSheetLayout)
+        bottomBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         id?.let {
             viewModel.setBrowserHistory(it)

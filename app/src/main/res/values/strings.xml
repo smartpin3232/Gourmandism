@@ -16,7 +16,7 @@
     <string name="openList">開團列表</string>
     <string name="myEvent">我的揪團</string>
     <string name="host">團長:</string>
-    <string name="location">地點:</string>
+    <string name="location">地點:&#160;</string>
     <string name="number_people">人數:</string>
     <string name="time">時間:</string>
     <string name="join">加入</string>
@@ -35,4 +35,5 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="input_tag">輸入標籤名稱..</string>
 </resources>

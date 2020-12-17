@@ -47,8 +47,9 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     val profile: LiveData<User>
         get() = _profile
 
-    var imageUri = MutableLiveData<String>()
     var imagesUri = MutableLiveData<MutableList<String>>()
+
+    var localImages = MutableLiveData<MutableList<String>>()
 
     override fun onCleared() {
         super.onCleared()
@@ -75,11 +76,11 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
         }
     }
 
-    fun setComment(comment: String, imageUri: String?){
+    fun setComment(comment: String, imageUri: MutableList<String>?){
 
         val imageArray = mutableListOf<String>()
         imageUri?.let {
-            imageArray.add(it)
+            imageArray.addAll(it)
         }
 
         val commentInfo = Comment(

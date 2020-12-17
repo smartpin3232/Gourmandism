@@ -75,5 +75,9 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 
 }
