@@ -5,7 +5,9 @@
     >
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.detail.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

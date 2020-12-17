@@ -299,7 +299,8 @@
 
         <include
             android:id="@+id/bottom_dialog"
-            layout="@layout/dialog_new_event" />
+            layout="@layout/dialog_new_event"
+            app:viewModel="@{viewModel}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

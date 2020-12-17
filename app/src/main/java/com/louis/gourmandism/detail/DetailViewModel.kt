@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.louis.gourmandism.data.BrowseRecently
-import com.louis.gourmandism.data.Comment
-import com.louis.gourmandism.data.Result
-import com.louis.gourmandism.data.Shop
+import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +32,12 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     private val _browserStatus = MutableLiveData<Boolean>()
     val browserStatus: LiveData<Boolean>
         get() = _browserStatus
+
+    private var _newEventStatus = MutableLiveData<Boolean>()
+    val newEventStatus: LiveData<Boolean>
+        get() = _newEventStatus
+
+    val date = MutableLiveData<Long>()
 
     override fun onCleared() {
         super.onCleared()
@@ -93,6 +96,29 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         coroutineScope.launch {
             val result = repository.setBrowserHistory(UserManager.userToken.toString(),browseRecently)
             _browserStatus.value = when(result){
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
+    fun newEvent(content: String,memberLimit: String){
+        val eventInfo = Event(
+            host = UserManager.user.value,
+            content = content,
+            shop = shopInfo.value,
+            status = 0,
+            time = date.value!!,
+            member= mutableListOf(UserManager.user.value!!.name),
+            memberLimit = memberLimit.toInt()
+        )
+        coroutineScope.launch {
+            val result = repository.newEvent(eventInfo)
+            _newEventStatus.value = when(result){
                 is Result.Success -> {
                     result.data
                 }

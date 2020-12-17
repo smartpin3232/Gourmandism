@@ -1,16 +1,19 @@
 package com.louis.gourmandism.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.navigateUp
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
@@ -21,6 +24,7 @@ import com.louis.gourmandism.extension.getVmFactory
 class DetailFragment : Fragment() {
 
     private val viewModel by viewModels<DetailViewModel> { getVmFactory() }
+    private lateinit var bottomBehavior : BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +35,7 @@ class DetailFragment : Fragment() {
         binding.viewModel = viewModel
         val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
-        val bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomSheetLayout)
+        bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomSheetLayout)
         bottomBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         id?.let {
@@ -46,6 +50,30 @@ class DetailFragment : Fragment() {
         val adapter = DetailAdapter(viewModel)
         binding.recyclerViewDetailComment.adapter = adapter
 
+        binding.bottomDialog.editTime.setOnClickListener {
+            val builder = SingleDateAndTimePickerDialog.Builder(context)
+                .bottomSheet()
+                .curved()
+                .backgroundColor(resources.getColor(R.color.mainStyleColor))
+                .mainColor(Color.WHITE)
+                .titleTextColor(Color.WHITE)
+                .displayListener {}
+                .title("選擇時間")
+                .listener { date ->
+                    binding.bottomDialog.editTime.text = date.toString()
+                    viewModel.date.value = date.time
+                }
+
+                .build()
+            builder.display()
+        }
+
+        binding.bottomDialog.buttonGo.setOnClickListener{
+            val newEventContent = binding.bottomDialog.editContent.text.toString()
+            val newEventMemberLimit = binding.bottomDialog.editNumber.text.toString()
+            viewModel.newEvent(newEventContent, newEventMemberLimit)
+        }
+
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
@@ -57,26 +85,39 @@ class DetailFragment : Fragment() {
             }
         })
 
+        viewModel.newEventStatus.observe(viewLifecycleOwner, Observer {
+
+            slideUpDownBottomSheet()
+        })
+
         binding.textAddComment.setOnClickListener {
+
             findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2commentDialog(
                 viewModel.shopInfo.value!!
             ))
         }
 
         binding.textAddEvent.setOnClickListener {
-            findNavController().navigate(DetailFragmentDirections.actionGlobalNewEventFragment(
-                viewModel.shopInfo.value!!
-            ))
+
+            slideUpDownBottomSheet()
         }
 
         binding.textAddWishList.setOnClickListener {
+
             id?.let {
                 findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2wishFragment(it))
             }
         }
 
-
         return binding.root
+    }
+
+    private fun slideUpDownBottomSheet() {
+        if (bottomBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            bottomBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            bottomBehavior.state = BottomSheetBehavior.STATE_HIDDEN;
+        }
     }
 
     override fun onStart() {
