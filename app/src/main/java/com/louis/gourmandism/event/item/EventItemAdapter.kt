@@ -51,9 +51,11 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                 if (binding.textAdd.text == "加入"){
                     if(item.member!!.size >= item.memberLimit){
                         viewModel.toast()
+
                     }else{
                         binding.textAdd.text = "退出"
                         viewModel.joinGame(item.id,0)
+                        viewModel.setEventNotification(item)
                     }
                 }else{
                     binding.textAdd.text = "加入"

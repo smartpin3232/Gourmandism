@@ -42,6 +42,11 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
     val toastStatus: LiveData<Boolean>
         get() = _toastStatus
 
+    private var _notificationInfo = MutableLiveData<Event>()
+
+    val notificationInfo: LiveData<Event>
+        get() = _notificationInfo
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -82,6 +87,10 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
 
     fun toShop(item: Event) {
         _shopInfo.value = item.shop
+    }
+
+    fun setEventNotification(event: Event){
+        _notificationInfo.value = event
     }
 
 

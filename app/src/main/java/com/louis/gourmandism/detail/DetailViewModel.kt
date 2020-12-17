@@ -106,8 +106,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         }
     }
 
-    fun newEvent(content: String,memberLimit: String){
+    fun newEvent(content: String, memberLimit: String, createTime: Long){
         val eventInfo = Event(
+            createTime = createTime,
             host = UserManager.user.value,
             content = content,
             shop = shopInfo.value,

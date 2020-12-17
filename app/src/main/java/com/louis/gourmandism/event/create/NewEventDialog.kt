@@ -33,19 +33,13 @@ class NewEventDialog : Fragment() {
         }
 
         binding.editTime.setOnClickListener {
-//            val builder =
-//                AlertDialog.Builder(requireContext())
-//            builder.setMessage("喜歡的話給個好評吧！")
-//            val dialog: AlertDialog = builder.create()
-//            dialog.show()
+
             val builder = SingleDateAndTimePickerDialog.Builder(context)
                 .bottomSheet()
                 .curved()
                 .backgroundColor(resources.getColor(R.color.mainStyleColor))
                 .mainColor(Color.WHITE)
                 .titleTextColor(Color.WHITE)
-                //.stepSizeMinutes(15)
-                //.todayText("aujourd'hui")
                 .displayListener {}
                 .title("Simple")
                 .listener { date ->

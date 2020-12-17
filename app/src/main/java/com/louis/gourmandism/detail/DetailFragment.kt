@@ -19,6 +19,7 @@ import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import java.util.*
 
 
 class DetailFragment : Fragment() {
@@ -71,7 +72,8 @@ class DetailFragment : Fragment() {
         binding.bottomDialog.buttonGo.setOnClickListener{
             val newEventContent = binding.bottomDialog.editContent.text.toString()
             val newEventMemberLimit = binding.bottomDialog.editNumber.text.toString()
-            viewModel.newEvent(newEventContent, newEventMemberLimit)
+            val createTime = Calendar.getInstance().timeInMillis
+            viewModel.newEvent(newEventContent, newEventMemberLimit, createTime)
         }
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
