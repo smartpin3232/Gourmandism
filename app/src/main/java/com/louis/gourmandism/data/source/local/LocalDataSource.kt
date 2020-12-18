@@ -79,5 +79,9 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 
 }

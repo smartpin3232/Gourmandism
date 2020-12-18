@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.louis.gourmandism.profile.ProfileViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <ScrollView
@@ -198,7 +199,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/round_layout_3"
                 android:gravity="center"
-                android:text="ADD FRIEND"
+                android:text="@string/add_friend"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/edit_introduction"
                 app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
@@ -210,7 +211,7 @@
                 android:layout_marginStart="16dp"
                 android:background="@drawable/round_layout_3"
                 android:gravity="center"
-                android:text="SEND MESSAGE"
+                android:text="@string/send_message"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/button_add_friend"
                 app:layout_constraintTop_toTopOf="@+id/button_add_friend" />

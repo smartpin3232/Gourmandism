@@ -455,4 +455,29 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("User")
+            val document = db.document(userId)
+
+            if (status) {
+                document.update("friendList", FieldValue.arrayUnion(friendId))
+            } else {
+                document.update("friendList", FieldValue.arrayRemove(friendId))
+            }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
 }

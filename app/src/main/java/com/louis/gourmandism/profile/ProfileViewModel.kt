@@ -22,6 +22,10 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
     val profile: LiveData<User>
         get() = _profile
 
+    private var _masterInfo = MutableLiveData<User>()
+    val masterInfo: LiveData<User>
+        get() = _masterInfo
+
     private var _comment = MutableLiveData<List<Comment>>()
     val comment: LiveData<List<Comment>>
         get() = _comment
@@ -42,6 +46,11 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
     val shopInfo: LiveData<Shop>
         get() = _shopInfo
 
+    private var _addFriendStatus = MutableLiveData<Boolean>()
+    val addFriendStatus: LiveData<Boolean>
+        get() = _addFriendStatus
+
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -49,6 +58,7 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
 
     init {
         getProfile()
+        getMasterInfo()
         getUserComment()
         getMyFavorite()
     }
@@ -58,6 +68,21 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
             userId.let {
                 val result = repository.getUser(it)
                 _profile.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+        }
+    }
+    fun getMasterInfo() {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.getUser(it)
+                _masterInfo.value = when (result) {
                     is Result.Success -> {
                         result.data
                     }
@@ -128,6 +153,22 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
         }
     }
 
+    fun addFriend(status: Boolean) {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.addFriend(it, userId, status)
+                _addFriendStatus.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+        }
+    }
+
     fun getLikeAmount(commentList: List<Comment>): Int{
         var likeAmount = 0
         for(comment in commentList){
@@ -147,6 +188,7 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
         }
         return forkAmount
     }
+
 
     fun navigateToComment(comment: Comment){
         _commentInfo.value = comment

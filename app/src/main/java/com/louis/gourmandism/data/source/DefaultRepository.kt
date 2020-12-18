@@ -79,5 +79,9 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.setSelectTag(userId, tag)
     }
 
+    override suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean> {
+        return remoteDataSource.addFriend(userId, friendId, status)
+    }
+
 
 }

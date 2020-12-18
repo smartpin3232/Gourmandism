@@ -9,31 +9,50 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentProfileBinding
 import com.louis.gourmandism.extension.getVmFactory
-import com.louis.gourmandism.home.HomeViewModel
+import com.louis.gourmandism.login.UserManager
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment : Fragment() {
 
     private val viewModel by viewModels<ProfileViewModel> {
         getVmFactory(ProfileFragmentArgs.fromBundle( requireArguments()).userId )
     }
+    lateinit var binding : FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        val userId = ProfileFragmentArgs.fromBundle( requireArguments()).userId
 
         val adapter = ProfileCommentAdapter(viewModel)
         binding.recyclerViewProfileComment.adapter = adapter
 
         val previewAdapter = ProfilePreviewAdapter(viewModel)
         binding.recyclerViewPreview.adapter = previewAdapter
+
+        binding.buttonAddFriend.setOnClickListener {
+
+            if(binding.buttonAddFriend.tag == true){
+                viewModel.addFriend(false)
+                binding.buttonAddFriend.text = getString(R.string.add_friend)
+                binding.buttonAddFriend.tag = false
+            } else{
+                viewModel.addFriend(true)
+                binding.buttonAddFriend.text = getString(R.string.delete_friend)
+                binding.buttonAddFriend.tag = true
+            }
+
+        }
 
         viewModel.comment.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -50,6 +69,7 @@ class ProfileFragment : Fragment() {
 
         viewModel.profile.observe(viewLifecycleOwner, Observer {
             it?.let {
+                checkUserPermission(it.id)
                 it.browseRecently?.let { data -> viewModel.getShop(data) }
             }
         })
@@ -76,6 +96,30 @@ class ProfileFragment : Fragment() {
             }
         })
 
+        viewModel.masterInfo.observe(viewLifecycleOwner, Observer {
+            it.friendList?.let {friendId->
+                if(friendId.any {data-> data == userId }){
+                    binding.buttonAddFriend.text = getString(R.string.delete_friend)
+                    binding.buttonAddFriend.tag = true
+                }else{
+                    binding.buttonAddFriend.text = getString(R.string.add_friend)
+                    binding.buttonAddFriend.tag = false
+                }
+            }
+        })
+
         return binding.root
+    }
+
+    private fun checkUserPermission(userId: String){
+        if(userId == UserManager.userToken){
+            binding.buttonAddFriend.visibility = View.GONE
+            binding.buttonSendMessage.visibility = View.GONE
+            binding.buttonEdit.visibility = View.VISIBLE
+        }else{
+            binding.buttonAddFriend.visibility = View.VISIBLE
+            binding.buttonSendMessage.visibility = View.VISIBLE
+            binding.buttonEdit.visibility = View.GONE
+        }
     }
 }
