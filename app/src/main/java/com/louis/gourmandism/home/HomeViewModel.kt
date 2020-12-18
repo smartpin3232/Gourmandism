@@ -25,6 +25,8 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
 
     var toCommentStatus = MutableLiveData<Comment>()
 
+    var toProfileStatus = MutableLiveData<String>()
+
     private var _likeStatus =MutableLiveData<Boolean>()
     val likeStatus: LiveData<Boolean>
         get() = _likeStatus
@@ -54,6 +56,10 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
         toCommentStatus.value = comment
     }
 
+    fun navigateToProfile(userId: String) {
+        toProfileStatus.value = userId
+    }
+
     fun setLike(commentId: String, status: Int){
         coroutineScope.launch {
             UserManager.userToken?.let {
@@ -69,7 +75,5 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
             }
         }
     }
-
-
 
 }

@@ -39,6 +39,8 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
 
     val date = MutableLiveData<Long>()
 
+    var toProfileStatus = MutableLiveData<String>()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -128,6 +130,10 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                 }
             }
         }
+    }
+
+    fun navigateToProfile(userId: String) {
+        toProfileStatus.value = userId
     }
 
     fun leaveDetail(){

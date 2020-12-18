@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val repository: Repository) : ViewModel() {
+class ProfileViewModel(private val repository: Repository, private val userId: String) : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -34,6 +34,14 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
     val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
+    private var _commentInfo = MutableLiveData<Comment>()
+    val commentInfo: LiveData<Comment>
+        get() = _commentInfo
+
+    private var _shopInfo = MutableLiveData<Shop>()
+    val shopInfo: LiveData<Shop>
+        get() = _shopInfo
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -47,7 +55,7 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getProfile() {
         coroutineScope.launch {
-            UserManager.userToken?.let {
+            userId.let {
                 val result = repository.getUser(it)
                 _profile.value = when (result) {
                     is Result.Success -> {
@@ -63,7 +71,7 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getUserComment() {
         coroutineScope.launch {
-            UserManager.userToken?.let {
+            userId?.let {
                 val result = repository.getComment(it, 1)
                 _comment.value = when (result) {
                     is Result.Success -> {
@@ -104,7 +112,7 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getMyFavorite() {
         coroutineScope.launch {
-            UserManager.userToken?.let {
+            userId.let {
                 val result = repository.getMyFavorite(it)
                 _myFavorite.value = when (result) {
                     is Result.Success -> {
@@ -138,6 +146,14 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
             }
         }
         return forkAmount
+    }
+
+    fun navigateToComment(comment: Comment){
+        _commentInfo.value = comment
+    }
+
+    fun navigateToShop(shop: Shop){
+        _shopInfo.value = shop
     }
 
 }

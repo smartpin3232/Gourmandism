@@ -172,7 +172,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
 
-                    findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment())
+                    UserManager.userToken?.let {
+                        findNavController(R.id.myNavHostFragment).navigate(NavigationDirections.actionGlobalProfileFragment(it))
+                    }
                     return@OnNavigationItemSelectedListener true
                 }
                 else -> {

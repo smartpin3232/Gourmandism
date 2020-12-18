@@ -30,6 +30,11 @@ class DetailAdapter(private val viewModel: DetailViewModel) :
             binding.recyclerViewDetailComment.adapter = adapter
             adapter.submitList(item.images)
 
+            binding.imageUser.setOnClickListener {
+                item.host?.let {
+                    viewModel.navigateToProfile(it.id)
+                }
+            }
             binding.executePendingBindings()
         }
 

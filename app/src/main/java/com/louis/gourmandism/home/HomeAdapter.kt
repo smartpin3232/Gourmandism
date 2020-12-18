@@ -58,6 +58,10 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
                 viewModel.navigationToDetail(item.shopId)
             }
 
+            binding.userImage.setOnClickListener {
+                viewModel.navigateToProfile(item.host!!.id)
+            }
+
             binding.executePendingBindings()
         }
 

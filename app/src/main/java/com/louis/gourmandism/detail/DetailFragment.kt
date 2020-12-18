@@ -19,6 +19,7 @@ import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import com.louis.gourmandism.home.HomeFragmentDirections
 import java.util.*
 
 
@@ -90,6 +91,13 @@ class DetailFragment : Fragment() {
         viewModel.newEventStatus.observe(viewLifecycleOwner, Observer {
 
             slideUpDownBottomSheet()
+        })
+
+        viewModel.toProfileStatus.observe(viewLifecycleOwner, Observer {
+
+            it?.let{
+                findNavController().navigate(DetailFragmentDirections.actionGlobalProfileFragment(it))
+            }
         })
 
         binding.textAddComment.setOnClickListener {

@@ -56,3 +56,9 @@ fun Fragment.add2wishVmFactory(shopId: String): Add2wishViewModelFactory {
     val repository = (requireContext().applicationContext as MyApplication).repository
     return Add2wishViewModelFactory(repository, shopId)
 }
+
+fun Fragment.getVmFactory(userId: String): ProfileViewModelFactory {
+
+    val repository = (requireContext().applicationContext as MyApplication).repository
+    return ProfileViewModelFactory(repository, userId)
+}

@@ -32,9 +32,6 @@ class ViewModelFactory constructor(
                 isAssignableFrom(DetailViewModel::class.java) ->
                     DetailViewModel(repository)
 
-                isAssignableFrom(ProfileViewModel::class.java) ->
-                    ProfileViewModel(repository)
-
                 isAssignableFrom(SearchViewModel::class.java) ->
                     SearchViewModel(repository)
 
