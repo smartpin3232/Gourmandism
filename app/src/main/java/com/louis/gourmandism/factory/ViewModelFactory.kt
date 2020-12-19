@@ -6,6 +6,7 @@ import com.louis.gourmandism.MainViewModel
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.detail.DetailViewModel
 import com.louis.gourmandism.event.item.EventItemViewModel
+import com.louis.gourmandism.friend.item.FriendItemViewModel
 import com.louis.gourmandism.home.HomeViewModel
 import com.louis.gourmandism.login.LoginViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
@@ -46,6 +47,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(NewTagDialogViewModel::class.java) ->
                     NewTagDialogViewModel(repository)
+
+                isAssignableFrom(FriendItemViewModel::class.java) ->
+                    FriendItemViewModel(repository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

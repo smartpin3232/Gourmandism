@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.wishFragment -> CurrentFragmentType.WISH
                     R.id.profileFragment -> CurrentFragmentType.PROFILE
                     R.id.detailFragment -> CurrentFragmentType.DETAIL
+                    R.id.friendFragment -> CurrentFragmentType.FRIEND
                     else -> viewModel.currentFragmentType.value
                 }
             }

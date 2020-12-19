@@ -55,4 +55,5 @@ fun Fragment.getVmFactory(userId: String): ProfileViewModelFactory {
 
     val repository = (requireContext().applicationContext as MyApplication).repository
     return ProfileViewModelFactory(repository, userId)
+
 }

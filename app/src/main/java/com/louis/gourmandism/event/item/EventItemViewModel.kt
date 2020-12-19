@@ -84,7 +84,6 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         _toastStatus.value = true
     }
 
-
     fun toShop(item: Event) {
         _shopInfo.value = item.shop
     }

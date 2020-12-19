@@ -51,6 +51,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.getUser(id)
     }
 
+    override suspend fun getAllFriend(friendList: List<String>): Result<List<User>> {
+        return remoteDataSource.getAllFriend(friendList)
+    }
+
     override suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>> {
         return remoteDataSource.getMyFavorite(userId)
     }

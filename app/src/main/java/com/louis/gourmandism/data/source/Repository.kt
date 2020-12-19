@@ -25,6 +25,8 @@ interface Repository {
 
     suspend fun getUser(id: String): Result<User>
 
+    suspend fun getAllFriend(friendList: List<String>): Result<List<User>>
+
     suspend fun getMyFavorite(userId: String): Result<MutableList<Favorite>>
 
     suspend fun setWish(folderId: String, shopId: String, status: Int) : Result<Boolean>

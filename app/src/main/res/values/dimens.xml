@@ -9,6 +9,10 @@
     <dimen name="height_bottom_nav_view_main">65dp</dimen>
     <dimen name="size_bottom_nav_icon">35dp</dimen>
 
-    <dimen name="margin">16dp</dimen>
+
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="standard_half_margin">8dp</dimen>
+
+
 
 </resources>

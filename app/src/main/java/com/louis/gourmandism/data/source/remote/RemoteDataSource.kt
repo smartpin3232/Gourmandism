@@ -3,6 +3,7 @@ package com.louis.gourmandism.data.source.remote
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -243,7 +244,7 @@ object RemoteDataSource : DataSource {
                         val user = document.toObject(User::class.java)
                         list.add(user)
                     }
-                    continuation.resume(Result.Success(list.filter { it.id == id }[0]))
+                    continuation.resume(Result.Success(list[0]))
 
                 } else {
                     task.exception?.let {
@@ -253,6 +254,25 @@ object RemoteDataSource : DataSource {
                 }
             }
     }
+
+    override suspend fun getAllFriend(friendList: List<String>): Result<List<User>> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance()
+            .collection("User")
+            .whereIn(FieldPath.documentId(), friendList)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val list = task.result.toObjects(User::class.java)
+                    continuation.resume(Result.Success(list))
+                } else {
+                    task.exception?.let {
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                }
+            }
+    }
+
 
     override suspend fun createUser(user: User): Result<Boolean> =
         suspendCoroutine { continuation ->

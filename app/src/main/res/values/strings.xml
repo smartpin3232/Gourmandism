@@ -39,4 +39,6 @@
     <string name="add_friend">ADD FRIEND</string>
     <string name="delete_friend">DELETE FRIEND</string>
     <string name="send_message">SEND MESSAGE</string>
+    <string name="friend_list">FRIEND LIST</string>
+    <string name="message">MESSAGE</string>
 </resources>
