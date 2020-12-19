@@ -28,7 +28,9 @@ class FriendItemFragment(val type: Int) : Fragment() {
 
         viewModel.profile.observe(viewLifecycleOwner, Observer {
             it.friendList?.let { friendList ->
-                viewModel.getAllFriend(friendList)
+                if(!friendList.isNullOrEmpty()){
+                    viewModel.getAllFriend(friendList)
+                }
             }
         })
 

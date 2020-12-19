@@ -1,6 +1,7 @@
 package com.louis.gourmandism.login
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -31,8 +32,11 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG = this.javaClass.name
     private lateinit var binding: ActivityLoginBinding
-    // FirebaseAuth
     private lateinit var auth: FirebaseAuth
+    private var userUid = ""
+    private var userName = ""
+    private lateinit var userPhoto : Uri
+
     val viewModel by viewModels<LoginViewModel> { getVmFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +53,24 @@ class LoginActivity : AppCompatActivity() {
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
         binding.signInButton.setOnClickListener{
             signIn(mGoogleSignInClient)
         }
 
-        viewModel.createStatus.observe(this, Observer {
+        viewModel.profile.observe(this, Observer {
+            if(it != null){
+                startActivity(Intent(this, MainActivity::class.java))
+            } else{
+                viewModel.createUser(userUid, userName, userPhoto)
+            }
+        })
 
+        viewModel.createStatus.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
         })
+
     }
 
     private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
@@ -89,7 +103,13 @@ class LoginActivity : AppCompatActivity() {
                 val user = auth.currentUser
                 if (user != null) {
                     UserManager.userToken = user.uid
-                    viewModel.createUser(user.uid, user.displayName.toString(), user.photoUrl)
+                    userUid = user.uid
+                    userName = user.displayName.toString()
+                    user.photoUrl?.let {
+                        userPhoto = it
+                    }
+                    viewModel.getProfile(user.uid)
+//                    viewModel.createUser(user.uid, user.displayName.toString(), user.photoUrl)
                 }
             } else {
                 // If sign in fails, display a message to the user.

@@ -244,7 +244,11 @@ object RemoteDataSource : DataSource {
                         val user = document.toObject(User::class.java)
                         list.add(user)
                     }
-                    continuation.resume(Result.Success(list[0]))
+                    if(!list.isNullOrEmpty()){
+                        continuation.resume(Result.Success(list[0]))
+                    }else{
+                        continuation.resume(Result.Fail("No data"))
+                    }
 
                 } else {
                     task.exception?.let {

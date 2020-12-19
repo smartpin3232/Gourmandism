@@ -55,14 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.textToolbarTitle.setOnClickListener {
-//            UserManager.clear()
-            createNotificationChannel()
-            val intent = Intent().apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-            val builder = createBuilder(pendingIntent,"balabala")
-            if (builder != null) {
-                NotificationManagerCompat.from(applicationContext).notify(0, builder.build())
-            }
+            UserManager.clear()
         }
 
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

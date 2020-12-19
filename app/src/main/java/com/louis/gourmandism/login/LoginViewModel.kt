@@ -19,9 +19,12 @@ class LoginViewModel(private val repository: Repository) : ViewModel(){
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private var _createStatus = MutableLiveData<Boolean>()
-
     val createStatus : LiveData<Boolean>
         get() = _createStatus
+
+    private var _profile = MutableLiveData<User>()
+    val profile: LiveData<User>
+        get() = _profile
 
     override fun onCleared() {
         super.onCleared()
@@ -48,6 +51,22 @@ class LoginViewModel(private val repository: Repository) : ViewModel(){
                 }
                 else -> {
                     null
+                }
+            }
+        }
+    }
+
+    fun getProfile(userUid: String) {
+        coroutineScope.launch {
+            userUid.let {
+                val result = repository.getUser(it)
+                _profile.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
                 }
             }
         }
