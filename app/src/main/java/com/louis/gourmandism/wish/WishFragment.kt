@@ -24,7 +24,6 @@ class WishFragment : Fragment() {
         val binding = FragmentWishBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
 
-
         val adapter = WishAdapter(viewModel)
         binding.recyclerViewMyWishList.adapter = adapter
 
@@ -32,12 +31,10 @@ class WishFragment : Fragment() {
         binding.recyclerViewShareWishList.adapter = adapter2
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
-
             viewModel.getShop()
         })
 
         viewModel.shop.observe(viewLifecycleOwner, Observer {
-
             it?.let{
                 adapter.submitList(viewModel.getNewFavorite())
                 adapter2.submitList(viewModel.getShareFavorite())
@@ -45,17 +42,12 @@ class WishFragment : Fragment() {
         })
 
         binding.textNew.setOnClickListener {
-
             findNavController().navigate(NavigationDirections.actionGlobalNewWishListDialog())
         }
 
-
-
         viewModel.navigationData.observe(viewLifecycleOwner, Observer {
-
             findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
         })
-
 
         return binding.root
     }

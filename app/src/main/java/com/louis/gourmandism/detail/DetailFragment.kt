@@ -1,5 +1,6 @@
 package com.louis.gourmandism.detail
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class DetailFragment : Fragment() {
     private val viewModel by viewModels<DetailViewModel> { getVmFactory() }
     private lateinit var bottomBehavior : BottomSheetBehavior<ConstraintLayout>
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +81,11 @@ class DetailFragment : Fragment() {
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
+            var starTotal = 0F
+            it.forEach {comment->
+                starTotal += comment.star
+            }
+            binding.textStarAverage.text = " ${((starTotal/it.size).toString())}"
         })
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
