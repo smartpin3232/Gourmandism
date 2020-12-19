@@ -125,6 +125,14 @@ class MainActivity : AppCompatActivity() {
 //                    findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_gameFragment)
                     true
                 }
+
+                R.id.nav_pick_friend -> {
+//                    viewModel.navigate.value = 1
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_friendFragment)
+                    true
+                }
+
                 else -> false
             }
         }

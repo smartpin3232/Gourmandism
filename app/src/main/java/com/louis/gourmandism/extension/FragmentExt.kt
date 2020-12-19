@@ -33,12 +33,6 @@ fun Fragment.getVmFactory(shop: Shop): Add2commentViewModelFactory {
     return Add2commentViewModelFactory(repository, shop)
 }
 
-fun Fragment.getEventVmFactory(shop: Shop): NewEventViewModelFactory {
-
-    val repository = (requireContext().applicationContext as MyApplication).repository
-    return NewEventViewModelFactory(repository, shop)
-}
-
 fun Fragment.getCommentVmFactory(comment: Comment): CommentViewModelFactory {
 
     val repository = (requireContext().applicationContext as MyApplication).repository

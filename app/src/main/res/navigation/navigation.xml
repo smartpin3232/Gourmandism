@@ -33,7 +33,7 @@
         android:id="@+id/profileFragment"
         android:name="com.louis.gourmandism.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <argument
             android:name="userId"
             app:argType="string" />
@@ -80,6 +80,12 @@
             app:argType="com.louis.gourmandism.data.Location" />
     </fragment>
 
+    <fragment
+        android:id="@+id/friendFragment"
+        android:name="com.louis.gourmandism.friend.FriendFragment"
+        android:label="FriendFragment"
+        tools:layout="@layout/fragment_friend"/>
+
     <dialog
         android:id="@+id/newTagDialog"
         android:name="com.louis.gourmandism.search.create.NewTagDialog"
@@ -95,16 +101,6 @@
             android:name="shopId"
             app:argType="string" />
     </dialog>
-
-    <fragment
-        android:id="@+id/newEventFragment"
-        android:name="com.louis.gourmandism.event.create.NewEventDialog"
-        android:label="NewEventFragment"
-        tools:layout="@layout/dialog_new_event">
-        <argument
-            android:name="shop"
-            app:argType="com.louis.gourmandism.data.Shop" />
-    </fragment>
 
     <dialog
         android:id="@+id/add2commentDialog"
@@ -155,10 +151,6 @@
         app:destination="@id/add2commentDialog" />
 
     <action
-        android:id="@+id/action_global_newEventFragment"
-        app:destination="@id/newEventFragment" />
-
-    <action
         android:id="@+id/action_global_commentFragment"
         app:destination="@id/commentFragment" />
 
@@ -177,5 +169,9 @@
     <action
         android:id="@+id/action_global_newTagDialog"
         app:destination="@id/newTagDialog" />
+
+    <action
+        android:id="@+id/action_global_friendFragment"
+        app:destination="@id/friendFragment" />
 
 </navigation>

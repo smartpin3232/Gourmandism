@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.louis.gourmandism.comment.CommentViewModel
 import com.louis.gourmandism.data.Comment
-import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
-import com.louis.gourmandism.event.create.NewEventViewModel
 
 @Suppress("UNCHECKED_CAST")
 class CommentViewModelFactory(
