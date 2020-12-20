@@ -44,21 +44,11 @@ class SearchFragment : Fragment(){
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationPermission = false
-    var PERMISSION_ID = 8787
+    private var PERMISSION_ID = 8787
     private var myMap: GoogleMap? = null
     private var lastKnownLocation: Location? = null
 
     var clickMarker : Marker? = null
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("SearchFragment","onPause")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("SearchFragment","onStart")
-    }
 
     private val callback = OnMapReadyCallback { googleMap ->
         myMap = googleMap
@@ -71,8 +61,6 @@ class SearchFragment : Fragment(){
 
         //畫面遠近 1~20F
 //        googleMap.setMinZoomPreference(5.0f)
-
-        getDeviceLocation()
 
         //Marker點擊事件
         googleMap.setOnMarkerClickListener {
@@ -99,6 +87,7 @@ class SearchFragment : Fragment(){
             }
         }
 
+        //MarkerInfo 點擊事件
         googleMap.setOnInfoWindowClickListener {
             Log.i("InfoWindow",it.title)
             if(it.title == "新增餐廳"){
@@ -106,6 +95,8 @@ class SearchFragment : Fragment(){
                 findNavController().navigate(SearchFragmentDirections.actionGlobalNewShopFragment(location))
             }
         }
+
+        getDeviceLocation()
 
     }
 

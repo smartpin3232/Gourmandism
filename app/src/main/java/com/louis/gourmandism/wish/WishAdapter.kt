@@ -35,8 +35,6 @@ class WishAdapter(private val viewModel: WishViewModel) :
                 viewModel.navigateToDetail(favorite)
             }
 
-            binding.textHostName.text = UserManager.user.value?.name
-
             binding.executePendingBindings()
         }
 

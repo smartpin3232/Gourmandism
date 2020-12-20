@@ -67,13 +67,13 @@
                     style="@style/detail_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:paddingHorizontal="5dp"
+
+                    android:text="@{favorite.userName}"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/text_list_name"
                     app:layout_constraintTop_toBottomOf="@+id/text_list_name"
                     tools:text="Louis 分享的清單" />
             </androidx.constraintlayout.widget.ConstraintLayout>

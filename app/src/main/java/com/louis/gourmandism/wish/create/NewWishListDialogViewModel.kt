@@ -29,7 +29,8 @@ class NewWishListDialogViewModel(private val repository: Repository) : ViewModel
             attentionList = mutableListOf(),
             folderName = folderName,
             shops = mutableListOf(),
-            userId = UserManager.userToken.toString()
+            userId = UserManager.userToken.toString(),
+            userName = UserManager.user.value!!.name
         )
 
         coroutineScope.launch {
