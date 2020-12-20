@@ -41,7 +41,7 @@ class WishFragment : Fragment() {
             }
         })
 
-        binding.textNew.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalNewWishListDialog())
         }
 

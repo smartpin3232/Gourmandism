@@ -15,122 +15,165 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp"
         >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_star2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{String.valueOf(data.star)}"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
-            tools:text="x4.5" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/text_title"
-            app:layout_constraintTop_toBottomOf="@+id/text_title"
-            app:srcCompat="@drawable/tasty_select" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/user_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            app:civ_border_width="0dp"
-            imageUrl="@{data.host.image}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/user_image"
+                    imageUrl="@{data.host.image}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:civ_border_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/text_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{data.host.name}"
-            tools:text="Gary"
-            android:fontFamily="@font/baloo_chettan"
-            app:layout_constraintBottom_toBottomOf="@+id/user_image"
-            app:layout_constraintStart_toEndOf="@+id/user_image"
-            app:layout_constraintTop_toTopOf="@+id/user_image" />
+                <TextView
+                    android:id="@+id/text_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:text="@{data.host.name}"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/user_image"
+                    app:layout_constraintTop_toTopOf="@+id/user_image"
+                    tools:text="Gary" />
 
-        <ImageView
-            android:id="@+id/image_main"
-            imageUrl="@{data.images[0]}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:scaleType="matrix"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_image"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/baloo_chettan"
-            android:text="@{data.title}"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_main"
-            tools:text="店名" />
+            <TextView
+                android:id="@+id/text_post_time"
+                textTime="@{data.createdTime}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraint_profile"
+                app:layout_constraintStart_toStartOf="@+id/constraint_profile"
+                tools:text="1天前" />
 
-        <TextView
-            android:id="@+id/text_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/baloo_chettan"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_shop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraint_profile">
 
-            android:maxLines="2"
-            android:text="@{data.content}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/text_title"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/text_title"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            tools:text="快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~" />
+                <ImageView
+                    android:id="@+id/image_main"
+                    imageUrl="@{data.images[0]}"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="matrix"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/text_post_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="一天前"
-            app:layout_constraintBottom_toBottomOf="@+id/text_user_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_user_name" />
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:text="@{data.title}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image_main"
+                    tools:text="店名" />
 
-        <ImageView
-            android:id="@+id/image_favorite"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@drawable/good"
-            app:layout_constraintBottom_toBottomOf="@+id/text_title"
-            app:layout_constraintEnd_toEndOf="@+id/text_title"
-            app:layout_constraintTop_toTopOf="@+id/text_title" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraint_shop">
+
+                <TextView
+                    android:id="@+id/text_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/baloo_chettan"
+                    android:maxLines="2"
+                    android:text="@{data.content}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~快來吃~" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_comment"
+                    app:layout_constraintTop_toBottomOf="@+id/text_comment"
+                    app:srcCompat="@drawable/tasty_select" />
+
+                <TextView
+                    android:id="@+id/text_star2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{String.valueOf(data.star)}"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="@+id/imageView2"
+                    tools:text="x4.5" />
+
+                <ImageView
+                    android:id="@+id/image_favorite"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/good"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_star2"
+                    app:layout_constraintStart_toEndOf="@+id/text_star2"
+                    app:layout_constraintTop_toTopOf="@+id/text_star2" />
+
+                <TextView
+                    android:id="@+id/text_like_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="12"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_favorite"
+                    app:layout_constraintStart_toEndOf="@+id/image_favorite"
+                    app:layout_constraintTop_toTopOf="@+id/image_favorite" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

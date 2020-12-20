@@ -11,10 +11,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_location"
+        app:layout_constraintTop_toTopOf="@+id/text_location">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView3"
+            android:id="@+id/cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -42,20 +44,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:text="@{shop.name}"
             app:layout_constraintBottom_toTopOf="@+id/text_location"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{shop.name}"
-            app:layout_constraintStart_toEndOf="@+id/cardView3"
-            app:layout_constraintTop_toTopOf="@+id/cardView3"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="@+id/cardView"
             tools:text="Gary 麵包工坊" />
 
         <TextView
             android:id="@+id/text_location"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="@{shop.address}"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView3"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_shop"
             app:layout_constraintTop_toBottomOf="@+id/text_shop"

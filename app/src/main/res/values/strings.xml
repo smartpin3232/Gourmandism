@@ -20,9 +20,9 @@
     <string name="number_people">人數:</string>
     <string name="time">時間:</string>
     <string name="join">加入</string>
-    <string name="my_wish_list">我的收藏清單</string>
-    <string name="share_wish_list">關注的收藏清單</string>
-    <string name="recommend_list">推薦的收藏清單</string>
+    <string name="my_wish_list">我的清單</string>
+    <string name="share_wish_list">關注清單</string>
+    <string name="recommend_list">推薦清單</string>
     <string name="my_comment">我的食記</string>
     <string name="preview">最近瀏覽</string>
     <string name="from">from&#160;</string>

@@ -80,12 +80,14 @@ class DetailFragment : Fragment() {
         }
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-            var starTotal = 0F
-            it.forEach {comment->
-                starTotal += comment.star
+            it?.let {
+                adapter.submitList(it)
+                var starTotal = 0F
+                it.forEach {comment->
+                    starTotal += comment.star
+                }
+                binding.textStarAverage.text = " ${((starTotal/it.size).toString())}"
             }
-            binding.textStarAverage.text = " ${((starTotal/it.size).toString())}"
         })
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {

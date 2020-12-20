@@ -22,12 +22,12 @@ object RemoteDataSource : DataSource {
 
         FirebaseFirestore.getInstance()
             .collection("Comment")
-            .orderBy("createdTime", Query.Direction.DESCENDING)
+//            .orderBy("createdTime", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
                 val list = mutableListOf<Comment>()
                 for (document in snapshot!!) {
-
+                    Log.i("",document.toString())
                     val comment = document.toObject(Comment::class.java)
                     list.add(comment)
                 }

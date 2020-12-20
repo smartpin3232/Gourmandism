@@ -64,7 +64,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/text_new"
+                android:id="@+id/button_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -79,9 +79,9 @@
                 android:id="@+id/imageView5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/text_new"
-                app:layout_constraintStart_toEndOf="@+id/text_new"
-                app:layout_constraintTop_toTopOf="@+id/text_new"
+                app:layout_constraintBottom_toBottomOf="@+id/button_add"
+                app:layout_constraintStart_toEndOf="@+id/button_add"
+                app:layout_constraintTop_toTopOf="@+id/button_add"
                 app:srcCompat="@drawable/forward" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

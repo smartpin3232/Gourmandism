@@ -22,17 +22,27 @@
             android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/image_main"
-                imageUrl="@{event.shop.image[0]}"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="8dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:elevation="0dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/text_shop_info"
+                app:layout_constraintStart_toStartOf="@+id/text_shop_info"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/image_main"
+                    imageUrl="@{event.shop.image[0]}"
+                    android:layout_width="180dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/text_shop"
@@ -40,27 +50,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="@{event.shop.name}"
+                android:textColor="@color/black_3f3a3a"
+                android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_host"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/image_main"
-                app:layout_constraintTop_toTopOf="@+id/image_main"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toTopOf="@+id/cardView"
+                app:layout_constraintVertical_chainStyle="spread_inside"
                 tools:text="Gary 麵包工坊" />
+
+            <TextView
+                android:id="@+id/text_location"
+                style="@style/detail_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/location"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_time"
+                app:layout_constraintTop_toBottomOf="@+id/text_time" />
 
             <TextView
                 android:id="@+id/text_host_name"
                 style="@style/detail_information"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:text="@{event.host.name}"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text_host"
                 app:layout_constraintStart_toEndOf="@+id/text_host"
                 app:layout_constraintTop_toTopOf="@+id/text_host"
-                app:layout_constraintVertical_bias="0.0"
                 tools:text="Gary" />
+
+            <!--            <View-->
+            <!--                android:id="@+id/view_line4"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="1dp"-->
+            <!--                android:layout_marginStart="8dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:layout_marginEnd="8dp"-->
+            <!--                android:background="@color/gray_cccccc"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="1.0"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/text_context" />-->
 
             <TextView
                 android:id="@+id/text_time"
@@ -68,9 +102,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@+id/image_main"
-                app:layout_constraintTop_toBottomOf="@+id/image_main"
-                tools:text="12/25 AM 11:00"/>
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                tools:text="12/25 AM 11:00" />
 
             <TextView
                 android:id="@+id/text_host"
@@ -78,28 +113,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/host"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_number_people"
                 app:layout_constraintStart_toStartOf="@+id/text_shop"
                 app:layout_constraintTop_toBottomOf="@+id/text_shop" />
 
             <TextView
-                android:id="@+id/text_location"
+                android:id="@+id/text_location_content"
                 style="@style/detail_information"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/location"
-                app:layout_constraintStart_toStartOf="@+id/image_main"
-                app:layout_constraintTop_toBottomOf="@+id/image_main" />
-
-            <TextView
-                android:id="@+id/text_location_content"
-                style="@style/detail_information"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:text="@{event.shop.address}"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/text_location"
                 app:layout_constraintStart_toEndOf="@+id/text_location"
                 app:layout_constraintTop_toTopOf="@+id/text_location"
                 tools:text="台北市松山區99999號" />
@@ -110,7 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/number_people"
-                app:layout_constraintBottom_toBottomOf="@+id/image_main"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView"
                 app:layout_constraintStart_toStartOf="@+id/text_host"
                 app:layout_constraintTop_toBottomOf="@+id/text_host" />
 
@@ -119,40 +146,30 @@
                 style="@style/detail_information"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@{event.member.size()>=event.memberLimit?@color/red_d0021b:@color/gray_888888}"
+                android:layout_marginStart="4dp"
                 android:text="@{String.valueOf(event.member.size()) + @string/divider + String.valueOf(event.memberLimit)}"
+                android:textColor="@{event.member.size()>=event.memberLimit?@color/red_d0021b:@color/gray_888888}"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/text_number_people"
                 app:layout_constraintStart_toEndOf="@+id/text_number_people"
                 app:layout_constraintTop_toTopOf="@+id/text_number_people"
-                app:layout_constraintVertical_bias="1.0"
                 tools:text="3/8" />
 
             <TextView
                 android:id="@+id/text_context"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@{event.content}"
-
+                android:textColor="@color/gray_888888"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/text_location"
-                app:layout_constraintTop_toBottomOf="@+id/text_location_content"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/cardView"
+                app:layout_constraintTop_toBottomOf="@+id/text_location"
                 tools:text="快來一起吃~快來一起吃~快來一起吃~快來一起吃~快來一起吃~快來一起吃~" />
-
-            <View
-                android:id="@+id/view_line4"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/gray_cccccc"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_context" />
 
             <TextView
                 android:id="@+id/text_shop_info"
@@ -160,28 +177,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:background="@drawable/round_layout_3"
                 android:gravity="center"
                 android:text="店家詳情"
-                android:textColor="@color/gray_999999"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view_line5"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_line4" />
+                app:layout_constraintTop_toBottomOf="@+id/text_context" />
 
             <TextView
                 android:id="@+id/text_add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/round_layout_3"
                 android:gravity="center"
                 android:text="@string/join"
-                android:textColor="@color/gray_999999"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="@+id/view_line5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

@@ -50,15 +50,15 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
                     it.setBackgroundResource(R.drawable.good_select)
                 }
             }
-            binding.textComment.setOnClickListener {
+            binding.constraintComment.setOnClickListener {
                 viewModel.navigateToComment(item)
             }
 
-            binding.textTitle.setOnClickListener {
+            binding.constraintShop.setOnClickListener {
                 viewModel.navigationToDetail(item.shopId)
             }
 
-            binding.userImage.setOnClickListener {
+            binding.constraintProfile.setOnClickListener {
                 viewModel.navigateToProfile(item.host!!.id)
             }
 

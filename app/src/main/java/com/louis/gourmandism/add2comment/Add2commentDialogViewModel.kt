@@ -89,7 +89,8 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
             shopId = shopInfo.value?.id!!,
             title = shopInfo.value?.name!!,
             content = comment,
-            star = star.value!!
+            star = star.value!!,
+            createdTime = System.currentTimeMillis()
         )
 
         coroutineScope.launch {

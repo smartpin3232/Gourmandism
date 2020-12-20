@@ -31,7 +31,7 @@ class NewWishListDialog : BottomSheetDialogFragment() {
 
         val binding = DialogNewWishListBinding.inflate(inflater, container, false)
 
-        binding.textNew.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             val folderName = binding.editListName.text.toString()
             viewModel.createWishList(folderName)
         }

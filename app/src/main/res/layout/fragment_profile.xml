@@ -20,50 +20,84 @@
             android:layout_height="match_parent"
             android:background="@color/fragmentBackground">
 
-            <com.github.florent37.shapeofview.shapes.BubbleView
-                android:id="@+id/user_image"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:civ_border_width="0dp"
+            <!--            <com.github.florent37.shapeofview.shapes.DiagonalView-->
+            <!--                android:id="@+id/diagonalView"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:elevation="4dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                app:shape_diagonal_position="bottom">-->
+
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shape_bubble_borderRadius="20dp"
-                tools:src="@tools:sample/avatars">
+                app:srcCompat="@drawable/image_profile_background" />
+            <!--            </com.github.florent37.shapeofview.shapes.DiagonalView>-->
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    imageUrl="@{viewModel.profile.image}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:srcCompat="@tools:sample/avatars" />
 
-            </com.github.florent37.shapeofview.shapes.BubbleView>
+            <!--            <TextView-->
+            <!--                android:id="@+id/text_location"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="台北市信義區"-->
+            <!--                android:textSize="18sp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/text_user_name"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/text_user_name"-->
+            <!--                tools:text="台北市信義區" />-->
 
-            <TextView
-                android:id="@+id/text_location"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="台北市信義區"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-                app:layout_constraintTop_toBottomOf="@+id/text_user_name"
-                tools:text="台北市信義區" />
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.github.florent37.shapeofview.shapes.CircleView
+                    android:id="@+id/user_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:civ_border_width="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        imageUrl="@{viewModel.profile.image}"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                </com.github.florent37.shapeofview.shapes.CircleView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/text_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="@{viewModel.profile.name}"
                 android:includeFontPadding="false"
+                android:text="@{viewModel.profile.name}"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/text_location"
-                app:layout_constraintStart_toStartOf="@+id/text_location"
-                app:layout_constraintTop_toTopOf="@+id/user_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9"
                 tools:text="Louis" />
 
             <TextView
@@ -72,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/my_comment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_add_friend" />
@@ -119,15 +153,15 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/user_image"
-                app:layout_constraintStart_toEndOf="@+id/user_image"
-                app:layout_constraintTop_toBottomOf="@+id/text_location">
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout4">
 
                 <ImageView
                     android:id="@+id/icon_like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -138,26 +172,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="12"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/icon_like"
-                    app:layout_constraintTop_toTopOf="@+id/icon_like" />
+                    app:layout_constraintTop_toTopOf="@+id/icon_like"
+                    tools:text="12" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
                 app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout2">
 
                 <ImageView
                     android:id="@+id/icon_share"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -168,18 +203,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    tools:text="33"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_share"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/icon_share"
-                    app:layout_constraintTop_toTopOf="@+id/icon_share" />
+                    app:layout_constraintTop_toTopOf="@+id/icon_share"
+                    tools:text="33" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
                 android:id="@+id/edit_introduction"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/round_layout"
@@ -189,30 +225,31 @@
                 android:inputType="textPersonName"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/user_image"
-                app:layout_constraintTop_toBottomOf="@+id/user_image" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
             <TextView
                 android:id="@+id/button_add_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/round_layout_3"
                 android:gravity="center"
                 android:text="@string/add_friend"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/edit_introduction"
-                app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
+                app:layout_constraintTop_toBottomOf="@+id/button_edit" />
 
             <TextView
                 android:id="@+id/button_send_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/round_layout_3"
                 android:gravity="center"
                 android:text="@string/send_message"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/button_add_friend"
                 app:layout_constraintStart_toEndOf="@+id/button_add_friend"
                 app:layout_constraintTop_toTopOf="@+id/button_add_friend" />
 
@@ -220,13 +257,40 @@
                 android:id="@+id/button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/round_layout_3"
                 android:text="編輯"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/text_user_name"
-                app:layout_constraintStart_toEndOf="@+id/text_user_name"
-                app:layout_constraintTop_toTopOf="@+id/text_user_name" />
+                app:layout_constraintStart_toStartOf="@+id/edit_introduction"
+                app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@+id/text_user_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_user_name">
+
+                <ImageView
+                    android:id="@+id/icon_friend"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/user" />
+
+                <TextView
+                    android:id="@+id/text_friend_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="5"
+                    app:layout_constraintBottom_toBottomOf="@+id/icon_friend"
+                    app:layout_constraintStart_toEndOf="@+id/icon_friend"
+                    app:layout_constraintTop_toTopOf="@+id/icon_friend" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
