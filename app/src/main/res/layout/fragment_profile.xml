@@ -286,7 +286,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="5"
+                    android:text="@{String.valueOf(viewModel.profile.friendList.size())}"
+                    tools:text="5"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_friend"
                     app:layout_constraintStart_toEndOf="@+id/icon_friend"
                     app:layout_constraintTop_toTopOf="@+id/icon_friend" />
