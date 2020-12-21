@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.louis.gourmandism.data.Shop
 
 class EventReceiver : BroadcastReceiver() {
 
@@ -18,11 +19,12 @@ class EventReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
         if(intent.action.equals("Event")){
-            channelId = intent.extras?.get("EventId").toString()
-            createNotificationChannel(context)
+//            channelId = intent.extras?.get("EventId").toString()
+            channelId = intent.extras?.get("shopName").toString()
+
             val intentObject = Intent().apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
             val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intentObject, 0)
-            val builder = createBuilder(pendingIntent,channelId,context)
+            val builder = createBuilder(pendingIntent, channelId, context)
             if (builder != null) {
                 NotificationManagerCompat.from(context).notify(0, builder.build())
             }

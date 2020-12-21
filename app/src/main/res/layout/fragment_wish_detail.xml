@@ -46,19 +46,20 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/text_host_name"
             app:layout_constraintTop_toBottomOf="@+id/text_host_name"
-            tools:text="@{String.valueOf(viewModel.favoriteInfo.attentionList.size()) + @string/follower}" />
+            android:text="@{String.valueOf(viewModel.favoriteInfo.attentionList.size()) + @string/follower}"
+            tools:text= "12位追隨者"/>
 
         <View
             android:id="@+id/view3"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/gray_999999"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_follower" />
+            app:layout_constraintTop_toBottomOf="@+id/text_add_attention" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_favorite"
@@ -87,5 +88,21 @@
             android:text="REMOVE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_add_attention"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            android:background="@drawable/round_layout"
+            android:gravity="center"
+            android:paddingVertical="@dimen/standard_half_margin"
+            android:textSize="@dimen/standard_font_size"
+            android:textStyle="bold"
+            android:text="關注收藏"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_follower" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

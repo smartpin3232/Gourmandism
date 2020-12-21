@@ -62,6 +62,7 @@ class EventItemFragment(val status: Int) : Fragment() {
             val intent = Intent(requireContext(), EventReceiver::class.java)
             intent.action = "Event"
             intent.putExtra("EventId",it.id)
+//            intent.putExtra("shopName",it.shop?.name)
 
             val sender = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
             val am = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
