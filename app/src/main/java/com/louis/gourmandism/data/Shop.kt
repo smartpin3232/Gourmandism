@@ -22,3 +22,10 @@ data class Location(
     var locationX: Double = 0.0,
     var locationY: Double = 0.0
 ):Parcelable
+
+@Parcelize
+data class OpenTime(
+    var day: String = "",
+    var startTime: String = "",
+    var endTime: String = ""
+):Parcelable

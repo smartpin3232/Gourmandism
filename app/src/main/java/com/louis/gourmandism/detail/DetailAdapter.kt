@@ -35,6 +35,7 @@ class DetailAdapter(private val viewModel: DetailViewModel) :
                     viewModel.navigateToProfile(it.id)
                 }
             }
+
             binding.executePendingBindings()
         }
 

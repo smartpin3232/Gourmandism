@@ -8,11 +8,12 @@
     <string name="search_shop">搜尋餐廳…</string>
     <string name="Search">SEARCH</string>
     <string name="address">住址:</string>
-    <string name="business_time">營業時間:</string>
+    <string name="business_time">本日營業時間:</string>
     <string name="phone">電話:</string>
     <string name="about">關於店家</string>
     <string name="comment_area">評論專區</string>
     <string name="open">營業中</string>
+    <string name="close">休息中</string>
     <string name="openList">開團列表</string>
     <string name="myEvent">我的揪團</string>
     <string name="host">團長:</string>
@@ -41,4 +42,6 @@
     <string name="send_message">SEND MESSAGE</string>
     <string name="friend_list">FRIEND LIST</string>
     <string name="message">MESSAGE</string>
+    <string name="hyphen">&#160;─&#160;</string>
+
 </resources>

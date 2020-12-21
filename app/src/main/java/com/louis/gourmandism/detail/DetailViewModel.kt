@@ -11,6 +11,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.time.ExperimentalTime
 
 class DetailViewModel(private val repository: Repository) : ViewModel(){
 
@@ -130,6 +133,22 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                 }
             }
         }
+    }
+
+    @ExperimentalTime
+    fun getTodayBusinessTime(time: MutableList<OpenTime>, today: String) : OpenTime{
+        return time.filter { it.day == today }[0]
+    }
+
+    fun checkBusinessStatus(businessTime: OpenTime): Boolean {
+        val cal = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("HH:mm")
+        val hours = cal.get(Calendar.HOUR_OF_DAY)
+        val minutes= cal.get(Calendar.MINUTE)
+        val nowTimeFormat = dateFormat.parse("$hours:$minutes")
+        val startTime = dateFormat.parse(businessTime.startTime)
+        val endTime = dateFormat.parse(businessTime.endTime)
+        return nowTimeFormat in startTime..endTime
     }
 
     fun navigateToProfile(userId: String) {

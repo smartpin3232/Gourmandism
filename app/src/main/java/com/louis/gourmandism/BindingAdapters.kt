@@ -8,6 +8,7 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.louis.gourmandism.data.OpenTime
 import java.text.SimpleDateFormat
 
 @BindingAdapter("imageUrl")
@@ -74,4 +75,20 @@ fun bindTextTime(textView: TextView, date: Long) {
         else -> {
             textView.text = "${(timeDiff/minute)}分鐘前" }
     }
+}
+
+
+@BindingAdapter("textBusinessTime")
+fun bindBusinessTime(textView: TextView, time: OpenTime) {
+    val day = when(time.day){
+        "1" -> "星期一"
+        "2" -> "星期二"
+        "3" -> "星期三"
+        "4" -> "星期四"
+        "5" -> "星期五"
+        "6" -> "星期六"
+        "7" -> "星期日"
+        else -> "星期日"
+    }
+    textView.text = day+ "  " + time.startTime + " ‒ " + time.endTime
 }

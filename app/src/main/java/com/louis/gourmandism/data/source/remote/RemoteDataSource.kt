@@ -27,7 +27,7 @@ object RemoteDataSource : DataSource {
 
                 val list = mutableListOf<Comment>()
                 for (document in snapshot!!) {
-                    Log.i("",document.toString())
+                    Log.i("comment",document.toString())
                     val comment = document.toObject(Comment::class.java)
                     list.add(comment)
                 }
