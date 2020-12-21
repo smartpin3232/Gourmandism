@@ -104,10 +104,23 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         return favoriteShopList
     }
 
-    fun getShareFavorite() : List<Favorite>?{
-        val favoriteShopList = myFavorite.value?.filter {
-            it.type == 1 && it.attentionList!!.any {attention-> attention == UserManager.userToken }
+    fun getShareFavorite(status: Int) : List<Favorite>?{
+        val favoriteShopList = when(status){
+            0->{
+                myFavorite.value?.filter {
+                    it.type == 1 && it.attentionList!!.any {attention-> attention == UserManager.userToken }
+                }
+            }
+            1->{
+                myFavorite.value?.filter {
+                    it.type == 1 && !it.attentionList!!.any {attention-> attention == UserManager.userToken }
+                }
+            }
+            else -> {
+                myFavorite.value
+            }
         }
+
         favoriteShopList?.let {
 
             for (favorite in it) {

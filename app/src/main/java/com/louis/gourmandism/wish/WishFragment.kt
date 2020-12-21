@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.databinding.FragmentWishBinding
-import com.louis.gourmandism.databinding.ItemWishBinding
 import com.louis.gourmandism.extension.getVmFactory
 
 class WishFragment : Fragment() {
@@ -27,8 +26,12 @@ class WishFragment : Fragment() {
         val adapter = WishAdapter(viewModel)
         binding.recyclerViewMyWishList.adapter = adapter
 
-        val adapter2 = WishAdapter(viewModel)
-        binding.recyclerViewShareWishList.adapter = adapter2
+        val attentionAdapter = WishAdapter(viewModel)
+        binding.recyclerViewShareWishList.adapter = attentionAdapter
+
+        val shareAdapter = WishAdapter(viewModel)
+        binding.recyclerViewRecommendWishList.adapter = shareAdapter
+
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
             viewModel.getShop()
@@ -37,7 +40,8 @@ class WishFragment : Fragment() {
         viewModel.shop.observe(viewLifecycleOwner, Observer {
             it?.let{
                 adapter.submitList(viewModel.getNewFavorite())
-                adapter2.submitList(viewModel.getShareFavorite())
+                attentionAdapter.submitList(viewModel.getShareFavorite(0))
+                shareAdapter.submitList(viewModel.getShareFavorite(1))
             }
         })
 

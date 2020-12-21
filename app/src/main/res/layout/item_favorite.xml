@@ -53,5 +53,13 @@
             app:layout_constraintStart_toStartOf="@+id/text_shop_name"
             app:layout_constraintTop_toBottomOf="@+id/text_shop_name" />
 
+        <ImageView
+            android:id="@+id/button_remove"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cancel" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
