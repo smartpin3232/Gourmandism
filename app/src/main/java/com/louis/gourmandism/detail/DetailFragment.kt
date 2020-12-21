@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.OpenTime
 import com.louis.gourmandism.databinding.FragmentDetailBinding
@@ -118,7 +119,7 @@ class DetailFragment : Fragment() {
             val builder = SingleDateAndTimePickerDialog.Builder(context)
                 .bottomSheet()
                 .curved()
-                .backgroundColor(resources.getColor(R.color.mainStyleColor))
+                .backgroundColor(resources.getColor(R.color.gray_646464))
                 .mainColor(Color.WHITE)
                 .titleTextColor(Color.WHITE)
                 .displayListener {}
@@ -180,8 +181,8 @@ class DetailFragment : Fragment() {
         })
 
         viewModel.newEventStatus.observe(viewLifecycleOwner, Observer {
-
             slideUpDownBottomSheet()
+            findNavController().navigate(NavigationDirections.actionGlobalEventFragment())
         })
 
         viewModel.toProfileStatus.observe(viewLifecycleOwner, Observer {

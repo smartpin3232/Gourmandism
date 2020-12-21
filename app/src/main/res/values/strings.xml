@@ -44,4 +44,8 @@
     <string name="message">MESSAGE</string>
     <string name="hyphen">&#160;─&#160;</string>
 
+    <string name="follow_collection">關注收藏</string>
+    <string name="follow_cancel">取消關注</string>
+    <string name="remove">REMOVE</string>
+
 </resources>

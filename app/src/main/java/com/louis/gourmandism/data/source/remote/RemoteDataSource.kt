@@ -31,6 +31,7 @@ object RemoteDataSource : DataSource {
                     val comment = document.toObject(Comment::class.java)
                     list.add(comment)
                 }
+                list.sortByDescending { it.createdTime }
                 liveData.value = list
             }
         return liveData
@@ -224,7 +225,7 @@ object RemoteDataSource : DataSource {
                     val event = document.toObject(Event::class.java)
                     list.add(event)
                 }
-
+                list.sortByDescending { it.createTime }
                 liveData.value = list
                 Log.i("liveData", liveData.value.toString())
             }

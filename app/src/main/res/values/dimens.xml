@@ -12,6 +12,7 @@
 
     <dimen name="standard_margin">16dp</dimen>
     <dimen name="standard_half_margin">8dp</dimen>
+    <dimen name="standard_quarter_margin">4dp</dimen>
 
     <dimen name="standard_font_size">18sp</dimen>
 

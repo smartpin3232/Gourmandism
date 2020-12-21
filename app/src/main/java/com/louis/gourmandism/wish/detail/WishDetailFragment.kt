@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.databinding.FragmentWishDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import com.louis.gourmandism.login.UserManager
 
 
 class WishDetailFragment : Fragment() {
@@ -31,6 +32,9 @@ class WishDetailFragment : Fragment() {
         val binding = FragmentWishDetailBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        val favorite = WishDetailFragmentArgs.fromBundle(requireArguments()).favorite
+        viewModel.checkListStatus(favorite)
 
         val adapter = WishDetailAdapter(viewModel)
         binding.recyclerViewFavorite.adapter = adapter

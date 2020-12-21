@@ -7,6 +7,7 @@
         <variable
             name="viewModel"
             type="com.louis.gourmandism.wish.detail.WishDetailViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +86,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_layout_4"
-            android:text="REMOVE"
+            android:text="@string/remove"
+            android:visibility="@{viewModel.listStatus == 3 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -95,12 +97,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/standard_margin"
             android:layout_marginTop="@dimen/standard_half_margin"
+            android:visibility="@{viewModel.listStatus == 3 ? View.GONE : View.VISIBLE}"
             android:background="@drawable/round_layout"
             android:gravity="center"
             android:paddingVertical="@dimen/standard_half_margin"
             android:textSize="@dimen/standard_font_size"
             android:textStyle="bold"
-            android:text="關注收藏"
+            android:text="@{viewModel.listStatus == 2 ? @string/follow_collection:@string/follow_cancel}"
+            tools:text="@string/follow_collection"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_follower" />

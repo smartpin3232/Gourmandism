@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingHorizontal="@dimen/standard_quarter_margin"
+        android:paddingVertical="@dimen/standard_half_margin">
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"

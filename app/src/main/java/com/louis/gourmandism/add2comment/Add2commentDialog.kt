@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.R
@@ -24,6 +25,7 @@ import com.louis.gourmandism.extension.getVmFactory
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
+import com.louis.gourmandism.NavigationDirections
 import java.io.File
 
 class Add2commentDialog : BottomSheetDialogFragment() {
@@ -86,8 +88,8 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         })
 
         viewModel.setStatus.observe(viewLifecycleOwner, Observer {
-
-            this.dismiss()
+            findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
+//            this.dismiss()
         })
 
         viewModel.star.observe(viewLifecycleOwner, Observer {

@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="@dimen/standard_half_margin">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image_user"
@@ -76,7 +76,7 @@
             android:id="@+id/text_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/standard_half_margin"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="5"
@@ -91,10 +91,12 @@
             android:id="@+id/recycler_view_detail_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            android:layout_marginBottom="@dimen/standard_half_margin"
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_comment"

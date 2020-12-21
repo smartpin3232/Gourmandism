@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.Repository
+import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,6 +35,10 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     private val _navigateInfo = MutableLiveData<Shop>()
     val navigateInfo: LiveData<Shop>
         get() = _navigateInfo
+
+    private val _listStatus = MutableLiveData<Int>()
+    val listStatus: LiveData<Int>
+        get() = _listStatus
 
     override fun onCleared() {
         super.onCleared()
@@ -72,17 +77,28 @@ class WishDetailViewModel(private val repository: Repository, private val favori
         }
     }
 
-    fun getNewShop(shopIdList: MutableList<String>) : MutableList<Shop>{
+    fun getNewShop(shopIdList: MutableList<String>): MutableList<Shop> {
         val favoriteShopList = mutableListOf<Shop>()
         _shop.value?.let {
             for (shopId in shopIdList) {
-                if(it.any{shop ->  shop.id == shopId}){
-                    favoriteShopList.add(it.filter { shop ->  shop.id == shopId }[0])
+                if (it.any { shop -> shop.id == shopId }) {
+                    favoriteShopList.add(it.filter { shop -> shop.id == shopId }[0])
                 }
             }
 
         }
         return favoriteShopList
+    }
+
+    fun checkListStatus(favorite: Favorite) {
+        // 1: 已追隨清單  2: 推薦清單 3: 自己的清單
+        _listStatus.value = if (favorite.type == 1 && favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
+            1
+        } else if (favorite.type == 1 && !favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
+            2
+        } else {
+            3
+        }
     }
 
 
