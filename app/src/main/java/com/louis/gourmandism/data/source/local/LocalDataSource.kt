@@ -87,5 +87,13 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun setAttention(
+        userId: String,
+        favoriteId: String,
+        status: Boolean
+    ): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 
 }

@@ -20,7 +20,6 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     private val _favoriteInfo = MutableLiveData<Favorite>().apply {
         value = favorite
     }
-
     val favoriteInfo: LiveData<Favorite>
         get() = _favoriteInfo
 
@@ -39,6 +38,10 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     private val _listStatus = MutableLiveData<Int>()
     val listStatus: LiveData<Int>
         get() = _listStatus
+
+    private val _setAttentionStatus = MutableLiveData<Boolean>()
+    val setAttentionStatus: LiveData<Boolean>
+        get() = _setAttentionStatus
 
     override fun onCleared() {
         super.onCleared()
@@ -88,6 +91,24 @@ class WishDetailViewModel(private val repository: Repository, private val favori
 
         }
         return favoriteShopList
+    }
+
+    fun setAttention(status: Boolean) {
+
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.setAttention(it, favorite.id, status)
+                _setAttentionStatus.value = when(result){
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+
+        }
     }
 
     fun checkListStatus(favorite: Favorite) {

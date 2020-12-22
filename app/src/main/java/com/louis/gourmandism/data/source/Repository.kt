@@ -42,4 +42,6 @@ interface Repository {
     suspend fun setSelectTag(userId: String, tag: String): Result<Boolean>
 
     suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean>
+
+    suspend fun setAttention(userId: String, favoriteId: String, status: Boolean): Result<Boolean>
 }

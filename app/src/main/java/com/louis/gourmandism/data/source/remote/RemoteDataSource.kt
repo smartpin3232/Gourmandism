@@ -505,4 +505,30 @@ object RemoteDataSource : DataSource {
                 }
         }
 
+    override suspend fun setAttention(userId: String, favoriteId: String, status: Boolean): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("Favorite")
+            val document = db.document(favoriteId)
+
+            if (status) {
+                document.update("attentionList", FieldValue.arrayUnion(userId))
+            } else {
+                document.update("attentionList", FieldValue.arrayRemove(userId))
+            }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
+
 }

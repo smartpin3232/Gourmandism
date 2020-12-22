@@ -87,5 +87,9 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.addFriend(userId, friendId, status)
     }
 
+    override suspend fun setAttention(userId: String, favoriteId: String, status: Boolean): Result<Boolean> {
+        return remoteDataSource.setAttention(userId, favoriteId, status)
+    }
+
 
 }

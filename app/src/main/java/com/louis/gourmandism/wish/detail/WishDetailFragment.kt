@@ -10,9 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
+import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentWishDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
-import com.louis.gourmandism.login.UserManager
 
 
 class WishDetailFragment : Fragment() {
@@ -52,6 +52,17 @@ class WishDetailFragment : Fragment() {
                 }
             }
         })
+
+        binding.textAddAttention.setOnClickListener {
+            val status = if(binding.textAddAttention.text.toString() == getString(R.string.follow_collection)){
+                binding.textAddAttention.text = getString(R.string.follow_cancel)
+                true
+            } else{
+                binding.textAddAttention.text = getString(R.string.follow_collection)
+                false
+            }
+            viewModel.setAttention(status)
+        }
 
         viewModel.navigateInfo.observe(viewLifecycleOwner, Observer {
 
