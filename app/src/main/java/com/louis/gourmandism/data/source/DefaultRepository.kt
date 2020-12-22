@@ -91,5 +91,9 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.setAttention(userId, favoriteId, status)
     }
 
+    override suspend fun removeWishList(favoriteId: String): Result<Boolean> {
+        return  remoteDataSource.removeWishList(favoriteId)
+    }
+
 
 }

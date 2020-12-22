@@ -135,6 +135,10 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         return favoriteShopList
     }
 
+    fun onNavigationDone(){
+        _navigationData.value = null
+    }
+
     fun navigateToDetail(favorite: Favorite) {
         _navigationData.value = favorite
     }

@@ -51,12 +51,14 @@ class HomeFragment : Fragment() {
         viewModel.toCommentStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalCommentFragment(it))
+                viewModel.onNavigationDone()
             }
         })
 
         viewModel.toProfileStatus.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(HomeFragmentDirections.actionGlobalProfileFragment(it))
+                viewModel.onNavigationDone()
             }
         })
 

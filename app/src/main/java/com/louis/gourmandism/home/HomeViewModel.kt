@@ -60,6 +60,11 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
         toProfileStatus.value = userId
     }
 
+    fun onNavigationDone() {
+        toCommentStatus.value = null
+        toProfileStatus.value = null
+    }
+
     fun setLike(commentId: String, status: Int){
         coroutineScope.launch {
             UserManager.userToken?.let {

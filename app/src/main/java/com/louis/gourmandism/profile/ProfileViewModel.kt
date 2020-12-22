@@ -194,6 +194,11 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
         _commentInfo.value = comment
     }
 
+    fun onNavigationDone(){
+        _commentInfo.value = null
+    }
+
+
     fun navigateToShop(shop: Shop){
         _shopInfo.value = shop
     }

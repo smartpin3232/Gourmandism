@@ -64,6 +64,10 @@ class WishDetailFragment : Fragment() {
             viewModel.setAttention(status)
         }
 
+        binding.textRemove.setOnClickListener {
+
+        }
+
         viewModel.navigateInfo.observe(viewLifecycleOwner, Observer {
 
             findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it.id))

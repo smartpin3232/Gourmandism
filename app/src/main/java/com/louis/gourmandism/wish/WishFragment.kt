@@ -47,10 +47,15 @@ class WishFragment : Fragment() {
 
         binding.buttonAdd.setOnClickListener {
             findNavController().navigate(NavigationDirections.actionGlobalNewWishListDialog())
+
         }
 
         viewModel.navigationData.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
+                viewModel.onNavigationDone()
+
+            }
         })
 
         return binding.root

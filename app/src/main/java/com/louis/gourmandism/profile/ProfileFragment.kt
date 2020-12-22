@@ -82,11 +82,8 @@ class ProfileFragment : Fragment() {
 
         viewModel.commentInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(
-                    ProfileFragmentDirections.actionGlobalCommentFragment(
-                        it
-                    )
-                )
+                findNavController().navigate(ProfileFragmentDirections.actionGlobalCommentFragment(it))
+                viewModel.onNavigationDone()
             }
         })
 

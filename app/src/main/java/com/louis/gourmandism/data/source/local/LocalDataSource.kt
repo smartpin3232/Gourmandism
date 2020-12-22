@@ -95,5 +95,9 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun removeWishList(favoriteId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 
 }

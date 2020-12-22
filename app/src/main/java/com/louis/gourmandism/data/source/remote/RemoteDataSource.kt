@@ -391,7 +391,6 @@ object RemoteDataSource : DataSource {
         suspendCoroutine { continuation ->
             val db = FirebaseFirestore.getInstance().collection("Favorite")
             val document = db.document(folderId)
-
             if (status != 0) {
                 document.update("shops", FieldValue.arrayUnion(shopId))
             } else {
@@ -518,6 +517,26 @@ object RemoteDataSource : DataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
+    override suspend fun removeWishList(favoriteId: String): Result<Boolean> =
+        suspendCoroutine { continuation ->
+
+            val db = FirebaseFirestore.getInstance().collection("Favorite")
+            val document = db.document(favoriteId)
+                .delete()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
                     } else {
                         task.exception?.let {

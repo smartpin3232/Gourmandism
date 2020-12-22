@@ -44,4 +44,6 @@ interface Repository {
     suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean>
 
     suspend fun setAttention(userId: String, favoriteId: String, status: Boolean): Result<Boolean>
+
+    suspend fun removeWishList(favoriteId: String): Result<Boolean>
 }
