@@ -50,7 +50,10 @@ class EventItemFragment(val status: Int) : Fragment() {
 
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))
+            it?.let {
+                findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))
+                viewModel.onNavigationDone()
+            }
         })
 
         viewModel.toastStatus.observe(viewLifecycleOwner, Observer {

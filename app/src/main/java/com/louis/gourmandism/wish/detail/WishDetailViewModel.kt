@@ -43,6 +43,14 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     val setAttentionStatus: LiveData<Boolean>
         get() = _setAttentionStatus
 
+    private val _removeListStatus = MutableLiveData<Boolean>()
+    val removeListStatus: LiveData<Boolean>
+        get() = _removeListStatus
+
+    private var _addWishStatus = MutableLiveData<Boolean>()
+    val addWishStatus: LiveData<Boolean>
+        get() = _addWishStatus
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -111,6 +119,20 @@ class WishDetailViewModel(private val repository: Repository, private val favori
         }
     }
 
+    fun removeList(){
+        coroutineScope.launch {
+            val result = repository.removeWishList(favorite.id)
+            _removeListStatus.value = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
     fun checkListStatus(favorite: Favorite) {
         // 1: 已追隨清單  2: 推薦清單 3: 自己的清單
         _listStatus.value = if (favorite.type == 1 && favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
@@ -122,8 +144,30 @@ class WishDetailViewModel(private val repository: Repository, private val favori
         }
     }
 
+    fun setWish(shopId: String,status: Int) {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.setWish(favorite.id, shopId, status)
+                _addWishStatus.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+
+        }
+    }
+
 
     fun navigateToDetail(shop: Shop) {
         _navigateInfo.value = shop
     }
+
+    fun onNavigationDone() {
+        _navigateInfo.value = null
+    }
+
 }

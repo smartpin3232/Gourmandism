@@ -20,7 +20,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         .apply(
             RequestOptions()
                 .placeholder(R.drawable.home)
-                .error(R.drawable.no_picture)
+                .error(R.drawable.home)
         )
         .into(imgView)
 }
@@ -33,7 +33,7 @@ fun bindLocalImage(imgView: ImageView, imgUrl: String?) {
         .apply(
             RequestOptions()
                 .placeholder(R.drawable.home)
-                .error(R.drawable.no_picture)
+                .error(R.drawable.home)
         )
         .into(imgView)
 }

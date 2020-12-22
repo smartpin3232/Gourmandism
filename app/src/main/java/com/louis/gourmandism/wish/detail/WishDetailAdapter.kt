@@ -1,6 +1,7 @@
 package com.louis.gourmandism.wish.detail
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,6 +26,17 @@ class WishDetailAdapter(private val viewModel: WishDetailViewModel) :
 
         fun bind(shop: Shop, viewModel: WishDetailViewModel,holder: ViewHolder) {
             binding.shop = shop
+
+            if(viewModel.listStatus.value != 3){
+                binding.buttonRemove.visibility = View.GONE
+            } else {
+                binding.buttonRemove.visibility = View.VISIBLE
+            }
+
+            binding.buttonRemove.setOnClickListener {
+                viewModel.setWish(shop.id,0)
+            }
+
             holder.itemView.setOnClickListener {
                 viewModel.navigateToDetail(shop)
             }

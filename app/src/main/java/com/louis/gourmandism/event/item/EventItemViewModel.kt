@@ -88,6 +88,10 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         _shopInfo.value = item.shop
     }
 
+    fun onNavigationDone() {
+        _shopInfo.value = null
+    }
+
     fun setEventNotification(event: Event){
         _notificationInfo.value = event
     }

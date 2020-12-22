@@ -1,7 +1,7 @@
 package com.louis.gourmandism.add2wish
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogAdd2wishBinding
 import com.louis.gourmandism.extension.add2wishVmFactory
-import com.louis.gourmandism.extension.getVmFactory
-
 
 class Add2wishFragment : BottomSheetDialogFragment() {
 
