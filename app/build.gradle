@@ -133,6 +133,7 @@ dependencies {
     //workManager
     implementation "androidx.work:work-runtime-ktx:2.4.0"
 
-    
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.5.0'
 
 }
