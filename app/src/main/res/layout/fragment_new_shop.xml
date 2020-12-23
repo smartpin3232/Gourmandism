@@ -55,6 +55,29 @@
             app:layout_constraintEnd_toEndOf="@+id/edit_phone"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/edit_phone"
-            app:layout_constraintTop_toBottomOf="@+id/edit_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_add_comment_image" />
+
+        <ImageView
+            android:id="@+id/image_camera"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_phone"
+            app:srcCompat="@drawable/add_photo_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_add_comment_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_camera"
+            tools:listitem="@layout/item_detail_comment_image" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

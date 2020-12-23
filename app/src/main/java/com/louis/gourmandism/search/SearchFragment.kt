@@ -1,7 +1,6 @@
 package com.louis.gourmandism.search
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.pm.PackageManager
 
 import android.location.Location
@@ -10,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -35,7 +33,6 @@ import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
-import com.louis.gourmandism.search.create.NewTagDialog
 
 
 class SearchFragment : Fragment(){
@@ -119,6 +116,29 @@ class SearchFragment : Fragment(){
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
+        //點擊取得當前位置
+        binding.textTitle.setOnClickListener {
+            getDeviceLocation()
+            viewModel.getShopList("",0)
+        }
+
+        viewModel.shopList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                for(item in it){
+                    myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
+                }
+                viewModel.selectShopList.value = it
+            }
+        })
+
+        viewModel.selectShopList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+//                for(item in it){
+//                    myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
+//                }
+            }
+        })
+
         viewModel.selectTagList.observe(viewLifecycleOwner, Observer {
             val list = mutableListOf<String>()
             list.addAll(it)
@@ -127,33 +147,20 @@ class SearchFragment : Fragment(){
             adapter.notifyDataSetChanged()
         })
 
-        //點擊取得當前位置
-        binding.textTitle.setOnClickListener {
-            getDeviceLocation()
-            viewModel.getShopList("",0)
-        }
-
-        viewModel.shopList.observe(viewLifecycleOwner, Observer {
-
-            it?.let {
-
-                for(item in it){
-                    myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
-                }
-            }
-        })
-
         UserManager.user.observe(viewLifecycleOwner, Observer {
             viewModel.getUserSelectTag()
         })
 
         viewModel.navigateToNewTag.observe(viewLifecycleOwner, Observer {
-
            findNavController().navigate(SearchFragmentDirections.actionGlobalNewTagDialog())
         })
 
-        viewModel.filterShopList.observe(viewLifecycleOwner, Observer {
+        viewModel.markerFilterShopList.observe(viewLifecycleOwner, Observer {
             resetMarker(it)
+        })
+
+        viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
+            viewModel.getMyFavoriteShop(it)
         })
 
         binding.cardShopInfo.setOnClickListener {
@@ -161,9 +168,30 @@ class SearchFragment : Fragment(){
             Log.i("cardView","click")
         }
 
+        binding.textSelectMode.setOnClickListener {
+            if(binding.textSelectMode.text.toString() == "我的收藏"){
+
+                viewModel.shopList.value?.let {
+                    resetMarker(it)
+                    viewModel.selectShopList.value = it
+                }
+
+                binding.textSelectMode.text = "全部店家"
+            }else{
+
+                viewModel.shopList.value?.let {allShopList->
+                    val filterList = allShopList.filter {shop->
+                        viewModel.myFavoriteShop.value!!.contains(shop.id)}
+                    viewModel.selectShopList.value = filterList
+                    resetMarker(filterList)
+                }
+                binding.textSelectMode.text = "我的收藏"
+            }
+        }
+
         binding.editSearch.addTextChangedListener {
 
-            viewModel.shopList.value?.let {shopList->
+            viewModel.selectShopList.value?.let {shopList->
                 val filterList = viewModel.filter(shopList ,it.toString())
                 resetMarker(filterList)
             }
@@ -174,9 +202,7 @@ class SearchFragment : Fragment(){
 
     private fun resetMarker(filterList: List<Shop>){
         myMap?.clear()
-
         for (item in filterList) {
-
             myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
         }
     }

@@ -25,16 +25,26 @@ class NewShopViewModel(private val repository: Repository, private val location:
     val newStatus: LiveData<Boolean>
         get() = _newStatus
 
+    var imagesUri = MutableLiveData<MutableList<String>>()
+
+    var localImages = MutableLiveData<MutableList<String>>()
+
     init {
     }
 
     fun newShop(name: String, address: String, phone: String){
+
+        val imageArray = mutableListOf<String>()
+        imagesUri.value?.let {
+            imageArray.addAll(it)
+        }
+
         val shop= Shop(
             name = name,
             address = address,
             phone = phone,
             location = Location(location.locationX,location.locationY),
-            image = mutableListOf()
+            image = imageArray
         )
         coroutineScope.launch {
             val result = repository.newShop(shop)

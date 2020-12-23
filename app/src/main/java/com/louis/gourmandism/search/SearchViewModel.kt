@@ -7,9 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,8 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.louis.gourmandism.R
-import com.louis.gourmandism.bindImage
-import com.louis.gourmandism.data.Location
+import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.data.Result
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
@@ -40,14 +37,17 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
+    //All shop list
     private var _shopList = MutableLiveData<List<Shop>>()
     val shopList: LiveData<List<Shop>>
         get() = _shopList
 
-    private var _filterShopList = MutableLiveData<List<Shop>>()
-    val filterShopList: LiveData<List<Shop>>
-        get() = _filterShopList
+    //使用marker搜尋的list
+    private var _markerFilterShopList = MutableLiveData<List<Shop>>()
+    val markerFilterShopList: LiveData<List<Shop>>
+        get() = _markerFilterShopList
 
+    //show shop information when click marker
     private var _shop = MutableLiveData<Shop>()
     val shop: LiveData<Shop>
         get() = _shop
@@ -58,9 +58,20 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
 
     private var tagStatus: String = ""
 
-    var testStatus = MutableLiveData<Boolean>()
-
     var selectTagList = MutableLiveData<MutableList<String>>()
+
+    //Get my favorite list
+    private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
+    val myFavorite: LiveData<MutableList<Favorite>>
+        get() = _myFavorite
+
+    //Get my favorite shopId
+    private var _myFavoriteShop = MutableLiveData<MutableList<String>>()
+    val myFavoriteShop: LiveData<MutableList<String>>
+        get() = _myFavoriteShop
+
+    var selectShopList = MutableLiveData<List<Shop>>()
+
 
     override fun onCleared() {
         super.onCleared()
@@ -70,6 +81,39 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     init {
         getShopList("", 0)
         getUserSelectTag()
+        getFavorite()
+    }
+
+    private fun getFavorite() {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.getMyFavorite(it)
+                _myFavorite.value = when (result) {
+                    is Result.Success -> {
+                        Log.i("favorite",result.data.toString())
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+
+        }
+    }
+
+    fun getMyFavoriteShop(favoriteList: MutableList<Favorite>) {
+        UserManager.userToken?.let {
+            val newShopList = mutableListOf<String>()
+            val shopList = favoriteList.filter { it.userId == UserManager.userToken }
+            shopList.forEach {favorite->
+                favorite.shops?.let { shop->
+                    for(item in shop)
+                        newShopList.add(item)
+                }
+            }
+            _myFavoriteShop.value = newShopList
+        }
     }
 
     fun getShopList(id: String, mode: Int) {
@@ -217,10 +261,10 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
 
     fun markerSet(tag: String) {
         if (tagStatus == tag) {
-            _filterShopList.value = _shopList.value
+            _markerFilterShopList.value = selectShopList.value
             tagStatus = ""
         } else {
-            _filterShopList.value = filter(_shopList.value!!, tag)
+            _markerFilterShopList.value = filter(selectShopList.value!!, tag)
             tagStatus = tag
         }
     }
