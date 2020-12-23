@@ -2,6 +2,7 @@ package com.louis.gourmandism.detail
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.icu.math.BigDecimal
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -165,7 +166,7 @@ class DetailFragment : Fragment() {
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
-                var starTotal = 0F
+                var starTotal = 0.0
                 it.forEach {comment->
                     starTotal += comment.star
                 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.profile.edit.ProfileEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_layout"
+        tools:context=".profile.edit.ProfileEditDialog">
+
+        <com.github.florent37.shapeofview.shapes.CircleView
+            android:id="@+id/user_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_half_margin"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            app:civ_border_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars">
+
+            <ImageView
+                android:id="@+id/image_user"
+                imageUrl="@{viewModel.profile.image}"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </com.github.florent37.shapeofview.shapes.CircleView>
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_layout_4"
+            android:text="@{viewModel.profile.name}"
+            tools:text="Louis"
+            android:textColor="@color/gray_646464"
+            android:layout_marginStart="@dimen/standard_half_margin"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            android:layout_marginEnd="@dimen/standard_half_margin"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_image"
+            app:layout_constraintTop_toTopOf="@+id/user_image" />
+
+        <EditText
+            android:id="@+id/edit_introduction"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/standard_half_margin"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            android:layout_marginEnd="@dimen/standard_half_margin"
+            android:background="@drawable/round_layout_4"
+            android:gravity="top"
+            android:textColor="@color/gray_646464"
+            android:hint="Say something about you"
+            android:paddingHorizontal="@dimen/standard_half_margin"
+            android:inputType="textMultiLine"
+            android:text="@{viewModel.profile.intro}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/user_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/user_image"
+            app:layout_constraintTop_toBottomOf="@+id/edit_name" />
+
+        <Button
+            android:id="@+id/button_send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_half_margin"
+            android:layout_marginTop="@dimen/standard_half_margin"
+            android:layout_marginEnd="@dimen/standard_half_margin"
+            android:layout_marginBottom="@dimen/standard_half_margin"
+            android:paddingVertical="@dimen/standard_quarter_margin"
+            android:background="@drawable/round_layout_3"
+            android:text="修改"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_image" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

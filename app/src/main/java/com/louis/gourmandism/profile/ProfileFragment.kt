@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentProfileBinding
 import com.louis.gourmandism.extension.getVmFactory
@@ -52,6 +53,12 @@ class ProfileFragment : Fragment() {
                 binding.buttonAddFriend.tag = true
             }
 
+        }
+
+        binding.buttonEdit.setOnClickListener {
+            viewModel.profile.value?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalProfileEditDialog(it))
+            }
         }
 
         viewModel.comment.observe(viewLifecycleOwner, Observer {

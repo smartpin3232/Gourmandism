@@ -84,7 +84,16 @@
         android:id="@+id/friendFragment"
         android:name="com.louis.gourmandism.friend.FriendFragment"
         android:label="FriendFragment"
-        tools:layout="@layout/fragment_friend"/>
+        tools:layout="@layout/fragment_friend" />
+
+    <dialog
+        android:id="@+id/profileEditDialog"
+        android:name="com.louis.gourmandism.profile.edit.ProfileEditDialog"
+        android:label="ProfileEditDialog">
+        <argument
+            android:name="user"
+            app:argType="com.louis.gourmandism.data.User" />
+    </dialog>
 
     <dialog
         android:id="@+id/newTagDialog"
@@ -173,5 +182,9 @@
     <action
         android:id="@+id/action_global_friendFragment"
         app:destination="@id/friendFragment" />
+
+    <action
+        android:id="@+id/action_global_profileEditDialog"
+        app:destination="@id/profileEditDialog" />
 
 </navigation>
