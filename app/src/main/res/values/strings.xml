@@ -47,5 +47,6 @@
     <string name="follow_collection">關注收藏</string>
     <string name="follow_cancel">取消關注</string>
     <string name="remove">REMOVE</string>
+    <string name="profile_about">Say something about you</string>
 
 </resources>

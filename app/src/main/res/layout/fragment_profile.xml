@@ -22,17 +22,6 @@
             android:layout_height="match_parent"
             android:background="@color/fragmentBackground">
 
-            <!--            <com.github.florent37.shapeofview.shapes.DiagonalView-->
-            <!--                android:id="@+id/diagonalView"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:elevation="4dp"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"-->
-            <!--                app:shape_diagonal_position="bottom">-->
-
-
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="wrap_content"
@@ -42,19 +31,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/image_profile_background" />
-            <!--            </com.github.florent37.shapeofview.shapes.DiagonalView>-->
-
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/text_location"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="台北市信義區"-->
-            <!--                android:textSize="18sp"-->
-            <!--                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/text_user_name"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/text_user_name"-->
-            <!--                tools:text="台北市信義區" />-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout3"
@@ -107,7 +83,7 @@
                 style="@style/detail_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/standard_margin"
                 android:layout_marginTop="8dp"
                 android:text="@string/my_comment"
                 app:layout_constraintStart_toStartOf="parent"
@@ -141,9 +117,8 @@
                 android:id="@+id/recycler_view_preview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginHorizontal="@dimen/standard_margin"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
                 android:overScrollMode="never"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -218,16 +193,15 @@
                 android:id="@+id/edit_introduction"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:layout_marginHorizontal="@dimen/standard_margin"
                 android:background="@drawable/round_layout"
                 android:paddingHorizontal="@dimen/standard_quarter_margin"
                 android:textColor="@color/gray_777777"
                 android:ems="10"
                 android:gravity="top"
                 android:text="@{viewModel.profile.intro}"
-                android:hint=" Say something about you"
+                android:hint="@string/profile_about"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

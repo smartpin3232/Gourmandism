@@ -11,6 +11,8 @@
 
 
     <dimen name="standard_margin">16dp</dimen>
+    <dimen name="standard_three_quarters_margin">12dp</dimen>
+    <dimen name="standard_half_three_quarters_margin">6dp</dimen>
     <dimen name="standard_half_margin">8dp</dimen>
     <dimen name="standard_quarter_margin">4dp</dimen>
 
