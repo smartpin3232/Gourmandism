@@ -72,6 +72,7 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
 
     var selectShopList = MutableLiveData<List<Shop>>()
 
+    var tagPosition = MutableLiveData<Int>()
 
     override fun onCleared() {
         super.onCleared()
@@ -259,12 +260,14 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         return filteredList
     }
 
-    fun markerSet(tag: String) {
+    fun markerSet(tag: String, position: Int) {
         if (tagStatus == tag) {
             _markerFilterShopList.value = selectShopList.value
+            tagPosition.value = null
             tagStatus = ""
         } else {
             _markerFilterShopList.value = filter(selectShopList.value!!, tag)
+            tagPosition.value = position
             tagStatus = tag
         }
     }

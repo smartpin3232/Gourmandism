@@ -163,6 +163,10 @@ class SearchFragment : Fragment(){
             viewModel.getMyFavoriteShop(it)
         })
 
+        viewModel.tagPosition.observe(viewLifecycleOwner, Observer {
+            adapter.notifyDataSetChanged()
+        })
+
         binding.cardShopInfo.setOnClickListener {
             findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
             Log.i("cardView","click")

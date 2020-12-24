@@ -16,12 +16,16 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.louis.gourmandism.databinding.ActivityMainBinding
 import com.louis.gourmandism.databinding.NavDrawerBinding
 import com.louis.gourmandism.extension.getVmFactory
@@ -36,10 +40,12 @@ class MainActivity : AppCompatActivity() {
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private lateinit var appBarConfiguration: AppBarConfiguration
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        firebaseAnalytics = Firebase.analytics
 //        val loginStatus = intent.getBundleExtra("bundle")?.getBoolean("loginStatus")
         if (UserManager.userToken == null
         ) {
@@ -52,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
 //        applicationContext.startService(Intent(applicationContext, GourmandismService::class.java))
-
 
         binding.textToolbarTitle.setOnClickListener {
             UserManager.clear()

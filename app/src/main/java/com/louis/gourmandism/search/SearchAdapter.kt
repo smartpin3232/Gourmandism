@@ -1,10 +1,14 @@
 package com.louis.gourmandism.search
 
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.ItemTagBinding
 
 
@@ -30,11 +34,18 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
         ) {
             binding.tag = item
 
+            if(position == viewModel.tagPosition.value){
+                binding.textType.setBackgroundColor(Color.parseColor("#cbae82"))
+            }else{
+                binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
+            }
+
             binding.textType.setOnClickListener {
                 if(item == "新增"){
                     viewModel.addSelectTag()
+                    viewModel.tagPosition.value = null
                 }else{
-                    viewModel.markerSet(item)
+                    viewModel.markerSet(item, position)
                 }
             }
 
