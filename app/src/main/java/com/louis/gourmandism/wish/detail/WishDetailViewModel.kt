@@ -49,6 +49,10 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     val addWishStatus: LiveData<Boolean>
         get() = _addWishStatus
 
+    private var _setShareStatus = MutableLiveData<Boolean>()
+    val setShareStatus: LiveData<Boolean>
+        get() = _setShareStatus
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -131,14 +135,32 @@ class WishDetailViewModel(private val repository: Repository, private val favori
         }
     }
 
+    fun setShare(status: Int){
+        coroutineScope.launch {
+            val result = repository.setShareStatus(favorite.id, status)
+            _setShareStatus.value = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
     fun checkListStatus(favorite: Favorite) {
-        // 1: 已追隨清單  2: 推薦清單 3: 自己的清單
-        _listStatus.value = if (favorite.type == 1 && favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
+        //1:自己的清單 2:已追隨清單 3:推薦清單
+        _listStatus.value = if(favorite.userId == UserManager.userToken){
             1
-        } else if (favorite.type == 1 && !favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
-            2
         } else {
-            3
+            if (favorite.type == 1 && favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
+                2
+            } else if (favorite.type == 1 && !favorite.attentionList!!.any { attention -> attention == UserManager.userToken }) {
+                3
+            } else {
+                4
+            }
         }
     }
 
@@ -165,7 +187,6 @@ class WishDetailViewModel(private val repository: Repository, private val favori
         list?.shops?.remove(shopId)
         favoriteInfo.value = list
     }
-
 
     fun navigateToDetail(shop: Shop) {
         _navigateInfo.value = shop

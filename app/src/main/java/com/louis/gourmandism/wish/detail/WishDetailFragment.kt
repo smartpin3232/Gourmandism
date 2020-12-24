@@ -11,15 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
-import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentWishDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import it.beppi.tristatetogglebutton_library.TriStateToggleButton
 
 
 class WishDetailFragment : Fragment() {
@@ -32,11 +31,13 @@ class WishDetailFragment : Fragment() {
         )
     }
 
+    lateinit var binding : FragmentWishDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentWishDetailBinding.inflate(inflater, container, false)
+        binding = FragmentWishDetailBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -45,6 +46,8 @@ class WishDetailFragment : Fragment() {
 
         val adapter = WishDetailAdapter(viewModel)
         binding.recyclerViewFavorite.adapter = adapter
+
+        initStatus(favorite.type)
 
         viewModel.favoriteInfo.observe(viewLifecycleOwner, Observer {
             viewModel.getUser(it.userId)
@@ -76,6 +79,18 @@ class WishDetailFragment : Fragment() {
             viewModel.setAttention(status)
         }
 
+        binding.toggle.setOnToggleChanged { toggleStatus, booleanToggleStatus, toggleIntValue ->
+            when(toggleStatus){
+                TriStateToggleButton.ToggleStatus.on->{
+                    viewModel.setShare(1)
+                }
+                TriStateToggleButton.ToggleStatus.off->{
+                    viewModel.setShare(0)
+                }
+                else -> null
+            }
+        }
+
         binding.textRemove.setOnClickListener {
             showDialog()
         }
@@ -85,10 +100,6 @@ class WishDetailFragment : Fragment() {
                 findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it.id))
                 viewModel.onNavigationDone()
             }
-        })
-
-        viewModel.addWishStatus.observe(viewLifecycleOwner, Observer {
-//            favorite.shops?.remove()
         })
 
         return binding.root
@@ -111,6 +122,14 @@ class WishDetailFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun initStatus(type: Int) {
+        if(type == 0){
+            binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.off
+        }else{
+            binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.on
+        }
     }
 
 }

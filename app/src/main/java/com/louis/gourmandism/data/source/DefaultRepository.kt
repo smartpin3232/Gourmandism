@@ -79,8 +79,8 @@ class DefaultRepository(private val remoteDataSource: DataSource,
         return remoteDataSource.setBrowserHistory(userId, browseRecently)
     }
 
-    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> {
-        return remoteDataSource.setSelectTag(userId, tag)
+    override suspend fun setSelectTag(userId: String, tag: String, status: Boolean): Result<Boolean> {
+        return remoteDataSource.setSelectTag(userId, tag, status)
     }
 
     override suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean> {
@@ -93,6 +93,10 @@ class DefaultRepository(private val remoteDataSource: DataSource,
 
     override suspend fun removeWishList(favoriteId: String): Result<Boolean> {
         return  remoteDataSource.removeWishList(favoriteId)
+    }
+
+    override suspend fun setShareStatus(favoriteId: String, status: Int): Result<Boolean> {
+        return remoteDataSource.setShareStatus(favoriteId, status)
     }
 
 

@@ -108,12 +108,16 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         val favoriteShopList = when(status){
             0->{
                 myFavorite.value?.filter {
-                    it.type == 1 && it.attentionList!!.any {attention-> attention == UserManager.userToken }
+                    it.type == 1
+                    && it.attentionList!!.any {attention-> attention == UserManager.userToken }
+                    && it.userId!=UserManager.userToken
                 }
             }
             1->{
                 myFavorite.value?.filter {
-                    it.type == 1 && !it.attentionList!!.any {attention-> attention == UserManager.userToken }
+                    it.type == 1
+                    && !it.attentionList!!.any { attention-> attention == UserManager.userToken }
+                    && it.userId!=UserManager.userToken
                 }
             }
             else -> {

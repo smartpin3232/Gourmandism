@@ -1,6 +1,7 @@
 package com.louis.gourmandism.search
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 
 import android.location.Location
@@ -47,6 +48,7 @@ class SearchFragment : Fragment(){
 
     var clickMarker : Marker? = null
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private val callback = OnMapReadyCallback { googleMap ->
         myMap = googleMap
         getLocationPermission()
@@ -94,6 +96,13 @@ class SearchFragment : Fragment(){
         }
 
         getDeviceLocation()
+
+
+        @SuppressLint("ResourceType")
+        //id:2 右上角定位按鈕
+        val locationButton = mapFragment?.view?.rootView?.findViewById<View>(2)!!
+        // Change the visibility of my location button
+        locationButton.visibility = View.GONE
 
     }
 

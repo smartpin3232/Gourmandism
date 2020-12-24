@@ -70,6 +70,10 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     val myFavoriteShop: LiveData<MutableList<String>>
         get() = _myFavoriteShop
 
+    private var _tagResult = MutableLiveData<Boolean>()
+    val tagResult: LiveData<Boolean>
+        get() = _tagResult
+
     var selectShopList = MutableLiveData<List<Shop>>()
 
     var tagPosition = MutableLiveData<Int>()
@@ -157,16 +161,40 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun setUserTag(tag: String) {
+        coroutineScope.launch {
+            UserManager.userToken?.let {
+                val result = repository.setSelectTag(it, tag, false)
+                _tagResult.value = when (result) {
+                    is Result.Success -> {
+                        removeUserTag(tag)
+                        result.data
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+        }
+    }
+
     fun getUserSelectTag() {
         val newTag = mutableListOf<String>()
         UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
         selectTagList.value = newTag
     }
 
-    fun addSelectTag() {
+    private fun removeUserTag(tag: String){
+        UserManager.user.value?.selectTags?.remove(tag)
+        val newTag = mutableListOf<String>()
+        UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
+        selectTagList.value = newTag
+    }
 
+    fun addSelectTag() {
         _navigateToNewTag.value = true
     }
+
 
     fun setMapMarker(
         googleMap: GoogleMap,

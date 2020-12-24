@@ -39,11 +39,13 @@ interface Repository {
 
     suspend fun setBrowserHistory(userId: String, browseRecently: BrowseRecently): Result<Boolean>
 
-    suspend fun setSelectTag(userId: String, tag: String): Result<Boolean>
+    suspend fun setSelectTag(userId: String, tag: String, status: Boolean): Result<Boolean>
 
     suspend fun addFriend(userId: String, friendId: String, status: Boolean): Result<Boolean>
 
     suspend fun setAttention(userId: String, favoriteId: String, status: Boolean): Result<Boolean>
 
     suspend fun removeWishList(favoriteId: String): Result<Boolean>
+
+    suspend fun setShareStatus(favoriteId: String, status: Int): Result<Boolean>
 }

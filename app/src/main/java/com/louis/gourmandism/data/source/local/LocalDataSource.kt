@@ -79,7 +79,7 @@ class LocalDataSource(val context: Context) : DataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> {
+    override suspend fun setSelectTag(userId: String, tag: String, status: Boolean): Result<Boolean> {
         TODO("Not yet implemented")
     }
 
@@ -96,6 +96,10 @@ class LocalDataSource(val context: Context) : DataSource {
     }
 
     override suspend fun removeWishList(favoriteId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setShareStatus(favoriteId: String, status: Int): Result<Boolean> {
         TODO("Not yet implemented")
     }
 

@@ -8,6 +8,7 @@
             name="viewModel"
             type="com.louis.gourmandism.wish.detail.WishDetailViewModel" />
         <import type="android.view.View"/>
+        <import type="it.beppi.tristatetogglebutton_library.TriStateToggleButton"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,7 +88,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_layout_4"
             android:text="@string/remove"
-            android:visibility="@{viewModel.listStatus == 3 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.listStatus == 1 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,16 +98,29 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/standard_margin"
             android:layout_marginTop="@dimen/standard_half_margin"
-            android:visibility="@{viewModel.listStatus == 3 ? View.GONE : View.VISIBLE}"
             android:background="@drawable/round_layout"
             android:gravity="center"
             android:paddingVertical="@dimen/standard_half_margin"
+            android:text="@{viewModel.listStatus == 3 ? @string/follow_collection:@string/follow_cancel}"
             android:textSize="@dimen/standard_font_size"
             android:textStyle="bold"
-            android:text="@{viewModel.listStatus == 2 ? @string/follow_collection:@string/follow_cancel}"
-            tools:text="@string/follow_collection"
+            android:visibility="@{viewModel.listStatus != 1 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_follower" />
+            app:layout_constraintTop_toBottomOf="@+id/text_follower"
+            tools:text="@string/follow_collection" />
+
+        <it.beppi.tristatetogglebutton_library.TriStateToggleButton
+            android:id="@+id/toggle"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_list_name"
+            app:layout_constraintStart_toEndOf="@+id/text_list_name"
+            app:layout_constraintTop_toTopOf="@+id/text_list_name"
+            app:tbIsMidSelectable="false"
+            android:visibility="@{viewModel.listStatus == 1? View.VISIBLE : View.GONE}"
+            app:tbOnColor="@color/mainStyleColor" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

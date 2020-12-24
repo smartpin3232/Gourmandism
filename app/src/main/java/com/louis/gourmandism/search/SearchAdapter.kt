@@ -49,6 +49,13 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
                 }
             }
 
+            binding.textType.setOnLongClickListener {
+                if(item != "新增"){
+                    viewModel.setUserTag(item)
+                }
+                true
+            }
+
             binding.executePendingBindings()
         }
 

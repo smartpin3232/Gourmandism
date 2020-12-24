@@ -144,4 +144,7 @@ dependencies {
     //crashLytics
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //toggle
+    implementation 'com.github.BeppiMenozzi:TriStateToggleButton:1.1.4'
 }

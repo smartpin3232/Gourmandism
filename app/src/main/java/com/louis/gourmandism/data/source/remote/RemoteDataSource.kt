@@ -457,12 +457,17 @@ object RemoteDataSource : DataSource {
                 }
         }
 
-    override suspend fun setSelectTag(userId: String, tag: String): Result<Boolean> =
+    override suspend fun setSelectTag(userId: String, tag: String, status: Boolean): Result<Boolean> =
         suspendCoroutine { continuation ->
 
             val db = FirebaseFirestore.getInstance().collection("User")
             val document = db.document(userId)
-            document.update("selectTags", FieldValue.arrayUnion(tag))
+
+            if(status){
+                document.update("selectTags", FieldValue.arrayUnion(tag))
+            } else {
+                document.update("selectTags", FieldValue.arrayRemove(tag))
+            }
 
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -537,6 +542,26 @@ object RemoteDataSource : DataSource {
                 .delete()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail(""))
+                    }
+                }
+        }
+
+    override suspend fun setShareStatus(favoriteId: String, type: Int): Result<Boolean> =
+        suspendCoroutine { continuation ->
+            val db = FirebaseFirestore.getInstance().collection("Favorite")
+            val document = db.document(favoriteId)
+            document.update("type", type)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
                         continuation.resume(Result.Success(true))
                     } else {
                         task.exception?.let {

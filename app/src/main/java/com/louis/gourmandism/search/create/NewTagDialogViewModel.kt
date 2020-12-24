@@ -34,7 +34,7 @@ class NewTagDialogViewModel(private val repository: Repository) : ViewModel() {
     fun setUserTag(tag: String) {
         coroutineScope.launch {
             UserManager.userToken?.let {
-                val result = repository.setSelectTag(it, tag)
+                val result = repository.setSelectTag(it, tag, true)
                 _tagStatus.value = when (result) {
                     is Result.Success -> {
                         result.data

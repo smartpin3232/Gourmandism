@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.louis.gourmandism.data.OpenTime
+import it.beppi.tristatetogglebutton_library.TriStateToggleButton
 import java.text.SimpleDateFormat
 
 @BindingAdapter("imageUrl")
@@ -78,6 +79,7 @@ fun bindTextTime(textView: TextView, date: Long) {
 }
 
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("textBusinessTime")
 fun bindBusinessTime(textView: TextView, time: OpenTime) {
     val day = when(time.day){
