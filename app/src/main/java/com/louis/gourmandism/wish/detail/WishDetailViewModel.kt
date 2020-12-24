@@ -17,11 +17,9 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     val viewModelJob = Job()
     val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val _favoriteInfo = MutableLiveData<Favorite>().apply {
+    val favoriteInfo = MutableLiveData<Favorite>().apply {
         value = favorite
     }
-    val favoriteInfo: LiveData<Favorite>
-        get() = _favoriteInfo
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
@@ -150,6 +148,7 @@ class WishDetailViewModel(private val repository: Repository, private val favori
                 val result = repository.setWish(favorite.id, shopId, status)
                 _addWishStatus.value = when (result) {
                     is Result.Success -> {
+                        updateList(shopId)
                         result.data
                     }
                     else -> {
@@ -159,6 +158,12 @@ class WishDetailViewModel(private val repository: Repository, private val favori
             }
 
         }
+    }
+
+    private fun updateList(shopId: String){
+        val list = favoriteInfo.value?.copy()
+        list?.shops?.remove(shopId)
+        favoriteInfo.value = list
     }
 
 

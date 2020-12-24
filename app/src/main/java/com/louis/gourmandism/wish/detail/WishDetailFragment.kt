@@ -48,6 +48,11 @@ class WishDetailFragment : Fragment() {
 
         viewModel.favoriteInfo.observe(viewLifecycleOwner, Observer {
             viewModel.getUser(it.userId)
+
+            viewModel.shop?.let {shop->
+                    adapter.submitList(viewModel.getNewShop(it.shops!!))
+                    adapter.notifyDataSetChanged()
+            }
         })
 
         viewModel.shop.observe(viewLifecycleOwner, Observer {
@@ -83,7 +88,7 @@ class WishDetailFragment : Fragment() {
         })
 
         viewModel.addWishStatus.observe(viewLifecycleOwner, Observer {
-            adapter.notifyDataSetChanged()
+//            favorite.shops?.remove()
         })
 
         return binding.root
