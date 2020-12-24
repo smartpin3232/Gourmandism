@@ -13,9 +13,9 @@ import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogAdd2wishBinding
 import com.louis.gourmandism.extension.add2wishVmFactory
 
-class Add2wishFragment : BottomSheetDialogFragment() {
+class Add2wishDialog : BottomSheetDialogFragment() {
 
-    private val viewModel by viewModels<Add2wishViewModel> { add2wishVmFactory(Add2wishFragmentArgs.fromBundle(requireArguments()).shopId) }
+    private val viewModel by viewModels<Add2wishViewModel> { add2wishVmFactory(Add2wishDialogArgs.fromBundle(requireArguments()).shopId) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,9 @@ class Add2wishFragment : BottomSheetDialogFragment() {
         binding.recyclerViewAdd2wish.adapter = adapter
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+           it?.let {
+               adapter.submitList(viewModel.getMyFavorite(it))
+           }
         })
 
         viewModel.addWishStatus.observe(viewLifecycleOwner, Observer {

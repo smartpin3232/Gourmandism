@@ -103,7 +103,7 @@
 
     <dialog
         android:id="@+id/add2wishFragment"
-        android:name="com.louis.gourmandism.add2wish.Add2wishFragment"
+        android:name="com.louis.gourmandism.add2wish.Add2wishDialog"
         android:label="Add2wishFragment"
         tools:layout="@layout/dialog_add2wish">
         <argument

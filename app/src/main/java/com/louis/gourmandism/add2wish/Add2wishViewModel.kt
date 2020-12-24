@@ -40,10 +40,10 @@ class Add2wishViewModel(private val repository: Repository, private val shopId: 
     }
 
     init {
-        getMyFavorite()
+        getFavorite()
     }
 
-    private fun getMyFavorite() {
+    private fun getFavorite() {
         coroutineScope.launch {
             UserManager.userToken?.let {
                 val result = repository.getMyFavorite(it)
@@ -75,6 +75,14 @@ class Add2wishViewModel(private val repository: Repository, private val shopId: 
             }
 
         }
+    }
+
+    fun getMyFavorite(favoriteList: MutableList<Favorite>): List<Favorite> {
+        var myList = listOf<Favorite>()
+        UserManager.userToken?.let{
+            myList = favoriteList.filter {favorite ->  favorite.userId == it }
+        }
+        return myList
     }
 
 
