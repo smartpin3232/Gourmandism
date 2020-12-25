@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.lottery.LotteryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".lottery.LotteryFragment">
+
+        <Button
+            android:id="@+id/button_lottery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抽選"
+            android:textSize="25sp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:background="@drawable/round_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_shop" />
+
+        <ImageView
+            android:id="@+id/image_shop"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            imageUrl="@{viewModel.lotteryShop.image[0]}"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="@{viewModel.lotteryShop.name}"
+            app:layout_constraintEnd_toEndOf="@+id/image_shop"
+            app:layout_constraintStart_toStartOf="@+id/image_shop"
+            app:layout_constraintTop_toBottomOf="@+id/image_shop"
+            tools:text="Gary 麵包工坊" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

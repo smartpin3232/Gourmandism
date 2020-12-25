@@ -20,8 +20,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         .load(imgUri)
         .apply(
             RequestOptions()
-                .placeholder(R.drawable.home)
-                .error(R.drawable.home)
+                .placeholder(R.drawable.tableware)
+                .error(R.drawable.tableware)
         )
         .into(imgView)
 }

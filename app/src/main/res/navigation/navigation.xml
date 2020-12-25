@@ -81,6 +81,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/lotteryFragment"
+        android:name="com.louis.gourmandism.lottery.LotteryFragment"
+        android:label="LotteryFragment"
+        tools:layout="@layout/fragment_lottery"/>
+
+    <fragment
         android:id="@+id/friendFragment"
         android:name="com.louis.gourmandism.friend.FriendFragment"
         android:label="FriendFragment"
@@ -186,5 +192,9 @@
     <action
         android:id="@+id/action_global_profileEditDialog"
         app:destination="@id/profileEditDialog" />
+
+    <action
+        android:id="@+id/action_global_lotteryFragment"
+        app:destination="@id/lotteryFragment" />
 
 </navigation>

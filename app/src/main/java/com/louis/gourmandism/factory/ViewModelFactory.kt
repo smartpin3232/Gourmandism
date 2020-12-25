@@ -9,6 +9,7 @@ import com.louis.gourmandism.event.item.EventItemViewModel
 import com.louis.gourmandism.friend.item.FriendItemViewModel
 import com.louis.gourmandism.home.HomeViewModel
 import com.louis.gourmandism.login.LoginViewModel
+import com.louis.gourmandism.lottery.LotteryViewModel
 import com.louis.gourmandism.profile.ProfileViewModel
 import com.louis.gourmandism.profile.edit.ProfileEditViewModel
 import com.louis.gourmandism.search.SearchViewModel
@@ -54,6 +55,9 @@ class ViewModelFactory constructor(
 
                 isAssignableFrom(ProfileEditViewModel::class.java) ->
                     ProfileEditViewModel(repository)
+
+                isAssignableFrom(LotteryViewModel::class.java) ->
+                    LotteryViewModel(repository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

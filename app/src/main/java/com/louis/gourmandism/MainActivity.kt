@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_pick_restaurant -> {
 //                    viewModel.navigate.value = 1
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
-//                    findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_gameFragment)
+                    findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_lotteryFragment)
                     true
                 }
 

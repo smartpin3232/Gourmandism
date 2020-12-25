@@ -36,7 +36,9 @@ class FriendItemFragment(val type: Int) : Fragment() {
 
         viewModel.friendInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it)
+                if(type == 0){
+                    adapter.submitList(it)
+                }
             }
         })
 

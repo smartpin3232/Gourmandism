@@ -24,7 +24,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{viewModel.favoriteInfo.folderName}"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,10 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="18sp"
             android:text="@{@string/from + String.valueOf(viewModel.user.name)}"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/text_list_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_list_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_status"
             tools:text="from Gary" />
 
         <TextView
@@ -46,10 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{String.valueOf(viewModel.favoriteInfo.attentionList.size()) + @string/follower}"
             app:layout_constraintStart_toStartOf="@+id/text_host_name"
             app:layout_constraintTop_toBottomOf="@+id/text_host_name"
-            android:text="@{String.valueOf(viewModel.favoriteInfo.attentionList.size()) + @string/follower}"
-            tools:text= "12位追隨者"/>
+            tools:text="12位追隨者" />
 
         <View
             android:id="@+id/view3"
@@ -71,26 +71,25 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            tools:listitem="@layout/item_favorite"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view3"
-            app:layout_constraintVertical_bias="0.571" />
+            app:layout_constraintVertical_bias="0.571"
+            tools:listitem="@layout/item_favorite" />
 
         <TextView
             android:id="@+id/text_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/round_layout_4"
             android:text="@string/remove"
             android:visibility="@{viewModel.listStatus == 1 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_list_name" />
 
         <TextView
             android:id="@+id/text_add_attention"
@@ -112,15 +111,31 @@
 
         <it.beppi.tristatetogglebutton_library.TriStateToggleButton
             android:id="@+id/toggle"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/text_list_name"
-            app:layout_constraintStart_toEndOf="@+id/text_list_name"
-            app:layout_constraintTop_toTopOf="@+id/text_list_name"
-            app:tbIsMidSelectable="false"
             android:visibility="@{viewModel.listStatus == 1? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_status"
+            app:layout_constraintStart_toEndOf="@+id/text_status"
+            app:layout_constraintTop_toTopOf="@+id/text_status"
+            app:tbIsMidSelectable="false"
             app:tbOnColor="@color/mainStyleColor" />
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.7"
+            android:background="@drawable/round_layout_3"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="Private"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/text_list_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_list_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
