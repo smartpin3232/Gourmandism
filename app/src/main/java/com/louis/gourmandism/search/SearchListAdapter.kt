@@ -1,22 +1,19 @@
 package com.louis.gourmandism.search
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.data.Shop
-import com.louis.gourmandism.databinding.ItemFavoriteBinding
 import com.louis.gourmandism.databinding.ItemSearchListBinding
-import com.louis.gourmandism.databinding.ItemTagBinding
 
 class SearchListAdapter(private val viewModel: SearchViewModel) :
     ListAdapter<Shop, SearchListAdapter.ViewHolder>(SearchListDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item, viewModel, holder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,9 +24,16 @@ class SearchListAdapter(private val viewModel: SearchViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: Shop,  viewModel: SearchViewModel
+            item: Shop,
+            viewModel: SearchViewModel,
+            holder: ViewHolder
         ) {
             binding.shop = item
+
+            binding.constraintShopInfo.setOnClickListener {
+                viewModel.navigateToDetail(item)
+            }
+
             binding.executePendingBindings()
         }
 

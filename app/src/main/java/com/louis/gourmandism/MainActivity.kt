@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.NotificationCompat
@@ -193,5 +194,17 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+    private var firstPressedTime:Long = 0
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            if (System.currentTimeMillis() - firstPressedTime < 2000) {
+                super.onBackPressed()
+            } else {
+                Toast.makeText(this@MainActivity, "再按一次退出", Toast.LENGTH_SHORT).show()
+                firstPressedTime = System.currentTimeMillis()
+            }
+        }
+    }
 }

@@ -7,6 +7,9 @@
     <color name="mainStyleColor">#ffe0b2</color>
     <color name="fragmentBackground">#fff3e0</color>
 
+
+    <color name="green_mint">#9ebbb3</color>
+    <color name="green_cyan">#dee8e5</color>
     <color name="white">#ffffff</color>
 
     <color name="gray_646464">#646464</color>

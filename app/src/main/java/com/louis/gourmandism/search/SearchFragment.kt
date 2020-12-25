@@ -184,6 +184,13 @@ class SearchFragment : Fragment(){
             }
         })
 
+        viewModel.navigateDetailInfo.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(it.id))
+                viewModel.onNavigateDone()
+            }
+        })
+
         binding.cardShopInfo.setOnClickListener {
             findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
         }

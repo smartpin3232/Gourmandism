@@ -74,9 +74,14 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     val tagResult: LiveData<Boolean>
         get() = _tagResult
 
+    private var _navigateDetailInfo = MutableLiveData<Shop>()
+    val navigateDetailInfo: LiveData<Shop>
+        get() = _navigateDetailInfo
+
     var selectShopList = MutableLiveData<List<Shop>>()
 
     var tagPosition = MutableLiveData<Int>()
+
 
     override fun onCleared() {
         super.onCleared()
@@ -299,4 +304,13 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
             tagStatus = tag
         }
     }
+
+    fun navigateToDetail(shopInfo: Shop){
+        _navigateDetailInfo.value = shopInfo
+    }
+
+    fun onNavigateDone(){
+        _navigateDetailInfo.value = null
+    }
+
 }
