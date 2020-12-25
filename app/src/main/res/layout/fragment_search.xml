@@ -10,6 +10,10 @@
             type="com.louis.gourmandism.search.SearchViewModel" />
     </data>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -111,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:visibility="gone"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp"
@@ -124,6 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+
                     app:layout_constraintBottom_toBottomOf="@+id/parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -175,4 +180,10 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <include
+            android:id="@+id/bottom_dialog"
+            layout="@layout/dialog_search_list"
+            app:viewModel="@{viewModel}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

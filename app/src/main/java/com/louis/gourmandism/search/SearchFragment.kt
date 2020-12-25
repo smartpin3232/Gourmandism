@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 
@@ -108,6 +110,7 @@ class SearchFragment : Fragment(){
 
     private var mapFragment: SupportMapFragment? = null
     lateinit var binding : FragmentSearchBinding
+    private lateinit var bottomBehavior : BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -119,9 +122,15 @@ class SearchFragment : Fragment(){
         binding.lifecycleOwner = this
         binding.viewModel= viewModel
 
+//        bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomDialogSearchList)
+
         binding.cardShopInfo.bringToFront()
         val adapter = SearchAdapter(viewModel)
         binding.recyclerViewTag.adapter = adapter
+
+        val listAdapter = SearchListAdapter(viewModel)
+        binding.bottomDialog.recyclerViewSearchList.adapter = listAdapter
+
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
 
@@ -137,14 +146,6 @@ class SearchFragment : Fragment(){
                     myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
                 }
                 viewModel.selectShopList.value = it
-            }
-        })
-
-        viewModel.selectShopList.observe(viewLifecycleOwner, Observer {
-            it?.let {
-//                for(item in it){
-//                    myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
-//                }
             }
         })
 
@@ -166,6 +167,7 @@ class SearchFragment : Fragment(){
 
         viewModel.markerFilterShopList.observe(viewLifecycleOwner, Observer {
             resetMarker(it)
+            listAdapter.submitList(it)
         })
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
@@ -176,9 +178,14 @@ class SearchFragment : Fragment(){
             adapter.notifyDataSetChanged()
         })
 
+        viewModel.selectShopList.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                listAdapter.submitList(it)
+            }
+        })
+
         binding.cardShopInfo.setOnClickListener {
             findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
-            Log.i("cardView","click")
         }
 
         binding.textSelectMode.setOnClickListener {
@@ -207,6 +214,7 @@ class SearchFragment : Fragment(){
             viewModel.selectShopList.value?.let {shopList->
                 val filterList = viewModel.filter(shopList ,it.toString())
                 resetMarker(filterList)
+                listAdapter.submitList(filterList)
             }
         }
 
