@@ -3,6 +3,7 @@ package com.louis.gourmandism.event.item
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.data.Result
@@ -15,15 +16,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
-class EventItemViewModel(private val repository: Repository, status: Int) : ViewModel() {
+class EventItemViewModel(private val repository: Repository, private val status: Int) : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private var _eventList = MutableLiveData<List<Event>>()
-
-    val eventList: LiveData<List<Event>>
-        get() = _eventList
 
     var liveEventList = MutableLiveData<List<Event>>()
 
@@ -32,10 +28,13 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
     val shopInfo: LiveData<Shop>
         get() = _shopInfo
 
-    private var _joinStatus = MutableLiveData<Boolean>()
+    private var joinStatus = MutableLiveData<Boolean>()
 
-    val joinStatus: LiveData<Boolean>
-        get() = _joinStatus
+    private var _navigateToNewCommentInfo = MutableLiveData<Shop>()
+
+    val navigateToNewCommentInfo: LiveData<Shop>
+        get() = _navigateToNewCommentInfo
+
 
     private var _toastStatus = MutableLiveData<Boolean>()
 
@@ -56,18 +55,16 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         getLiveEvent(status)
     }
 
-
     private fun getLiveEvent(status: Int) {
         liveEventList = repository.getLiveEvents(status)
     }
-
 
     fun joinGame(eventId: String, status: Int) {
         coroutineScope.launch {
 
             UserManager.userToken?.let {
                 val result = repository.joinGame(eventId, it, status)
-                _joinStatus.value = when (result) {
+                joinStatus.value = when (result) {
                     is Result.Success -> {
                         result.data
                     }
@@ -80,6 +77,14 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         }
     }
 
+    fun filterList(eventList: List<Event>): List<Event>{
+        return if (status == 0){
+            eventList.filter { it.time > System.currentTimeMillis() }
+        } else {
+            eventList
+        }
+    }
+
     fun toast(){
         _toastStatus.value = true
     }
@@ -88,13 +93,17 @@ class EventItemViewModel(private val repository: Repository, status: Int) : View
         _shopInfo.value = item.shop
     }
 
+    fun navigateToNewComment(shop: Shop){
+        _navigateToNewCommentInfo.value = shop
+    }
+
     fun onNavigationDone() {
         _shopInfo.value = null
+        _navigateToNewCommentInfo.value = null
     }
 
     fun setEventNotification(event: Event){
         _notificationInfo.value = event
     }
-
 
 }

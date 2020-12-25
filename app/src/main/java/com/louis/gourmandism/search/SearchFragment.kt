@@ -323,6 +323,31 @@ class SearchFragment : Fragment(){
         }
     }
 
+    fun getDistance(
+        start: LatLng,
+        end: LatLng
+    ): Double {
+        val lat1 = Math.PI / 180 * start.latitude
+        val lat2 = Math.PI / 180 * end.latitude
+        val lon1 = Math.PI / 180 * start.longitude
+        val lon2 = Math.PI / 180 * end.longitude
+
+//      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
+//      double Lat2r = (Math.PI/180)*(gp2.getLatitudeE6()/1E6);
+//      double Lon1r = (Math.PI/180)*(gp1.getLongitudeE6()/1E6);
+//      double Lon2r = (Math.PI/180)*(gp2.getLongitudeE6()/1E6);
+
+        //地球半徑
+        val R = 6371.0
+
+        //兩點間距離 km，如果想要米的話，結果*1000就可以了
+        val d = Math.acos(
+            Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(
+                lat2
+            ) * Math.cos(lon2 - lon1)
+        ) * R
+        return d * 1000
+    }
 
 
 }

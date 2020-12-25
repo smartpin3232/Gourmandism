@@ -40,26 +40,34 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
                 viewModel.toShop(item)
             }
 
-            if(item.member?.any { it == UserManager.userToken }!!){
-                binding.textAdd.text = "退出"
+            if(item.time <= System.currentTimeMillis()){
+                binding.textAdd.text = "給予評論"
             }else{
-                binding.textAdd.text = "加入"
+                if(item.member?.any { it == UserManager.userToken }!!){
+                    binding.textAdd.text = "退出"
+                }else{
+                    binding.textAdd.text = "加入"
+                }
             }
+
 
 
             binding.textAdd.setOnClickListener {
                 if (binding.textAdd.text == "加入"){
-                    if(item.member!!.size >= item.memberLimit){
+                    if (item.member!!.size >= item.memberLimit){
                         viewModel.toast()
-
-                    }else{
+                    } else {
                         binding.textAdd.text = "退出"
                         viewModel.joinGame(item.id,0)
                         viewModel.setEventNotification(item)
                     }
-                }else{
+                } else if (binding.textAdd.text == "退出"){
                     binding.textAdd.text = "加入"
                     viewModel.joinGame(item.id,1)
+                } else {
+                    item.shop?.let {
+                        viewModel.navigateToNewComment(it)
+                    }
                 }
             }
 

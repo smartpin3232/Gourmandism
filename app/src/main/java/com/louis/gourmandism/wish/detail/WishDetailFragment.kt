@@ -52,7 +52,7 @@ class WishDetailFragment : Fragment() {
         viewModel.favoriteInfo.observe(viewLifecycleOwner, Observer {
             viewModel.getUser(it.userId)
 
-            viewModel.shop?.let {shop->
+            viewModel.shop.value?.let {shop->
                     adapter.submitList(viewModel.getNewShop(it.shops!!))
                     adapter.notifyDataSetChanged()
             }
@@ -82,9 +82,11 @@ class WishDetailFragment : Fragment() {
         binding.toggle.setOnToggleChanged { toggleStatus, booleanToggleStatus, toggleIntValue ->
             when(toggleStatus){
                 TriStateToggleButton.ToggleStatus.on->{
+                    binding.textStatus.text = getString(R.string.Public)
                     viewModel.setShare(1)
                 }
                 TriStateToggleButton.ToggleStatus.off->{
+                    binding.textStatus.text = getString(R.string.Private)
                     viewModel.setShare(0)
                 }
                 else -> null
@@ -127,8 +129,10 @@ class WishDetailFragment : Fragment() {
     private fun initStatus(type: Int) {
         if(type == 0){
             binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.off
+            binding.textStatus.text = getString(R.string.Private)
         }else{
             binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.on
+            binding.textStatus.text = getString(R.string.Public)
         }
     }
 

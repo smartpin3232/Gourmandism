@@ -119,7 +119,7 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
             shop = shopInfo.value,
             status = 0,
             time = date.value!!,
-            member= mutableListOf(UserManager.user.value!!.name),
+            member= mutableListOf(UserManager.user.value!!.id),
             memberLimit = memberLimit.toInt()
         )
         coroutineScope.launch {

@@ -48,5 +48,7 @@
     <string name="follow_cancel">取消關注</string>
     <string name="remove">REMOVE</string>
     <string name="profile_about">Say something about you</string>
+    <string name="Private">Private</string>
+    <string name="Public">Public</string>
 
 </resources>

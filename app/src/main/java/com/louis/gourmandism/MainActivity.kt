@@ -47,18 +47,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         firebaseAnalytics = Firebase.analytics
-//        val loginStatus = intent.getBundleExtra("bundle")?.getBoolean("loginStatus")
+
         if (UserManager.userToken == null
         ) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
-//        applicationContext.startService(Intent(applicationContext, GourmandismService::class.java))
 
         binding.textToolbarTitle.setOnClickListener {
             UserManager.clear()
@@ -68,30 +68,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.currentFragmentType.value = CurrentFragmentType.HOME
         setupNavController()
         setupDrawer()
-    }
-    private var channelId = "123"
-    private fun createBuilder(pendingIntent: PendingIntent, ContentText : String): NotificationCompat.Builder? {
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.home)
-            .setContentTitle("揪團通知")
-            .setContentText(ContentText)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-        return builder
-    }
-
-    private fun createNotificationChannel() {
-        val name = "Event"
-        val descriptionText = "Event"
-        val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel(channelId, name, importance).apply {
-            description = descriptionText
-        }
-        // Register the channel with the system
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
     }
 
     private fun setupNavController() {
@@ -105,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.profileFragment -> CurrentFragmentType.PROFILE
                     R.id.detailFragment -> CurrentFragmentType.DETAIL
                     R.id.friendFragment -> CurrentFragmentType.FRIEND
+                    R.id.lotteryFragment -> CurrentFragmentType.LOTTERY
                     else -> viewModel.currentFragmentType.value
                 }
             }
@@ -194,16 +171,20 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    private var firstPressedTime:Long = 0
+    private var firstPressedTime: Long = 0
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            if (System.currentTimeMillis() - firstPressedTime < 2000) {
+            if(viewModel.currentFragmentType.value == CurrentFragmentType.HOME){
+                if (System.currentTimeMillis() - firstPressedTime < 2000) {
+                    super.onBackPressed()
+                } else {
+                    Toast.makeText(this@MainActivity, "再按一次退出", Toast.LENGTH_SHORT).show()
+                    firstPressedTime = System.currentTimeMillis()
+                }
+            }else{
                 super.onBackPressed()
-            } else {
-                Toast.makeText(this@MainActivity, "再按一次退出", Toast.LENGTH_SHORT).show()
-                firstPressedTime = System.currentTimeMillis()
             }
         }
     }

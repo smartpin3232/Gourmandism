@@ -57,3 +57,7 @@ fun Fragment.getVmFactory(userId: String): ProfileViewModelFactory {
     return ProfileViewModelFactory(repository, userId)
 
 }
+
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
+}

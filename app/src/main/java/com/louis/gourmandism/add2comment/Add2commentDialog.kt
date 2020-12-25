@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import com.louis.gourmandism.NavigationDirections
+import com.louis.gourmandism.extension.hideKeyboard
 import java.io.File
 
 class Add2commentDialog : BottomSheetDialogFragment() {
@@ -223,4 +224,5 @@ class Add2commentDialog : BottomSheetDialogFragment() {
                 .show()
         }
     }
+
 }

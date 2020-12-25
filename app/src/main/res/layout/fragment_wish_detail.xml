@@ -131,7 +131,7 @@
             android:gravity="center"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
-            android:text="Private"
+            tools:text="@string/Private"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/text_list_name"

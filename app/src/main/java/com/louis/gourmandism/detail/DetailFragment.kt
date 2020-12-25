@@ -21,6 +21,7 @@ import com.louis.gourmandism.R
 import com.louis.gourmandism.data.OpenTime
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
+import com.louis.gourmandism.extension.hideKeyboard
 import java.util.*
 import kotlin.time.ExperimentalTime
 
@@ -105,14 +106,6 @@ class DetailFragment : Fragment() {
                     View.VISIBLE
                 }
             }
-//            val calendar = Calendar.getInstance()
-//
-//            val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
-//                calendar.set(Calendar.HOUR_OF_DAY, hour)
-//                calendar.set(Calendar.MINUTE, min)
-//                binding.textBusinessTimeContent.text = SimpleDateFormat("HH:mm").format(calendar.time)
-//            }
-//            TimePickerDialog(context, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
         }
 
 
@@ -198,8 +191,6 @@ class DetailFragment : Fragment() {
             findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2commentDialog(
                 viewModel.shopInfo.value!!
             ))
-
-
         }
 
         binding.textAddEvent.setOnClickListener {
@@ -233,6 +224,7 @@ class DetailFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         toggleFullScreen()
+
     }
 
     private fun toggleFullScreen() {
@@ -259,5 +251,6 @@ class DetailFragment : Fragment() {
         }
 
     }
+
 
 }
