@@ -11,15 +11,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/standard_half_margin">
+        android:layout_height="wrap_content">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image_user"
             imageUrl="@{data.host.image}"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:civ_border_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,15 +53,16 @@
 
         <TextView
             android:id="@+id/text_comment_time"
+            textTime="@{data.createdTime}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="14小時前"
-            textTime="@{data.createdTime}"
+            android:layout_marginEnd="16dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.555" />
+            app:layout_constraintVertical_bias="0.555"
+            tools:text="14小時前" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -80,12 +80,12 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="5"
-            tools:text="從你來到這裏的那一刻起，這個幽靜的鄉村就散發出一種不同的氣息。當然，一切都是經過深思熟慮和準備的。你的體驗從你下車的那一刻開始。這裏的氣氛很輕鬆，你可以在這裏漫步，看看這裏供應的各種美味的物品。房間很豪華。服務也很棒。但這並不能描述這家餐廳的感覺，那種感覺就像你周圍的整個世界都深呼吸，之後再發出最大的嘆息，然後讓人得到全新境界的放鬆。"
             android:text="@{data.content}"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_comment_time"
             app:layout_constraintStart_toStartOf="@+id/image_user"
-            app:layout_constraintTop_toBottomOf="@+id/image_user" />
+            app:layout_constraintTop_toBottomOf="@+id/image_user"
+            tools:text="從你來到這裏的那一刻起，這個幽靜的鄉村就散發出一種不同的氣息。當然，一切都是經過深思熟慮和準備的。你的體驗從你下車的那一刻開始。這裏的氣氛很輕鬆，你可以在這裏漫步，看看這裏供應的各種美味的物品。房間很豪華。服務也很棒。但這並不能描述這家餐廳的感覺，那種感覺就像你周圍的整個世界都深呼吸，之後再發出最大的嘆息，然後讓人得到全新境界的放鬆。" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_detail_comment"
@@ -93,8 +93,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/standard_half_margin"
             android:layout_marginBottom="@dimen/standard_half_margin"
+            android:paddingRight="4dp"
+            android:paddingLeft="@dimen/standard_three_quarters_margin"
             android:orientation="horizontal"
             android:overScrollMode="never"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

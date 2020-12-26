@@ -22,6 +22,7 @@ import com.louis.gourmandism.data.OpenTime
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.extension.hideKeyboard
+import java.text.NumberFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
 
@@ -163,7 +164,9 @@ class DetailFragment : Fragment() {
                 it.forEach {comment->
                     starTotal += comment.star
                 }
-                binding.textStarAverage.text = " ${((starTotal/it.size).toString())}"
+                val fm = NumberFormat.getNumberInstance()
+                fm.maximumFractionDigits = 1
+                binding.textStarAverage.text = fm.format(starTotal/it.size)
             }
         })
 

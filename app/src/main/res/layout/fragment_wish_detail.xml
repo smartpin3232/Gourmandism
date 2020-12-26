@@ -119,6 +119,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="4dp"
             android:switchPadding="0.0dp"
+            android:visibility="@{viewModel.listStatus == 1 ? View.VISIBLE : View.GONE}"
             app:trackTint="@color/selector_switch_track"
             app:thumbTint="@color/selector_switch_thumb"
             app:layout_constraintStart_toStartOf="@+id/text_list_name"

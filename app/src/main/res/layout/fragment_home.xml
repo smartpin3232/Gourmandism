@@ -28,6 +28,8 @@
                 android:background="@color/fragmentBackground"
                 app:spanCount="2"
                 android:padding="6dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

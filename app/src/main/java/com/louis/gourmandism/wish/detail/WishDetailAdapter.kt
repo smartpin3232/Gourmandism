@@ -27,10 +27,10 @@ class WishDetailAdapter(private val viewModel: WishDetailViewModel) :
         fun bind(shop: Shop, viewModel: WishDetailViewModel,holder: ViewHolder) {
             binding.shop = shop
 
-            if(viewModel.listStatus.value != 3){
-                binding.buttonRemove.visibility = View.GONE
-            } else {
+            if(viewModel.listStatus.value == 1){
                 binding.buttonRemove.visibility = View.VISIBLE
+            } else {
+                binding.buttonRemove.visibility = View.GONE
             }
 
             binding.buttonRemove.setOnClickListener {

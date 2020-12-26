@@ -25,7 +25,7 @@ class CommentAdapter(private val viewModel: CommentViewModel) :
 
         fun bind(item: String, viewModel: CommentViewModel) {
             binding.imageResource = item
-
+            viewModel.commentInfo.value?.images?.size
             binding.executePendingBindings()
         }
 

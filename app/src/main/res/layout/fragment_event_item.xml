@@ -22,6 +22,7 @@
             android:overScrollMode="never"
             android:paddingHorizontal="@dimen/standard_half_three_quarters_margin"
             android:paddingVertical="@dimen/standard_half_three_quarters_margin"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
