@@ -30,6 +30,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/chip_all"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="全部店家"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:mcv_backgroundColor="@color/green_cyan"
+            app:mcv_closeColor="@color/gray_646464"
+            app:mcv_iconTextColor="@color/white"
+            app:mcv_selectable="true"
+            app:mcv_textColor="@color/black_3f3a3a" />
+
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/chip_my_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:text="我的收藏"
+            app:layout_constraintStart_toEndOf="@+id/chip_all"
+            app:layout_constraintTop_toTopOf="@+id/chip_all"
+            app:mcv_backgroundColor="@color/green_cyan"
+            app:mcv_closeColor="@color/gray_646464"
+            app:mcv_iconTextColor="@color/white"
+            app:mcv_selectable="true"
+            app:mcv_textColor="@color/black_3f3a3a" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_search_list"
             android:layout_width="0dp"
@@ -42,7 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/chip_my_favorite"
             tools:listitem="@layout/item_search_list" />
 
 

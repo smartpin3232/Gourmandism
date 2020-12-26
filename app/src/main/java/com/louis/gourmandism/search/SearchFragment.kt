@@ -36,6 +36,7 @@ import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
+import com.robertlevonyan.views.chip.OnSelectClickListener
 import java.math.BigDecimal
 import java.text.NumberFormat
 
@@ -124,8 +125,6 @@ class SearchFragment : Fragment(){
         binding.lifecycleOwner = this
         binding.viewModel= viewModel
 
-//        bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomDialogSearchList)
-
         binding.cardShopInfo.bringToFront()
         val adapter = SearchAdapter(viewModel)
         binding.recyclerViewTag.adapter = adapter
@@ -133,8 +132,9 @@ class SearchFragment : Fragment(){
         val listAdapter = SearchListAdapter(viewModel)
         binding.bottomDialog.recyclerViewSearchList.adapter = listAdapter
 
-
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+        binding.bottomDialog.chipAll.chipSelected = true
 
         //點擊取得當前位置
         binding.textTitle.setOnClickListener {
@@ -208,25 +208,24 @@ class SearchFragment : Fragment(){
             findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
         }
 
-        binding.textSelectMode.setOnClickListener {
-            if(binding.textSelectMode.text.toString() == "我的收藏"){
+        binding.bottomDialog.chipAll.onSelectClickListener = OnSelectClickListener { v, selected ->
 
-                viewModel.shopList.value?.let {
-                    resetMarker(it)
-                    viewModel.selectShopList.value = it
-                }
-
-                binding.textSelectMode.text = "全部店家"
-            }else{
-
-                viewModel.shopList.value?.let {allShopList->
-                    val filterList = allShopList.filter {shop->
-                        viewModel.myFavoriteShop.value!!.contains(shop.id)}
-                    viewModel.selectShopList.value = filterList
-                    resetMarker(filterList)
-                }
-                binding.textSelectMode.text = "我的收藏"
+            viewModel.shopList.value?.let {
+                resetMarker(it)
+                viewModel.selectShopList.value = it
             }
+            binding.bottomDialog.chipMyFavorite.chipSelected = false
+        }
+
+        binding.bottomDialog.chipMyFavorite.onSelectClickListener = OnSelectClickListener { v, selected ->
+
+            viewModel.shopList.value?.let {allShopList->
+                val filterList = allShopList.filter {shop->
+                    viewModel.myFavoriteShop.value!!.contains(shop.id)}
+                viewModel.selectShopList.value = filterList
+                resetMarker(filterList)
+            }
+            binding.bottomDialog.chipAll.chipSelected = false
         }
 
         binding.editSearch.addTextChangedListener {
