@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -33,6 +34,7 @@ import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.LoginActivity
 import com.louis.gourmandism.login.UserManager
 import com.louis.gourmandism.util.CurrentFragmentType
+import com.louis.gourmandism.util.DrawerToggleType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.detailFragment -> CurrentFragmentType.DETAIL
                     R.id.friendFragment -> CurrentFragmentType.FRIEND
                     R.id.lotteryFragment -> CurrentFragmentType.LOTTERY
+                    R.id.wishDetailFragment -> CurrentFragmentType.WISH_DETAIL
                     else -> viewModel.currentFragmentType.value
                 }
             }
@@ -129,6 +132,24 @@ class MainActivity : AppCompatActivity() {
             LayoutInflater.from(this), binding.drawerNavView, false)
         bindingNavHeader.lifecycleOwner = this
         binding.drawerNavView.addHeaderView(bindingNavHeader.root)
+
+        viewModel.currentDrawerToggleType.observe(this, Observer { type ->
+            actionBarDrawerToggle?.isDrawerIndicatorEnabled = type.indicatorEnabled
+            supportActionBar?.setDisplayHomeAsUpEnabled(!type.indicatorEnabled)
+            binding.toolbar.setNavigationIcon(
+                when (type) {
+                    DrawerToggleType.BACK -> R.drawable.back
+                    else -> R.drawable.menu
+                }
+            )
+            actionBarDrawerToggle?.setToolbarNavigationClickListener {
+                when (type) {
+//                    DrawerToggleType.BACK -> onBackPressed()
+                    DrawerToggleType.BACK -> findNavController(R.id.myNavHostFragment).navigateUp()
+                    else -> {}
+                }
+            }
+        })
     }
 
 

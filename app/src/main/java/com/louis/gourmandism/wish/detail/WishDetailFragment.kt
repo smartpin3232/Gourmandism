@@ -79,17 +79,13 @@ class WishDetailFragment : Fragment() {
             viewModel.setAttention(status)
         }
 
-        binding.toggle.setOnToggleChanged { toggleStatus, booleanToggleStatus, toggleIntValue ->
-            when(toggleStatus){
-                TriStateToggleButton.ToggleStatus.on->{
-                    binding.textStatus.text = getString(R.string.Public)
-                    viewModel.setShare(1)
-                }
-                TriStateToggleButton.ToggleStatus.off->{
-                    binding.textStatus.text = getString(R.string.Private)
-                    viewModel.setShare(0)
-                }
-                else -> null
+        binding.switchStatus.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                viewModel.setShare(1)
+                buttonView.text = getString(R.string.Public)
+            } else {
+                viewModel.setShare(0)
+                buttonView.text = getString(R.string.Private)
             }
         }
 
@@ -128,11 +124,11 @@ class WishDetailFragment : Fragment() {
 
     private fun initStatus(type: Int) {
         if(type == 0){
-            binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.off
-            binding.textStatus.text = getString(R.string.Private)
+            binding.switchStatus.isChecked = false
+            binding.switchStatus.text = getString(R.string.Private)
         }else{
-            binding.toggle.toggleStatus = TriStateToggleButton.ToggleStatus.on
-            binding.textStatus.text = getString(R.string.Public)
+            binding.switchStatus.isChecked  = true
+            binding.switchStatus.text = getString(R.string.Public)
         }
     }
 

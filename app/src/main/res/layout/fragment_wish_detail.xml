@@ -38,7 +38,7 @@
             android:text="@{@string/from + String.valueOf(viewModel.user.name)}"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/text_list_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_status"
+            app:layout_constraintTop_toBottomOf="@+id/switch_status"
             tools:text="from Gary" />
 
         <TextView
@@ -109,33 +109,21 @@
             app:layout_constraintTop_toBottomOf="@+id/text_follower"
             tools:text="@string/follow_collection" />
 
-        <it.beppi.tristatetogglebutton_library.TriStateToggleButton
-            android:id="@+id/toggle"
-            android:layout_width="40dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp"
-            android:visibility="@{viewModel.listStatus == 1? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/text_status"
-            app:layout_constraintStart_toEndOf="@+id/text_status"
-            app:layout_constraintTop_toTopOf="@+id/text_status"
-            app:tbIsMidSelectable="false"
-            app:tbOnColor="@color/mainStyleColor" />
-
-        <TextView
-            android:id="@+id/text_status"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_status"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:alpha="0.7"
-            android:background="@drawable/round_layout_3"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            tools:text="@string/Private"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+            android:background="@drawable/round_layout"
+            android:text="@string/Private"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:switchPadding="0.0dp"
+            app:trackTint="@color/selector_switch_track"
+            app:thumbTint="@color/selector_switch_thumb"
             app:layout_constraintStart_toStartOf="@+id/text_list_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_list_name" />
+            app:layout_constraintTop_toBottomOf="@+id/text_list_name"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

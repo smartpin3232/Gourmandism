@@ -85,7 +85,7 @@
             app:itemIconSize="36dp"
             app:itemTextColor="@color/black_3f3a3a"
             app:itemShapeFillColor="@color/gray_cccccc"
-            android:background="@color/mainStyleColor" />
+            android:background="@color/lightYellow" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
 
