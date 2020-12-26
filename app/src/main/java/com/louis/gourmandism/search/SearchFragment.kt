@@ -170,6 +170,7 @@ class SearchFragment : Fragment(){
         viewModel.markerFilterShopList.observe(viewLifecycleOwner, Observer {
             resetMarker(it)
             listAdapter.submitList(it)
+            listAdapter.notifyDataSetChanged()
         })
 
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
@@ -180,9 +181,14 @@ class SearchFragment : Fragment(){
             adapter.notifyDataSetChanged()
         })
 
+        viewModel.myFavoriteShop.observe(viewLifecycleOwner, Observer {
+            viewModel.getShopList("", 0)
+        })
+
         viewModel.selectShopList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 listAdapter.submitList(it)
+                listAdapter.notifyDataSetChanged()
             }
         })
 

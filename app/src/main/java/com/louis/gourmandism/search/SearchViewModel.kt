@@ -97,7 +97,6 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     }
 
     init {
-        getShopList("", 0)
         getUserSelectTag()
         getFavorite()
     }
@@ -192,12 +191,14 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getUserSelectTag() {
+
         val newTag = mutableListOf<String>()
         UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
         selectTagList.value = newTag
     }
 
     private fun removeUserTag(tag: String){
+
         UserManager.user.value?.selectTags?.remove(tag)
         val newTag = mutableListOf<String>()
         UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
@@ -313,10 +314,8 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getDistance(
-        start: LatLng,
-        end: LatLng
-    ): Double {
+    fun getDistance(start: LatLng, end: LatLng): Double {
+
         val lat1 = Math.PI / 180 * start.latitude
         val lat2 = Math.PI / 180 * end.latitude
         val lon1 = Math.PI / 180 * start.longitude

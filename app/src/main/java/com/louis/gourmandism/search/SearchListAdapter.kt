@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.louis.gourmandism.R
 import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.ItemSearchListBinding
 
@@ -30,8 +31,22 @@ class SearchListAdapter(private val viewModel: SearchViewModel) :
         ) {
             binding.shop = item
 
+            viewModel.myFavoriteShop.value?.let {
+                if(it.any { shopId ->  shopId == item.id }){
+                    binding.imageWish.setBackgroundResource(R.drawable.wish_selected)
+                }else{
+                    binding.imageWish.setBackgroundResource(R.drawable.wish)
+                }
+            }
+
+
+
             binding.constraintShopInfo.setOnClickListener {
                 viewModel.navigateToDetail(item)
+            }
+
+            binding.imageWish.setOnClickListener {
+
             }
 
             binding.executePendingBindings()

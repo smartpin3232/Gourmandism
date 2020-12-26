@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.louis.gourmandism.MainViewModel" />
-        <import type="android.view.View"/>
-        <import type="com.louis.gourmandism.util.CurrentFragmentType"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.louis.gourmandism.util.CurrentFragmentType" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -16,76 +19,76 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_toolbar"
-            android:background="@color/mainStyleColor"
-            android:elevation="8dp"
-            android:gravity="center"
-            android:visibility="@{viewModel.currentFragmentType == CurrentFragmentType.DETAIL ||viewModel.currentFragmentType == CurrentFragmentType.SEARCH? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
 
-            <TextView
-                android:id="@+id/text_toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.currentFragmentType.value}"
-                tools:text="HOME"
-                tools:layout_editor_absoluteX="155dp"
-                tools:layout_editor_absoluteY="13dp"
-                style="@style/toolbar_title_text" />
-        </androidx.appcompat.widget.Toolbar>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_toolbar"
+                android:background="@color/mainStyleColor"
+                android:elevation="8dp"
+                android:gravity="center"
+                android:visibility="@{viewModel.currentFragmentType == CurrentFragmentType.DETAIL ||viewModel.currentFragmentType == CurrentFragmentType.SEARCH? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <fragment
-            android:id="@+id/myNavHostFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/navigation" />
+                <TextView
+                    android:id="@+id/text_toolbar_title"
+                    style="@style/toolbar_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.currentFragmentType.value}"
+                    tools:layout_editor_absoluteX="155dp"
+                    tools:layout_editor_absoluteY="13dp"
+                    tools:text="HOME" />
+            </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavView"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/height_bottom_nav_view_main"
-            android:background="@color/mainStyleColor"
-            android:elevation="8dp"
-            app:itemIconSize="@dimen/size_bottom_nav_icon"
-            app:itemIconTint="@color/black_3f3a3a"
-            app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            <fragment
+                android:id="@+id/myNavHostFragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:navGraph="@navigation/navigation" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_bottom_nav_view_main"
+                android:background="@color/mainStyleColor"
+                android:elevation="8dp"
+                app:itemIconSize="@dimen/size_bottom_nav_icon"
+                app:itemIconTint="@color/black_3f3a3a"
+                app:labelVisibilityMode="unlabeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:menu="@menu/bottom_nav_menu" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/drawerNavView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
+            android:background="@color/lightYellow"
             android:fitsSystemWindows="true"
-            app:menu="@menu/drawer_menu"
             app:itemIconSize="36dp"
-            app:itemTextColor="@color/black_3f3a3a"
             app:itemShapeFillColor="@color/gray_cccccc"
-            android:background="@color/lightYellow" />
+            app:itemTextColor="@color/black_3f3a3a"
+            app:menu="@menu/drawer_menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
 

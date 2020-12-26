@@ -68,7 +68,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_shop_name"
-            app:srcCompat="@drawable/wish" />
+            tools:src="@drawable/wish"/>
 
         <View
             android:id="@+id/view2"
