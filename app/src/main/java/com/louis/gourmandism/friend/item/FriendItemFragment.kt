@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.databinding.FragmentFriendItemBinding
 import com.louis.gourmandism.event.item.EventItemViewModel
 import com.louis.gourmandism.extension.getVmFactory
@@ -39,6 +41,13 @@ class FriendItemFragment(val type: Int) : Fragment() {
                 if(type == 0){
                     adapter.submitList(it)
                 }
+            }
+        })
+
+        viewModel.navigateProfile.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalProfileFragment(it.id))
+                viewModel.onNavigateDone()
             }
         })
 

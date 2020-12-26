@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             LayoutInflater.from(this), binding.drawerNavView, false)
         bindingNavHeader.lifecycleOwner = this
         binding.drawerNavView.addHeaderView(bindingNavHeader.root)
+        bindingNavHeader.viewModel = viewModel
 
         viewModel.currentDrawerToggleType.observe(this, Observer { type ->
             actionBarDrawerToggle?.isDrawerIndicatorEnabled = type.indicatorEnabled

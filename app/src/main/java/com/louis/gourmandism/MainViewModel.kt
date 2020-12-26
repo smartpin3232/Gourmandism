@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.Result
+import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
 
@@ -23,6 +24,8 @@ class MainViewModel(private val repository: Repository) : ViewModel(){
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     val currentFragmentType = MutableLiveData<CurrentFragmentType>()
+
+    val profile = MutableLiveData<User>()
 
     val currentDrawerToggleType: LiveData<DrawerToggleType> = Transformations.map(currentFragmentType) {
         when (it) {
@@ -45,6 +48,7 @@ class MainViewModel(private val repository: Repository) : ViewModel(){
                 UserManager.user.value = when (result) {
                     is Result.Success -> {
                         Log.i("UserViewModel", result.data.name)
+                        profile.value = result.data
                         result.data
                     }
                     else -> {

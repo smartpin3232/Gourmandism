@@ -13,7 +13,7 @@ class FriendAdapter (private val viewModel: FriendItemViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item, viewModel, holder)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,8 +23,17 @@ class FriendAdapter (private val viewModel: FriendItemViewModel) :
     class ViewHolder private constructor(val binding: ItemFriendBinding) :
         RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: User, viewModel: FriendItemViewModel) {
+        fun bind(
+            item: User,
+            viewModel: FriendItemViewModel,
+            holder: ViewHolder
+        ) {
             binding.user = item
+
+            holder.itemView.setOnClickListener {
+                viewModel.navigateToProfile(item)
+            }
+
             binding.executePendingBindings()
         }
 

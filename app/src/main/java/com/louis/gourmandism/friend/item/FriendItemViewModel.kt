@@ -26,6 +26,8 @@ class FriendItemViewModel(private val repository: Repository) : ViewModel() {
     val friendInfo: LiveData<List<User>>
         get() = _friendInfo
 
+    var navigateProfile = MutableLiveData<User>()
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -65,5 +67,13 @@ class FriendItemViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun navigateToProfile(user: User){
+        navigateProfile.value = user
+    }
+
+    fun onNavigateDone(){
+        navigateProfile.value = null
     }
 }

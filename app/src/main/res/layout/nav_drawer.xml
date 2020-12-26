@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.louis.gourmandism.MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -10,16 +12,17 @@
         android:background="@color/mainStyleColor"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/image_drawer_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            imageUrl="@{viewModel.profile.image}"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
-            android:scaleType="centerCrop"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/profile"
+            app:civ_border_width="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile" />
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/image_drawer_name"
             android:layout_width="match_parent"
@@ -28,7 +31,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/noto_sans"
-            android:text="Louis"
+            android:text="@{viewModel.profile.name}"
+            tools:text="Louis"
             android:textColor="@color/black_3f3a3a"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
