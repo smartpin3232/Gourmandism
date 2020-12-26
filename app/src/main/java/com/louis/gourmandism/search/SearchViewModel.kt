@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.icu.math.BigDecimal
+import android.location.Location
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -29,6 +31,9 @@ import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.math.acos
+import kotlin.math.cos
+import kotlin.math.sin
 
 class SearchViewModel(private val repository: Repository) : ViewModel() {
 
@@ -59,6 +64,9 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     private var tagStatus: String = ""
 
     var selectTagList = MutableLiveData<MutableList<String>>()
+
+    var myLocation = MutableLiveData<LatLng>()
+
 
     //Get my favorite list
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
@@ -303,6 +311,27 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
             tagPosition.value = position
             tagStatus = tag
         }
+    }
+
+    fun getDistance(
+        start: LatLng,
+        end: LatLng
+    ): Double {
+        val lat1 = Math.PI / 180 * start.latitude
+        val lat2 = Math.PI / 180 * end.latitude
+        val lon1 = Math.PI / 180 * start.longitude
+        val lon2 = Math.PI / 180 * end.longitude
+
+        //地球半徑
+        val R = 6371.0
+
+        //兩點間距離 km，如果想要米的話，結果*1000就可以了
+        val d = acos(
+            sin(lat1) * sin(lat2) + cos(lat1) * cos(
+                lat2
+            ) * cos(lon2 - lon1)
+        ) * R
+        return d
     }
 
     fun navigateToDetail(shopInfo: Shop){

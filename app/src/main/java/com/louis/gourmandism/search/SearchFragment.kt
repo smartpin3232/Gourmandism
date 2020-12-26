@@ -36,6 +36,8 @@ import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
+import java.math.BigDecimal
+import java.text.NumberFormat
 
 
 class SearchFragment : Fragment(){
@@ -65,10 +67,10 @@ class SearchFragment : Fragment(){
 
         //Marker點擊事件
         googleMap.setOnMarkerClickListener {
-
             if (it != clickMarker){
                 viewModel.getShop(it.tag.toString(),1)
                 binding.cardShopInfo.visibility = View.VISIBLE
+
             }else{
                 binding.cardShopInfo.visibility = View.GONE
             }
@@ -191,6 +193,17 @@ class SearchFragment : Fragment(){
             }
         })
 
+        viewModel.shop.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                var endLatLng = LatLng(it.location!!.locationX,it.location!!.locationY)
+                val distance = viewModel.getDistance(viewModel.myLocation.value!!,endLatLng)
+                val fm = NumberFormat.getNumberInstance()
+                fm.maximumFractionDigits = 2
+
+                binding.textDistance.text = fm.format(distance)+ "公里"
+            }
+        })
+
         binding.cardShopInfo.setOnClickListener {
             findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
         }
@@ -301,13 +314,14 @@ class SearchFragment : Fragment(){
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
 
-                            myMap?.apply {
-                                addMarker(MarkerOptions()
-                                    .position(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
-                                    .title("It's ME!!")
-                                    .snippet("${lastKnownLocation!!.latitude}, ${lastKnownLocation!!.longitude}")
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+                            viewModel.myLocation.value = LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)
 
+                            myMap?.apply {
+//                                addMarker(MarkerOptions()
+//                                    .position(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
+//                                    .title("It's ME!!")
+//                                    .snippet("${lastKnownLocation!!.latitude}, ${lastKnownLocation!!.longitude}")
+//                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
                                 moveCamera(
                                     CameraUpdateFactory.newLatLngZoom(
                                         LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude), 15f))
@@ -321,32 +335,6 @@ class SearchFragment : Fragment(){
         } catch (e: SecurityException) {
             e.printStackTrace()
         }
-    }
-
-    fun getDistance(
-        start: LatLng,
-        end: LatLng
-    ): Double {
-        val lat1 = Math.PI / 180 * start.latitude
-        val lat2 = Math.PI / 180 * end.latitude
-        val lon1 = Math.PI / 180 * start.longitude
-        val lon2 = Math.PI / 180 * end.longitude
-
-//      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
-//      double Lat2r = (Math.PI/180)*(gp2.getLatitudeE6()/1E6);
-//      double Lon1r = (Math.PI/180)*(gp1.getLongitudeE6()/1E6);
-//      double Lon2r = (Math.PI/180)*(gp2.getLongitudeE6()/1E6);
-
-        //地球半徑
-        val R = 6371.0
-
-        //兩點間距離 km，如果想要米的話，結果*1000就可以了
-        val d = Math.acos(
-            Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(
-                lat2
-            ) * Math.cos(lon2 - lon1)
-        ) * R
-        return d * 1000
     }
 
 

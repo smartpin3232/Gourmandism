@@ -94,7 +94,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraint_search"
-                tools:context=".search.SearchFragment" />
+                tools:context=".search.SearchFragment" >
+
+            </androidx.fragment.app.FragmentContainerView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_tag"
@@ -149,14 +151,16 @@
 
                     <TextView
                         android:id="@+id/text_shop_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:tag="@{viewModel.shop.id}"
                         android:text="@{viewModel.shop.name}"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/textView5"
+                        app:layout_constraintBottom_toTopOf="@+id/text_address"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/image_shop_image"
                         app:layout_constraintTop_toTopOf="@+id/image_shop_image"
                         tools:text="南極">
@@ -164,15 +168,27 @@
                     </TextView>
 
                     <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/text_address"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.shop.address}"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/image_shop_image"
+                        app:layout_constraintBottom_toTopOf="@+id/text_distance"
+                        app:layout_constraintEnd_toEndOf="@+id/text_shop_name"
                         app:layout_constraintStart_toStartOf="@+id/text_shop_name"
                         app:layout_constraintTop_toBottomOf="@+id/text_shop_name"
                         tools:text="比宇宙更遙遠的地方" />
+
+                    <TextView
+                        android:id="@+id/text_distance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_shop_image"
+                        app:layout_constraintEnd_toEndOf="@+id/text_address"
+                        app:layout_constraintStart_toStartOf="@+id/text_address"
+                        app:layout_constraintTop_toBottomOf="@+id/text_address"
+                        tools:text="99999公里" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
