@@ -35,6 +35,9 @@ class EventItemViewModel(private val repository: Repository, private val status:
     val navigateToNewCommentInfo: LiveData<Shop>
         get() = _navigateToNewCommentInfo
 
+    val join = MutableLiveData<Boolean>()
+
+    val leave = MutableLiveData<Boolean>()
 
     private var _toastStatus = MutableLiveData<Boolean>()
 

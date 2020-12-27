@@ -196,5 +196,13 @@
     <action
         android:id="@+id/action_global_lotteryFragment"
         app:destination="@id/lotteryFragment" />
+    <dialog
+        android:id="@+id/eventJoinDialog"
+        android:name="com.louis.gourmandism.event.EventJoinDialog"
+        android:label="EventJoinDialog" >
+        <argument
+            android:name="MessageType"
+            app:argType="com.louis.gourmandism.event.EventJoinDialog$MessageType" />
+    </dialog><action android:id="@+id/action_global_eventJoinDialog" app:destination="@id/eventJoinDialog"/>
 
 </navigation>

@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.EventReceiver
 import com.louis.gourmandism.databinding.FragmentEventItemBinding
 import com.louis.gourmandism.event.EventFragmentDirections
+import com.louis.gourmandism.event.EventJoinDialog
 import com.louis.gourmandism.extension.getVmFactory
 
 class EventItemFragment(val status: Int) : Fragment() {
@@ -69,6 +70,18 @@ class EventItemFragment(val status: Int) : Fragment() {
 
             am.set(AlarmManager.RTC_WAKEUP,it.time,sender)
 
+        })
+
+        viewModel.join.observe(viewLifecycleOwner, Observer {
+            it.let {
+                findNavController().navigate(EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN))
+            }
+        })
+
+        viewModel.leave.observe(viewLifecycleOwner, Observer {
+            it.let {
+                findNavController().navigate(EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.LEAVE))
+            }
         })
 
         return binding.root
