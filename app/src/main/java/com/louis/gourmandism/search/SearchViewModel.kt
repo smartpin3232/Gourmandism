@@ -74,7 +74,7 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         get() = _myFavorite
 
     //Get my favorite shopId
-    private var _myFavoriteShop = MutableLiveData<MutableList<String>>()
+    var _myFavoriteShop = MutableLiveData<MutableList<String>>()
     val myFavoriteShop: LiveData<MutableList<String>>
         get() = _myFavoriteShop
 
@@ -85,6 +85,10 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     private var _navigateDetailInfo = MutableLiveData<Shop>()
     val navigateDetailInfo: LiveData<Shop>
         get() = _navigateDetailInfo
+
+    private var _navigateAddWishInfo = MutableLiveData<Shop>()
+    val navigateAddWishInfo: LiveData<Shop>
+        get() = _navigateAddWishInfo
 
     var selectShopList = MutableLiveData<List<Shop>>()
 
@@ -101,7 +105,7 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         getFavorite()
     }
 
-    private fun getFavorite() {
+    fun getFavorite() {
         coroutineScope.launch {
             UserManager.userToken?.let {
                 val result = repository.getMyFavorite(it)
@@ -337,8 +341,13 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         _navigateDetailInfo.value = shopInfo
     }
 
+    fun navigateToAddWish(shop: Shop){
+        _navigateAddWishInfo.value = shop
+    }
+
     fun onNavigateDone(){
         _navigateDetailInfo.value = null
+        _navigateAddWishInfo.value = null
     }
 
 }

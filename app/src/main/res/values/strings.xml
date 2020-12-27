@@ -50,5 +50,7 @@
     <string name="profile_about">Say something about you</string>
     <string name="Private">Private</string>
     <string name="Public">Public</string>
+    <string name="kilo">公里</string>
+
 
 </resources>

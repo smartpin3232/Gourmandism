@@ -56,15 +56,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.textToolbarTitle.setOnClickListener {
-            UserManager.clear()
-        }
+//        binding.textToolbarTitle.setOnClickListener {
+//            UserManager.clear()
+//        }
 
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         viewModel.currentFragmentType.value = CurrentFragmentType.HOME
@@ -85,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.friendFragment -> CurrentFragmentType.FRIEND
                     R.id.lotteryFragment -> CurrentFragmentType.LOTTERY
                     R.id.wishDetailFragment -> CurrentFragmentType.WISH_DETAIL
+                    R.id.commentFragment -> CurrentFragmentType.COMMENT
                     else -> viewModel.currentFragmentType.value
                 }
             }

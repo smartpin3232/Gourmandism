@@ -164,9 +164,8 @@ class DetailFragment : Fragment() {
                 it.forEach {comment->
                     starTotal += comment.star
                 }
-                val fm = NumberFormat.getNumberInstance()
-                fm.maximumFractionDigits = 1
-                binding.textStarAverage.text = fm.format(starTotal/it.size)
+                val starFormat = String.format("%.1f",(starTotal/it.size))
+                binding.textStarAverage.text = starFormat
             }
         })
 

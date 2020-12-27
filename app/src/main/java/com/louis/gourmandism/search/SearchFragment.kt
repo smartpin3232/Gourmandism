@@ -2,10 +2,12 @@ package com.louis.gourmandism.search
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 
 import android.location.Location
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -30,13 +32,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.louis.gourmandism.MainActivity
 import com.louis.gourmandism.R
+import com.louis.gourmandism.add2wish.Add2wishDialog
 import com.louis.gourmandism.data.Shop
 
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
 import com.robertlevonyan.views.chip.OnSelectClickListener
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import java.math.BigDecimal
 import java.text.NumberFormat
 
@@ -154,7 +160,7 @@ class SearchFragment : Fragment(){
         viewModel.selectTagList.observe(viewLifecycleOwner, Observer {
             val list = mutableListOf<String>()
             list.addAll(it)
-            list.add("新增")
+            list.add("＋")
             adapter.submitList(list)
             adapter.notifyDataSetChanged()
         })
@@ -201,12 +207,30 @@ class SearchFragment : Fragment(){
 
         viewModel.shop.observe(viewLifecycleOwner, Observer {
             it?.let{
-                var endLatLng = LatLng(it.location!!.locationX,it.location!!.locationY)
+                val endLatLng = LatLng(it.location!!.locationX,it.location!!.locationY)
                 val distance = viewModel.getDistance(viewModel.myLocation.value!!,endLatLng)
                 val fm = NumberFormat.getNumberInstance()
                 fm.maximumFractionDigits = 2
+                val formatDistance = String.format("%.2f",distance)
+                binding.textDistance.text = formatDistance + getString(R.string.kilo)
+            }
+        })
 
-                binding.textDistance.text = fm.format(distance)+ "公里"
+        viewModel.navigateAddWishInfo.observe(viewLifecycleOwner, Observer {
+            it?.let {
+//                findNavController().navigate(SearchFragmentDirections.actionGlobalAdd2wishFragment(it.id))
+//                viewModel.onNavigateDone()
+                val a = Add2wishDialog()
+                val bundle = Bundle()
+                bundle.putString("shopId",it.id)
+                a.arguments = bundle
+                a.dialog?.setOnDismissListener {
+                    viewModel.getFavorite()
+                }
+                a.dialog?.setOnCancelListener {
+                    viewModel.getFavorite()
+                }
+                a.show(requireFragmentManager(),"")
             }
         })
 
@@ -252,7 +276,6 @@ class SearchFragment : Fragment(){
             myMap?.let { map -> viewModel.setMapMarker(map,item,requireActivity()) }
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

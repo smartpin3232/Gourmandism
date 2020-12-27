@@ -12,5 +12,6 @@ enum class CurrentFragmentType(val value: String) {
     DETAIL("DETAIL"),
     FRIEND("FRIEND"),
     LOTTERY("LOTTERY"),
-    WISH_DETAIL("WISH DETAIL")
+    WISH_DETAIL("WISH DETAIL"),
+    COMMENT("COMMENT"),
 }

@@ -40,13 +40,12 @@ class SearchListAdapter(private val viewModel: SearchViewModel) :
             }
 
 
-
             binding.constraintShopInfo.setOnClickListener {
                 viewModel.navigateToDetail(item)
             }
 
             binding.imageWish.setOnClickListener {
-
+                viewModel.navigateToAddWish(item)
             }
 
             binding.executePendingBindings()

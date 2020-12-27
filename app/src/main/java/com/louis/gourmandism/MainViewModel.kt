@@ -31,6 +31,7 @@ class MainViewModel(private val repository: Repository) : ViewModel(){
         when (it) {
             CurrentFragmentType.LOTTERY -> DrawerToggleType.BACK
             CurrentFragmentType.WISH_DETAIL -> DrawerToggleType.BACK
+            CurrentFragmentType.COMMENT -> DrawerToggleType.BACK
             else -> DrawerToggleType.NORMAL
         }
     }

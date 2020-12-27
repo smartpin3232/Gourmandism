@@ -35,13 +35,15 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             binding.tag = item
 
             if(position == viewModel.tagPosition.value){
-                binding.textType.setBackgroundColor(Color.parseColor("#cbae82"))
+                binding.textType.setBackgroundColor(Color.parseColor("#9ebbb3"))
+                binding.textType.setTextColor(Color.parseColor("#ffffff"))
             }else{
                 binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
+                binding.textType.setTextColor(Color.parseColor("#3f3a3a"))
             }
 
             binding.textType.setOnClickListener {
-                if(item == "新增"){
+                if(item == "＋"){
                     viewModel.addSelectTag()
                     viewModel.tagPosition.value = null
                 }else{
@@ -50,7 +52,7 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             }
 
             binding.textType.setOnLongClickListener {
-                if(item != "新增"){
+                if(item != "+"){
                     viewModel.setUserTag(item)
                 }
                 true
