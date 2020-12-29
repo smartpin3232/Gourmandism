@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.databinding.ItemCommentImageBinding
-import com.louis.gourmandism.profile.ProfileViewModel
 
 class CommentAdapter(private val viewModel: CommentViewModel) :
     ListAdapter<String, CommentAdapter.ViewHolder>(ProfileDiffCallback()) {
@@ -25,7 +24,6 @@ class CommentAdapter(private val viewModel: CommentViewModel) :
 
         fun bind(item: String, viewModel: CommentViewModel) {
             binding.imageResource = item
-            viewModel.commentInfo.value?.images?.size
             binding.executePendingBindings()
         }
 

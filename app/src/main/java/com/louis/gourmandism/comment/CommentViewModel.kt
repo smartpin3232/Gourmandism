@@ -19,9 +19,11 @@ class CommentViewModel(private val repository: Repository, private val comment: 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    var commentInfo = MutableLiveData<Comment>().apply {
+    private var _commentInfo = MutableLiveData<Comment>().apply {
         value = comment
     }
+    val commentInfo : LiveData<Comment>
+        get() = _commentInfo
 
     private var _profile = MutableLiveData<User>()
     val profile : LiveData<User>
@@ -30,10 +32,6 @@ class CommentViewModel(private val repository: Repository, private val comment: 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
-    }
-
-    init {
-
     }
 
     fun getProfile(id: String){
@@ -50,9 +48,8 @@ class CommentViewModel(private val repository: Repository, private val comment: 
         }
     }
 
-    fun setStar(list: MutableList<ImageView>, amount: Int){
-
-        for (i in 0 until amount){
+    fun setStar(list: MutableList<ImageView>, amount: Float){
+        for (i in 0 until amount.toInt()){
             list[i].setBackgroundResource(R.drawable.tasty_select)
         }
     }

@@ -49,10 +49,6 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         viewModelJob.cancel()
     }
 
-    init {
-
-    }
-
     fun getShop(id: String,mode: Int){
         coroutineScope.launch {
             val result = repository.getShop(id,mode)
@@ -65,11 +61,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                         }
                     }
                     else -> {
-                        Log.i("getComment","Error")
                         null
                     }
             }
-            Log.i("DetailViewModel","${_shopInfo}")
         }
     }
 
@@ -85,11 +79,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                     }
                 }
                 else -> {
-                    Log.i("getComment","Error")
                     null
                 }
             }
-            Log.i("DetailViewModel","${_shopInfo}")
         }
     }
 

@@ -1,12 +1,10 @@
 package com.louis.gourmandism.comment
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.louis.gourmandism.databinding.FragmentCommentBinding
@@ -34,12 +32,15 @@ class CommentFragment : Fragment() {
         )
 
         val adapter = CommentAdapter(viewModel)
-        binding.recyclerViewComment.adapter = adapter
+        binding.recyclerViewCommentImage.adapter = adapter
 
         viewModel.commentInfo.observe(viewLifecycleOwner, Observer {
+
+            it.host?.let {user->
+                viewModel.getProfile(user.id)
+            }
             adapter.submitList(it.images)
-            viewModel.getProfile(it.host!!.id)
-            viewModel.setStar(images,it.star.toInt())
+            viewModel.setStar(images, it.star)
         })
 
 
