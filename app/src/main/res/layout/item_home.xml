@@ -8,13 +8,13 @@
             name="data"
             type="com.louis.gourmandism.data.Comment" />
     </data>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="6dp"
-        >
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

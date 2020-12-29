@@ -24,16 +24,16 @@
                 android:id="@+id/recycler_view_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 android:background="@color/fragmentBackground"
-                app:spanCount="2"
-                android:padding="6dp"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                android:padding="6dp"
+                android:clipToPadding="false"
                 tools:listitem="@layout/item_home"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

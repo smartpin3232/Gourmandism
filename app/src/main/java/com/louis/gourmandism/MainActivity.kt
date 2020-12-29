@@ -1,10 +1,5 @@
 package com.louis.gourmandism
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,12 +8,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -146,7 +138,6 @@ class MainActivity : AppCompatActivity() {
             )
             actionBarDrawerToggle?.setToolbarNavigationClickListener {
                 when (type) {
-//                    DrawerToggleType.BACK -> onBackPressed()
                     DrawerToggleType.BACK -> findNavController(R.id.myNavHostFragment).navigateUp()
                     else -> {}
                 }

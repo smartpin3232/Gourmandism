@@ -15,11 +15,12 @@ import com.louis.gourmandism.data.Shop
 class EventReceiver : BroadcastReceiver() {
 
     private var channelId = "001010100"
+    private var eventAction = "Event"
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
 
-        if(intent.action.equals("Event")){
+        if(intent.action.equals(eventAction)){
 
             channelId = intent.extras?.get("EventId").toString()
             val shopName = intent.extras?.get("shopName").toString()
@@ -50,8 +51,8 @@ class EventReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(context: Context) {
 
-        val name = "Event"
-        val descriptionText = "Event"
+        val name = eventAction
+        val descriptionText = eventAction
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(channelId, name, importance).apply {
             description = descriptionText
