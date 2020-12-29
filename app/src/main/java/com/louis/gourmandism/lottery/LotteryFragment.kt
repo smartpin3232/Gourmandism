@@ -26,9 +26,8 @@ class LotteryFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.buttonLottery.setOnClickListener {
+
             viewModel.allShop.value?.let {
-//                val count = Random().nextInt(it.size)
-//                viewModel.lotteryShop.value = it[count]
                 object : CountDownTimer(3000, 100) {
                     override fun onFinish() {
 

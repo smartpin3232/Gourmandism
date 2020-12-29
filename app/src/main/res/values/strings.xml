@@ -41,6 +41,7 @@
     <string name="delete_friend">DELETE FRIEND</string>
     <string name="send_message">SEND MESSAGE</string>
     <string name="friend_list">FRIEND LIST</string>
+    <string name="friend_list_ch">好友列表</string>
     <string name="message">MESSAGE</string>
     <string name="hyphen">&#160;─&#160;</string>
 
@@ -51,6 +52,12 @@
     <string name="Private">Private</string>
     <string name="Public">Public</string>
     <string name="kilo">公里</string>
+    <string name="lottery">抽選</string>
 
+    <string name="time_to_go">已到赴約時間!</string>
+    <string name="event_notification">&#160;─&#160;揪團通知</string>
+    <string name="pick_restaurant">餐廳抽選</string>
+    <string name="sign_out">登出</string>
+    <string name="welcome">Welcome</string>
 
 </resources>

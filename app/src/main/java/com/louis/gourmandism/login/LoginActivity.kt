@@ -56,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.signInButton.setOnClickListener{
+            signInButtonEnable(false)
             signIn(mGoogleSignInClient)
         }
 
@@ -91,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
+                signInButtonEnable(true)
             }
         }
     }
@@ -109,13 +111,17 @@ class LoginActivity : AppCompatActivity() {
                         userPhoto = it
                     }
                     viewModel.getProfile(user.uid)
-//                    viewModel.createUser(user.uid, user.displayName.toString(), user.photoUrl)
                 }
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w(TAG,"signInWithCredential:failure", task.exception)
+                signInButtonEnable(true)
             }
         }
+    }
+
+    private fun signInButtonEnable(status: Boolean){
+        binding.signInButton.isEnabled = status
     }
 
 }

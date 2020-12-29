@@ -60,12 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-//        binding.textToolbarTitle.setOnClickListener {
-//            UserManager.clear()
-//        }
-
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        viewModel.currentFragmentType.value = CurrentFragmentType.HOME
         setupNavController()
         setupDrawer()
     }
@@ -96,19 +91,26 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = null
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         NavigationUI.setupWithNavController(binding.drawerNavView, navController)
+
         binding.drawerNavView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_pick_restaurant -> {
-//                    viewModel.navigate.value = 1
+
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_lotteryFragment)
                     true
                 }
 
-                R.id.nav_pick_friend -> {
-//                    viewModel.navigate.value = 1
+                R.id.nav_friend -> {
+
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     findNavController(R.id.myNavHostFragment).navigate(R.id.action_global_friendFragment)
+                    true
+                }
+
+                R.id.nav_sign_out -> {
+
+                    UserManager.clear()
                     true
                 }
 

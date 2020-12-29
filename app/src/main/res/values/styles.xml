@@ -48,4 +48,8 @@
         <item name="android:backgroundTint">@color/mainStyleColor</item>
     </style>
 
+    <style name="ProgressTheme" parent="Widget.AppCompat.ProgressBar">
+        <item name="colorAccent">@color/black_3f3a3a</item>
+    </style>
+
 </resources>

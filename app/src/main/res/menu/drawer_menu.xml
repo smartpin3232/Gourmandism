@@ -2,16 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item android:title="Welcome">
+    <item android:title="@string/welcome">
         <menu>
             <item
                 android:id="@+id/nav_pick_restaurant"
                 android:icon="@drawable/home"
-                android:title="餐廳抽選" />
+                android:title="@string/pick_restaurant" />
             <item
-                android:id="@+id/nav_pick_friend"
+                android:id="@+id/nav_friend"
                 android:icon="@drawable/friend"
-                android:title="好友列表" />
+                android:title="@string/friend_list_ch" />
+
+            <item
+                android:id="@+id/nav_sign_out"
+                android:icon="@drawable/exit"
+                android:title="@string/sign_out" />
 
         </menu>
     </item>

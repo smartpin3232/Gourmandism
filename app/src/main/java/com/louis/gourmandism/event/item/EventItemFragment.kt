@@ -68,8 +68,8 @@ class EventItemFragment(val status: Int) : Fragment() {
             val sender = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
             val am = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-            am.set(AlarmManager.RTC_WAKEUP,it.time,sender)
-
+//            am.set(AlarmManager.RTC_WAKEUP,it.time,sender)
+            am.set(AlarmManager.RTC_WAKEUP,5000,sender)
         })
 
         viewModel.join.observe(viewLifecycleOwner, Observer {

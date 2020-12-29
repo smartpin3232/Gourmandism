@@ -28,8 +28,6 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
     var toProfileStatus = MutableLiveData<String>()
 
     private var _likeStatus =MutableLiveData<Boolean>()
-    val likeStatus: LiveData<Boolean>
-        get() = _likeStatus
 
     override fun onCleared() {
         super.onCleared()
@@ -37,10 +35,10 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
     }
 
     init {
-        getLiveArticlesResult()
+        getLiveCommentResult()
     }
 
-    private fun getLiveArticlesResult() {
+    private fun getLiveCommentResult(isInitial: Boolean = false) {
         commentList = repository.getLiveComments()
     }
 

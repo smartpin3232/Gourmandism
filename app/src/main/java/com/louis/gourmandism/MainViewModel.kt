@@ -48,7 +48,6 @@ class MainViewModel(private val repository: Repository) : ViewModel(){
                 val result = repository.getUser(it)
                 UserManager.user.value = when (result) {
                     is Result.Success -> {
-                        Log.i("UserViewModel", result.data.name)
                         profile.value = result.data
                         result.data
                     }

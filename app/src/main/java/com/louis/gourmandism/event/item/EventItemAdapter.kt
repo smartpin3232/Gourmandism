@@ -54,21 +54,22 @@ class EventItemAdapter(private val viewModel: EventItemViewModel) :
 
             binding.textAdd.setOnClickListener {
                 if (binding.textAdd.text == "加入"){
-                    viewModel.leave.value = true
                     if (item.member!!.size >= item.memberLimit){
                         viewModel.toast()
                     } else {
                         binding.textAdd.text = "退出"
+                        viewModel.join.value = true
                         viewModel.joinGame(item.id,0)
                         viewModel.setEventNotification(item)
                     }
                 } else if (binding.textAdd.text == "退出"){
-                    viewModel.join.value = true
                     binding.textAdd.text = "加入"
+                    viewModel.leave.value = true
                     viewModel.joinGame(item.id,1)
                 } else {
                     item.shop?.let {
                         viewModel.navigateToNewComment(it)
+
                     }
                 }
             }

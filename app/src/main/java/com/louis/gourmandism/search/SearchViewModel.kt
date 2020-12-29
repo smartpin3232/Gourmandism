@@ -67,14 +67,13 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
 
     var myLocation = MutableLiveData<LatLng>()
 
-
     //Get my favorite list
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
     val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
     //Get my favorite shopId
-    var _myFavoriteShop = MutableLiveData<MutableList<String>>()
+    private var _myFavoriteShop = MutableLiveData<MutableList<String>>()
     val myFavoriteShop: LiveData<MutableList<String>>
         get() = _myFavoriteShop
 
@@ -149,7 +148,6 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
                     }
                 }
                 else -> {
-                    Log.i("getShop", "Error")
                     null
                 }
             }
@@ -169,7 +167,6 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
                     }
                 }
                 else -> {
-                    Log.i("getShop", "Error")
                     null
                 }
             }

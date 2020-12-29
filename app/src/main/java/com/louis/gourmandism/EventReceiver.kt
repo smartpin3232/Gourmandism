@@ -23,7 +23,7 @@ class EventReceiver : BroadcastReceiver() {
 
             channelId = intent.extras?.get("EventId").toString()
             val shopName = intent.extras?.get("shopName").toString()
-            val content = "$shopName  已到赴約時間!"
+            val content = "$shopName + ${context.getString(R.string.time_to_go)}"
 
             createNotificationChannel(context)
             val intentObject = Intent().apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
@@ -40,7 +40,7 @@ class EventReceiver : BroadcastReceiver() {
 
         return NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("揪團通知")
+            .setContentTitle(context.getString(R.string.event_notification))
             .setContentText(ContentText)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
