@@ -2,7 +2,6 @@ package com.louis.gourmandism.data.source
 
 import androidx.lifecycle.MutableLiveData
 import com.louis.gourmandism.data.*
-import com.louis.gourmandism.data.source.remote.RemoteDataSource
 
 /**
  * Created by Wayne Chen on 2020-01-15.

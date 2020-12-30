@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogAdd2wishBinding

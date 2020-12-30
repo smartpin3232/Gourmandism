@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.DataSource
 import com.louis.gourmandism.login.UserManager
@@ -22,7 +21,6 @@ object RemoteDataSource : DataSource {
 
         FirebaseFirestore.getInstance()
             .collection("Comment")
-//            .orderBy("createdTime", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
                 val list = mutableListOf<Comment>()
@@ -215,7 +213,6 @@ object RemoteDataSource : DataSource {
                     .whereArrayContains("member", UserManager.userToken.toString())
             }
         }
-//            .orderBy("createTime", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
 
                 val list = mutableListOf<Event>()
@@ -309,20 +306,7 @@ object RemoteDataSource : DataSource {
                     if (task.isSuccessful) {
                         val list = mutableListOf<Favorite>()
                         for (document in task.result!!) {
-
                             val favorite = document.toObject(Favorite::class.java)
-//                            favorite.shops?.let {
-//
-//                                FirebaseFirestore.getInstance()
-//                                    .collection("Shop").whereArrayContains("id",it)
-//                                    .get()
-//                                    .addOnCompleteListener { task2->
-//                                        if(task2.isSuccessful){
-//                                            favorite.shopsInfo?.addAll(task2.result.toObjects(Shop::class.java))
-//                                        }
-//                                    }
-//                            }
-
                             list.add(favorite)
                         }
                         list.sortBy { it.createdTime }
@@ -421,7 +405,6 @@ object RemoteDataSource : DataSource {
                 db.set(favorite)
                 .addOnCompleteListener { task ->
 
-//                    task.result.update("id", task.result.id)
                     if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
                     } else {

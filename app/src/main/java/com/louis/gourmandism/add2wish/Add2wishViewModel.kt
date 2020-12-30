@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.data.Result
-import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
@@ -20,19 +19,12 @@ class Add2wishViewModel(private val repository: Repository, private val shopId: 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
-
     val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
-
     private var _addWishStatus = MutableLiveData<Boolean>()
-
     val addWishStatus: LiveData<Boolean>
         get() = _addWishStatus
-
-    init {
-
-    }
 
     override fun onCleared() {
         super.onCleared()
@@ -84,7 +76,5 @@ class Add2wishViewModel(private val repository: Repository, private val shopId: 
         }
         return myList
     }
-
-
 
 }

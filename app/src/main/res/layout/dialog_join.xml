@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="dialog"
             type="com.louis.gourmandism.event.EventJoinDialog" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,6 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:srcCompat="@drawable/sandwich" />
+
             <TextView
                 android:id="@+id/text_message_content"
                 android:layout_width="wrap_content"
@@ -46,14 +50,15 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:text='@{dialog.message ?? ""}'
-                android:visibility='@{dialog.message != null ? View.VISIBLE : View. GONE}'
                 android:textColor="@color/black_3f3a3a"
                 android:textSize="18sp"
+                android:visibility='@{dialog.message != null ? View.VISIBLE : View. GONE}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_message_icon" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
