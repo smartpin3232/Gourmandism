@@ -29,6 +29,7 @@ class ProfilePreviewAdapter(private val viewModel: ProfileViewModel) :
             binding.root.setOnClickListener {
                 viewModel.navigateToShop(item)
             }
+
             binding.executePendingBindings()
         }
 

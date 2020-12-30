@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.louis.gourmandism.profile.ProfileViewModel" />
@@ -14,12 +15,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:background="@color/fragmentBackground">
+        android:background="@color/fragmentBackground"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/fragmentBackground">
 
             <ImageView
@@ -51,7 +52,7 @@
                     tools:src="@tools:sample/avatars">
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/image_user"
                         userImage="@{viewModel.profile.image}"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
@@ -94,10 +95,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
                 android:paddingHorizontal="8dp"
-                android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,8 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/standard_margin"
                 android:layout_marginTop="8dp"
-                android:overScrollMode="never"
                 android:orientation="vertical"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -194,16 +195,16 @@
                 android:id="@+id/edit_introduction"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="@dimen/standard_margin"
                 android:layout_marginHorizontal="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/standard_margin"
                 android:background="@drawable/round_layout"
-                android:paddingHorizontal="@dimen/standard_quarter_margin"
-                android:textColor="@color/gray_777777"
                 android:ems="10"
-                android:gravity="top"
                 android:enabled="false"
-                android:text="@{viewModel.profile.intro}"
+                android:gravity="top"
                 android:hint="@string/profile_about"
+                android:paddingHorizontal="@dimen/standard_quarter_margin"
+                android:text="@{viewModel.profile.intro}"
+                android:textColor="@color/gray_777777"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -215,9 +216,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_layout_3"
-                android:paddingVertical="4dp"
-                android:paddingHorizontal="8dp"
                 android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
                 android:text="@string/add_friend"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/edit_introduction"
@@ -230,8 +231,8 @@
                 android:layout_marginStart="8dp"
                 android:background="@drawable/round_layout_3"
                 android:gravity="center"
-                android:paddingVertical="4dp"
                 android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
                 android:text="@string/send_message"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/button_add_friend"
@@ -244,9 +245,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/round_layout_3"
-                android:text="編輯"
-                android:paddingVertical="4dp"
                 android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="@string/edit"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@+id/edit_introduction"
                 app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
@@ -274,12 +275,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@{String.valueOf(viewModel.profile.friendList.size())}"
-                    tools:text="5"
                     app:layout_constraintBottom_toBottomOf="@+id/icon_friend"
                     app:layout_constraintStart_toEndOf="@+id/icon_friend"
-                    app:layout_constraintTop_toTopOf="@+id/icon_friend" />
+                    app:layout_constraintTop_toTopOf="@+id/icon_friend"
+                    tools:text="5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

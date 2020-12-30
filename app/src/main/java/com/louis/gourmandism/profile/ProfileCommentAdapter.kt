@@ -30,6 +30,7 @@ class ProfileCommentAdapter(private val viewModel: ProfileViewModel) :
             binding.root.setOnClickListener {
                 viewModel.navigateToComment(item)
             }
+
             binding.executePendingBindings()
         }
 

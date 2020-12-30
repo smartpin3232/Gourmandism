@@ -1,6 +1,5 @@
 package com.louis.gourmandism.profile.edit
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
@@ -27,6 +24,7 @@ import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogProfileEditBinding
 import com.louis.gourmandism.extension.getVmFactory
+import com.louis.gourmandism.util.CameraUtil
 
 import java.io.File
 
@@ -57,11 +55,9 @@ class ProfileEditDialog : BottomSheetDialogFragment() {
 
         viewModel.profile.value = ProfileEditDialogArgs.fromBundle(requireArguments()).user
 
-        val storageFirebase = FirebaseStorage.getInstance().reference
-
         binding.buttonSend.setOnClickListener {
             if(!filePath.isBlank()){
-                uploadPhoto(storageFirebase, filePath)
+                uploadPhoto(filePath)
             }else{
                 val user = viewModel.profile.value
                 user?.apply {
@@ -74,7 +70,7 @@ class ProfileEditDialog : BottomSheetDialogFragment() {
         }
 
         binding.userImage.setOnClickListener {
-            checkPermission()
+            CameraUtil.checkPermissionAndGetLocalImg(requireContext(),requireActivity(),this)
         }
 
         viewModel.imageUri.observe(viewLifecycleOwner, Observer {
@@ -94,8 +90,6 @@ class ProfileEditDialog : BottomSheetDialogFragment() {
                 findNavController().navigate(NavigationDirections.actionGlobalProfileFragment(it.id))
             }
         })
-
-
 
         return binding.root
     }
@@ -149,7 +143,8 @@ class ProfileEditDialog : BottomSheetDialogFragment() {
             Toast.makeText(this.requireContext(), exception.message, Toast.LENGTH_SHORT).show()
         }
     }
-    private fun uploadPhoto(storageRef: StorageReference, localImage: String) {
+    private fun uploadPhoto(localImage: String) {
+        val storageRef = FirebaseStorage.getInstance().reference
         val file = Uri.fromFile(File(localImage))
         val eventsRef = storageRef.child(file.lastPathSegment ?: "")
 
@@ -168,36 +163,5 @@ class ProfileEditDialog : BottomSheetDialogFragment() {
                 Log.i("Upload", exception.toString())
             }
     }
-    private fun checkPermission() {
-        val permission = ActivityCompat.checkSelfPermission(
-            this.requireContext(),
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            //if not having permission, ask for it
-            ActivityCompat.requestPermissions(
-                this.requireActivity(), arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                MY_PERMISSIONS_REQUEST_READ_CONTACTS
-            )
-            getLocalImg()
-        } else {
-            getLocalImg()
-        }
-    }
-    private fun getLocalImg() {
-        ImagePicker.with(this)
-            //Crop image(Optional), Check Customization for more option
-            .crop()
-            //Final image size will be less than 1 MB(Optional)
-            .compress(1024)
-            //Final image resolution will be less than 1080 x 1080(Optional)
-            .maxResultSize(
-                1080,
-                1080
-            )
-            .start()
-    }
+
 }

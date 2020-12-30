@@ -59,5 +59,6 @@
     <string name="pick_restaurant">餐廳抽選</string>
     <string name="sign_out">登出</string>
     <string name="welcome">Welcome</string>
+    <string name="edit">編輯</string>
 
 </resources>
