@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,8 +19,6 @@ import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentWishDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
-import it.beppi.tristatetogglebutton_library.TriStateToggleButton
-
 
 class WishDetailFragment : Fragment() {
 
@@ -49,12 +48,31 @@ class WishDetailFragment : Fragment() {
 
         initStatus(favorite.type)
 
-        viewModel.favoriteInfo.observe(viewLifecycleOwner, Observer {
-            viewModel.getUser(it.userId)
+        binding.textAddAttention.setOnClickListener {
+            changeAttentionStatus()
+        }
 
+        binding.textRemove.setOnClickListener {
+            showDialog()
+        }
+
+        binding.switchStatus.setOnCheckedChangeListener { buttonView, isChecked ->
+            changeShareStatus(isChecked, buttonView)
+        }
+
+        viewModel.navigateInfo.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it.id))
+                viewModel.onNavigationDone()
+            }
+        })
+
+        viewModel.favoriteInfo.observe(viewLifecycleOwner, Observer {
+
+            viewModel.getUser(it.userId)
             viewModel.shop.value?.let {shop->
-                    adapter.submitList(viewModel.getNewShop(it.shops!!))
-                    adapter.notifyDataSetChanged()
+                adapter.submitList(viewModel.getNewShop(it.shops!!))
+                adapter.notifyDataSetChanged()
             }
         })
 
@@ -68,39 +86,32 @@ class WishDetailFragment : Fragment() {
             }
         })
 
-        binding.textAddAttention.setOnClickListener {
-            val status = if(binding.textAddAttention.text.toString() == getString(R.string.follow_collection)){
+        return binding.root
+    }
+
+    private fun changeShareStatus(
+        isChecked: Boolean,
+        buttonView: CompoundButton
+    ) {
+        if (isChecked) {
+            viewModel.setShare(1)
+            buttonView.text = getString(R.string.Public)
+        } else {
+            viewModel.setShare(0)
+            buttonView.text = getString(R.string.Private)
+        }
+    }
+
+    private fun changeAttentionStatus() {
+        val status =
+            if (binding.textAddAttention.text.toString() == getString(R.string.follow_collection)) {
                 binding.textAddAttention.text = getString(R.string.follow_cancel)
                 true
-            } else{
+            } else {
                 binding.textAddAttention.text = getString(R.string.follow_collection)
                 false
             }
-            viewModel.setAttention(status)
-        }
-
-        binding.switchStatus.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
-                viewModel.setShare(1)
-                buttonView.text = getString(R.string.Public)
-            } else {
-                viewModel.setShare(0)
-                buttonView.text = getString(R.string.Private)
-            }
-        }
-
-        binding.textRemove.setOnClickListener {
-            showDialog()
-        }
-
-        viewModel.navigateInfo.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it.id))
-                viewModel.onNavigationDone()
-            }
-        })
-
-        return binding.root
+        viewModel.setAttention(status)
     }
 
     private fun showDialog() {

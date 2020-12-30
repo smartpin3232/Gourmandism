@@ -53,7 +53,7 @@ class WishFragment : Fragment() {
         viewModel.navigationData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalWishDetailFragment(it))
-                viewModel.onNavigationDone()
+                viewModel.onNavigated()
 
             }
         })

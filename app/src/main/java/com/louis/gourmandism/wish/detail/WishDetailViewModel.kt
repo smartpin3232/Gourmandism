@@ -17,9 +17,11 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     val viewModelJob = Job()
     val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    val favoriteInfo = MutableLiveData<Favorite>().apply {
+    private val _favoriteInfo = MutableLiveData<Favorite>().apply {
         value = favorite
     }
+    val favoriteInfo: LiveData<Favorite>
+        get() = _favoriteInfo
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
@@ -185,7 +187,7 @@ class WishDetailViewModel(private val repository: Repository, private val favori
     private fun updateList(shopId: String){
         val list = favoriteInfo.value?.copy()
         list?.shops?.remove(shopId)
-        favoriteInfo.value = list
+        _favoriteInfo.value = list
     }
 
     fun navigateToDetail(shop: Shop) {
