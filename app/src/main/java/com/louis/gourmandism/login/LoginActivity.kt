@@ -33,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var userPhoto : Uri
     private var userUid = ""
     private var userName = ""
-    private lateinit var userPhoto : Uri
 
     val viewModel by viewModels<LoginViewModel> { getVmFactory() }
 
@@ -53,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
 
         binding.signInButton.setOnClickListener{
             signInButtonEnable(false)

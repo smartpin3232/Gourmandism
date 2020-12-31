@@ -12,7 +12,6 @@ fun Activity.getVmFactory(): ViewModelFactory {
     return ViewModelFactory(repository)
 }
 
-
 fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }

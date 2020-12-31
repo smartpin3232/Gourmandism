@@ -34,13 +34,7 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
         ) {
             binding.tag = item
 
-            if(position == viewModel.tagPosition.value){
-                binding.textType.setBackgroundColor(Color.parseColor("#9ebbb3"))
-                binding.textType.setTextColor(Color.parseColor("#ffffff"))
-            }else{
-                binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
-                binding.textType.setTextColor(Color.parseColor("#3f3a3a"))
-            }
+            initTagStatus(position, viewModel)
 
             binding.textType.setOnClickListener {
                 if(item == "＋"){
@@ -59,6 +53,19 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             }
 
             binding.executePendingBindings()
+        }
+
+        private fun initTagStatus(
+            position: Int,
+            viewModel: SearchViewModel
+        ) {
+            if (position == viewModel.tagPosition.value) {
+                binding.textType.setBackgroundColor(Color.parseColor("#9ebbb3"))
+                binding.textType.setTextColor(Color.parseColor("#ffffff"))
+            } else {
+                binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
+                binding.textType.setTextColor(Color.parseColor("#3f3a3a"))
+            }
         }
 
         companion object {

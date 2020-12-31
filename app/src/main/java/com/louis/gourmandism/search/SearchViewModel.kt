@@ -37,10 +37,8 @@ import kotlin.math.sin
 
 class SearchViewModel(private val repository: Repository) : ViewModel() {
 
-
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
 
     //All shop list
     private var _shopList = MutableLiveData<List<Shop>>()
@@ -60,12 +58,6 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     private var _navigateToNewTag = MutableLiveData<Boolean>()
     val navigateToNewTag: LiveData<Boolean>
         get() = _navigateToNewTag
-
-    private var tagStatus: String = ""
-
-    var selectTagList = MutableLiveData<MutableList<String>>()
-
-    var myLocation = MutableLiveData<LatLng>()
 
     //Get my favorite list
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
@@ -89,9 +81,15 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     val navigateAddWishInfo: LiveData<Shop>
         get() = _navigateAddWishInfo
 
+    private var tagStatus: String = ""
+
     var selectShopList = MutableLiveData<List<Shop>>()
 
     var tagPosition = MutableLiveData<Int>()
+
+    var selectTagList = MutableLiveData<MutableList<String>>()
+
+    var myLocation = MutableLiveData<LatLng>()
 
 
     override fun onCleared() {
@@ -104,13 +102,12 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         getFavorite()
     }
 
-    fun getFavorite() {
+    private fun getFavorite() {
         coroutineScope.launch {
             UserManager.userToken?.let {
                 val result = repository.getMyFavorite(it)
                 _myFavorite.value = when (result) {
                     is Result.Success -> {
-                        Log.i("favorite",result.data.toString())
                         result.data
                     }
                     else -> {
@@ -192,24 +189,23 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getUserSelectTag() {
-
         val newTag = mutableListOf<String>()
         UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
         selectTagList.value = newTag
     }
 
     private fun removeUserTag(tag: String){
-
-        UserManager.user.value?.selectTags?.remove(tag)
-        val newTag = mutableListOf<String>()
-        UserManager.user.value?.selectTags?.let { newTag.addAll(it) }
-        selectTagList.value = newTag
+        val newTags = mutableListOf<String>()
+        UserManager.user.value?.selectTags?.let { tags->
+            tags.remove(tag)
+            newTags.addAll(tags)
+        }
+        selectTagList.value = newTags
     }
 
     fun addSelectTag() {
         _navigateToNewTag.value = true
     }
-
 
     fun setMapMarker(
         googleMap: GoogleMap,
@@ -249,34 +245,6 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
                     }
                 })
         }
-    }
-
-    private fun createDrawableFromView(context: Context, view: View): Bitmap? {
-        val displayMetrics = DisplayMetrics()
-        (context as Activity).windowManager.defaultDisplay
-            .getMetrics(displayMetrics)
-
-
-        view.layoutParams = ActionBar.LayoutParams(
-            ActionBar.LayoutParams.WRAP_CONTENT,
-            ActionBar.LayoutParams.WRAP_CONTENT
-        )
-
-        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels)
-
-        view.layout(
-            0, 0, displayMetrics.widthPixels,
-            displayMetrics.heightPixels
-        )
-        view.buildDrawingCache()
-        val bitmap = Bitmap.createBitmap(
-            view.measuredWidth,
-            view.measuredHeight, Bitmap.Config.ARGB_8888
-        )
-
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-        return bitmap
     }
 
     fun filter(list: List<Shop>, query: String): List<Shop> {
@@ -323,15 +291,16 @@ class SearchViewModel(private val repository: Repository) : ViewModel() {
         val lon2 = Math.PI / 180 * end.longitude
 
         //地球半徑
-        val R = 6371.0
+        val earthRadius = 6371.0
 
         //兩點間距離 km，如果想要米的話，結果*1000就可以了
-        val d = acos(
+        val distance = acos(
             sin(lat1) * sin(lat2) + cos(lat1) * cos(
                 lat2
             ) * cos(lon2 - lon1)
-        ) * R
-        return d
+        ) * earthRadius
+
+        return distance
     }
 
     fun navigateToDetail(shopInfo: Shop){

@@ -13,5 +13,4 @@ class FriendPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
         return FriendItemFragment(position)
     }
-
 }

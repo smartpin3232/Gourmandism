@@ -25,30 +25,36 @@ class SearchListAdapter(private val viewModel: SearchViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: Shop,
+            shop: Shop,
             viewModel: SearchViewModel,
             holder: ViewHolder
         ) {
-            binding.shop = item
+            binding.shop = shop
 
-            viewModel.myFavoriteShop.value?.let {
-                if(it.any { shopId ->  shopId == item.id }){
-                    binding.imageWish.setBackgroundResource(R.drawable.wish_selected)
-                }else{
-                    binding.imageWish.setBackgroundResource(R.drawable.wish)
-                }
+            viewModel.myFavoriteShop.value?.let {favoriteList->
+                initWishStatus(favoriteList, shop)
             }
 
-
             binding.constraintShopInfo.setOnClickListener {
-                viewModel.navigateToDetail(item)
+                viewModel.navigateToDetail(shop)
             }
 
             binding.imageWish.setOnClickListener {
-                viewModel.navigateToAddWish(item)
+                viewModel.navigateToAddWish(shop)
             }
 
             binding.executePendingBindings()
+        }
+
+        private fun initWishStatus(
+            it: MutableList<String>,
+            shop: Shop
+        ) {
+            if (it.any { shopId -> shopId == shop.id }) {
+                binding.imageWish.setBackgroundResource(R.drawable.wish_selected)
+            } else {
+                binding.imageWish.setBackgroundResource(R.drawable.wish)
+            }
         }
 
         companion object {

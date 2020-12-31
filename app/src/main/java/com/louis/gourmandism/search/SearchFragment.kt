@@ -2,12 +2,9 @@ package com.louis.gourmandism.search
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
-
 import android.location.Location
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,45 +16,33 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-
-
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.louis.gourmandism.MainActivity
 import com.louis.gourmandism.R
-import com.louis.gourmandism.add2wish.Add2wishDialog
 import com.louis.gourmandism.data.Shop
-
 import com.louis.gourmandism.databinding.FragmentSearchBinding
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
 import com.robertlevonyan.views.chip.OnSelectClickListener
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import java.math.BigDecimal
 import java.text.NumberFormat
-
 
 class SearchFragment : Fragment(){
 
     private val viewModel by viewModels<SearchViewModel> { getVmFactory() }
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationPermission = false
     private var PERMISSION_ID = 8787
     private var myMap: GoogleMap? = null
     private var lastKnownLocation: Location? = null
-
-    var clickMarker : Marker? = null
+    private var clickMarker : Marker? = null
 
     @SuppressLint("UseRequireInsteadOfGet")
     private val callback = OnMapReadyCallback { googleMap ->
@@ -108,7 +93,6 @@ class SearchFragment : Fragment(){
 
         getDeviceLocation()
 
-
         @SuppressLint("ResourceType")
         //id:2 右上角定位按鈕
         val locationButton = mapFragment?.view?.rootView?.findViewById<View>(2)!!
@@ -142,12 +126,6 @@ class SearchFragment : Fragment(){
 
         binding.bottomDialog.chipAll.chipSelected = true
 
-        //點擊取得當前位置
-        binding.textTitle.setOnClickListener {
-            getDeviceLocation()
-            viewModel.getShopList("",0)
-        }
-
         viewModel.shopList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 for(item in it){
@@ -158,8 +136,8 @@ class SearchFragment : Fragment(){
         })
 
         viewModel.selectTagList.observe(viewLifecycleOwner, Observer {
-            val list = mutableListOf<String>()
-            list.addAll(it)
+            var list = mutableListOf<String>()
+            list = it.toMutableList()
             list.add("＋")
             adapter.submitList(list)
             adapter.notifyDataSetChanged()
@@ -209,36 +187,27 @@ class SearchFragment : Fragment(){
             it?.let{
                 val endLatLng = LatLng(it.location!!.locationX,it.location!!.locationY)
                 val distance = viewModel.getDistance(viewModel.myLocation.value!!,endLatLng)
-                val fm = NumberFormat.getNumberInstance()
-                fm.maximumFractionDigits = 2
-                val formatDistance = String.format("%.2f",distance)
+                val formatDistance = toSecondDecimalPoint(distance)
                 binding.textDistance.text = formatDistance + getString(R.string.kilo)
             }
         })
 
         viewModel.navigateAddWishInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
-//                findNavController().navigate(SearchFragmentDirections.actionGlobalAdd2wishFragment(it.id))
-//                viewModel.onNavigateDone()
-                val a = Add2wishDialog()
-                val bundle = Bundle()
-                bundle.putString("shopId",it.id)
-                a.arguments = bundle
-                a.dialog?.setOnDismissListener {
-                    viewModel.getFavorite()
-                }
-                a.dialog?.setOnCancelListener {
-                    viewModel.getFavorite()
-                }
-                a.show(requireFragmentManager(),"")
+                findNavController().navigate(SearchFragmentDirections.actionGlobalAdd2wishFragment(
+                    it.id)
+                )
+                viewModel.onNavigateDone()
             }
         })
 
         binding.cardShopInfo.setOnClickListener {
-            findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(viewModel.shop.value?.id))
+            findNavController().navigate(SearchFragmentDirections.actionGlobalDetailFragment(
+                viewModel.shop.value?.id)
+            )
         }
 
-        binding.bottomDialog.chipAll.onSelectClickListener = OnSelectClickListener { v, selected ->
+        binding.bottomDialog.chipAll.onSelectClickListener = OnSelectClickListener { _, _ ->
 
             viewModel.shopList.value?.let {
                 resetMarker(it)
@@ -247,11 +216,12 @@ class SearchFragment : Fragment(){
             binding.bottomDialog.chipMyFavorite.chipSelected = false
         }
 
-        binding.bottomDialog.chipMyFavorite.onSelectClickListener = OnSelectClickListener { v, selected ->
+        binding.bottomDialog.chipMyFavorite.onSelectClickListener = OnSelectClickListener { _, _ ->
 
             viewModel.shopList.value?.let {allShopList->
                 val filterList = allShopList.filter {shop->
-                    viewModel.myFavoriteShop.value!!.contains(shop.id)}
+                    viewModel.myFavoriteShop.value!!.contains(shop.id)
+                }
                 viewModel.selectShopList.value = filterList
                 resetMarker(filterList)
             }
@@ -268,6 +238,12 @@ class SearchFragment : Fragment(){
         }
 
         return binding.root
+    }
+
+    private fun toSecondDecimalPoint(distance: Double): String {
+        val fm = NumberFormat.getNumberInstance()
+        fm.maximumFractionDigits = 2
+        return String.format("%.2f", distance)
     }
 
     private fun resetMarker(filterList: List<Shop>){
@@ -345,11 +321,6 @@ class SearchFragment : Fragment(){
                             viewModel.myLocation.value = LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude)
 
                             myMap?.apply {
-//                                addMarker(MarkerOptions()
-//                                    .position(LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude))
-//                                    .title("It's ME!!")
-//                                    .snippet("${lastKnownLocation!!.latitude}, ${lastKnownLocation!!.longitude}")
-//                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
                                 moveCamera(
                                     CameraUpdateFactory.newLatLngZoom(
                                         LatLng(lastKnownLocation!!.latitude, lastKnownLocation!!.longitude), 15f))
@@ -364,6 +335,5 @@ class SearchFragment : Fragment(){
             e.printStackTrace()
         }
     }
-
 
 }

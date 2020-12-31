@@ -1,6 +1,5 @@
 package com.louis.gourmandism.friend
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +8,6 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentFriendBinding
-import com.louis.gourmandism.event.PagerAdapter
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class FriendFragment : Fragment() {
 

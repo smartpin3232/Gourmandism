@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 class LotteryViewModel(private val repository: Repository) : ViewModel() {
 
-
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -22,7 +21,6 @@ class LotteryViewModel(private val repository: Repository) : ViewModel() {
         get() = _allShop
 
     var lotteryShop = MutableLiveData<Shop>()
-
 
     override fun onCleared() {
         super.onCleared()
