@@ -30,6 +30,7 @@ Gourmandism提供:
 
 ### Requirements
 - Android Studio 4.0
+- Android minSdk 28
 
 ### Version
 - 1.0.3
