@@ -8,11 +8,14 @@ Gourmandism提供:
 - 揪團功能, 與人共享美味加倍
 - 地圖探索, 尋找美食彈指之間
 
-<a href="https://bbs.huaweicloud.com/blogs/209753"><img width="300" height="150" src=https://github.com/smartpin3232/Gourmandism/blob/master/Google%20Play%20.png/></a>
+<a href="https://play.google.com/store/apps/details?id=com.louis.gourmandism"><img width="200" height="80" src=https://github.com/smartpin3232/Gourmandism/blob/master/Google%20Play%20.png/></a>
 
+<br></br>
+<img width="180" height="350" src=畫面2.jpg/>
+<img width="180" height="350" src=畫面1.jpg/>
+<img width="180" height="350" src=畫面3.jpg/>
 
 ### Requirements
--
 - Android Studio 4.0
 
 ### Version
