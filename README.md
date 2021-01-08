@@ -32,7 +32,7 @@ Gourmandism提供:
 - Android Studio 4.0
 
 ### Version
-- 1.2
+- 1.0.3
 
 ### Contact
 Louis Liu <br>
