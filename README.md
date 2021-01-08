@@ -8,7 +8,7 @@ Gourmandism提供:
 - 揪團功能, 與人共享美味加倍
 - 地圖探索, 尋找美食彈指之間
 
-![image](picture or gif url)
+![image](https://github.com/smartpin3232/Gourmandism/blob/master/Google%20Play.png)
 
 ### Requirements
 -
