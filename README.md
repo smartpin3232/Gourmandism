@@ -1,7 +1,7 @@
 # Gourmandism-美食地圖
 還找不到附近好吃的美食嗎? Gourmandism帶您前往味蕾新境界!
 
-Gourmandism提供:
+Gourmandism 提供:
 - 美食動態, 分享美食輕而易舉
 - 餐廳評分, 評價高低一目了然
 - 收藏清單, 留下美味隔周再訪
