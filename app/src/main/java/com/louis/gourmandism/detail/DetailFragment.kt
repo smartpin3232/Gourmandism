@@ -1,14 +1,15 @@
 package com.louis.gourmandism.detail
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.graphics.Color
-import android.icu.math.BigDecimal
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,11 +19,10 @@ import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePick
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
+import com.louis.gourmandism.data.Comment
 import com.louis.gourmandism.data.OpenTime
 import com.louis.gourmandism.databinding.FragmentDetailBinding
 import com.louis.gourmandism.extension.getVmFactory
-import com.louis.gourmandism.extension.hideKeyboard
-import java.text.NumberFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
 
@@ -31,6 +31,7 @@ class DetailFragment : Fragment() {
 
     private val viewModel by viewModels<DetailViewModel> { getVmFactory() }
     private lateinit var bottomBehavior : BottomSheetBehavior<ConstraintLayout>
+    private lateinit var binding : FragmentDetailBinding
 
     @ExperimentalTime
     @SuppressLint("SetTextI18n")
@@ -38,15 +39,16 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentDetailBinding.inflate(inflater, container,false)
+        binding = FragmentDetailBinding.inflate(inflater, container,false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        val id = DetailFragmentArgs.fromBundle(requireArguments()).shopId
+
+        val shopId = DetailFragmentArgs.fromBundle(requireArguments()).shopId
 
         bottomBehavior = BottomSheetBehavior.from(binding.bottomDialog.bottomSheetLayout)
         bottomBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
-        id?.let {
+        shopId?.let {
             viewModel.setBrowserHistory(it)
             viewModel.getShop(it,1)
             viewModel.getComment(it)
@@ -61,7 +63,7 @@ class DetailFragment : Fragment() {
         val timeAdapter = DetailTimeAdapter(viewModel)
         binding.recyclerOpenTime.adapter = timeAdapter
 
-        val time = mutableListOf<OpenTime>(
+        val businessTime = mutableListOf<OpenTime>(
             OpenTime(
                 day = "0",
                 startTime = "09:00",
@@ -93,7 +95,7 @@ class DetailFragment : Fragment() {
                 endTime = "22:30"
             )
         )
-        timeAdapter.submitList(time)
+        timeAdapter.submitList(businessTime)
 
         binding.recyclerOpenTime.tag = false
         binding.textBusinessTimeContent.setOnClickListener {
@@ -111,66 +113,31 @@ class DetailFragment : Fragment() {
 
 
         binding.bottomDialog.editTime.setOnClickListener {
-            val builder = SingleDateAndTimePickerDialog.Builder(context)
-                .bottomSheet()
-                .curved()
-                .backgroundColor(resources.getColor(R.color.gray_646464))
-                .mainColor(Color.WHITE)
-                .titleTextColor(Color.WHITE)
-                .displayListener {}
-                .title("選擇時間")
-                .listener { date ->
-                    binding.bottomDialog.editTime.text = date.toString()
-                    viewModel.date.value = date.time
-                }
-
-                .build()
-            builder.display()
+            showDateAndTimePicker()
         }
 
         binding.bottomDialog.buttonGo.setOnClickListener{
             val newEventContent = binding.bottomDialog.editContent.text.toString()
             val newEventMemberLimit = binding.bottomDialog.editNumber.text.toString()
             val createTime = Calendar.getInstance().timeInMillis
-            viewModel.newEvent(newEventContent, newEventMemberLimit, createTime)
+
+            checkInputStatus(newEventMemberLimit, newEventContent, createTime)
         }
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
             val whichDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-            val businessTime = viewModel.getTodayBusinessTime(time, (whichDay-1).toString())
-            binding.textBusinessTimeContent.text = businessTime.startTime + getString(R.string.hyphen) + businessTime.endTime
-            val businessStatus = viewModel.checkBusinessStatus(businessTime)
-
-            if(businessStatus){
-                binding.textStatus.apply {
-                    text = getString(R.string.open)
-                    setTextColor(context.getColor(R.color.black_3f3a3a))
-                    setBackgroundResource(R.drawable.round_layout)
-                }
-
-            }else{
-                binding.textStatus.apply {
-                    text = getString(R.string.close)
-                    setTextColor(context.getColor(R.color.white))
-                    setBackgroundResource(R.drawable.round_layout_3)
-                }
-            }
+            val openingHours = viewModel.getTodayBusinessTime(businessTime, (whichDay-1).toString())
+            businessStatusInit(openingHours)
         })
 
         viewModel.commentList.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
-                var starTotal = 0.0
-                it.forEach {comment->
-                    starTotal += comment.star
-                }
-                val starFormat = String.format("%.1f",(starTotal/it.size))
-                binding.textStarAverage.text = starFormat
+                binding.textStarAverage.text = getAverageRating(it)
             }
         })
 
         viewModel.leaveDetail.observe(viewLifecycleOwner, Observer {
-
             it?.let {
                 if (it) findNavController().navigateUp()
             }
@@ -182,32 +149,93 @@ class DetailFragment : Fragment() {
         })
 
         viewModel.toProfileStatus.observe(viewLifecycleOwner, Observer {
-
             it?.let{
                 findNavController().navigate(DetailFragmentDirections.actionGlobalProfileFragment(it))
             }
         })
 
         binding.textAddComment.setOnClickListener {
-
-            findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2commentDialog(
-                viewModel.shopInfo.value!!
-            ))
+            viewModel.shopInfo.value?.let {
+                findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2commentDialog(it))
+            }
         }
 
         binding.textAddEvent.setOnClickListener {
-
             slideUpDownBottomSheet()
         }
 
         binding.textAddWishList.setOnClickListener {
-
-            id?.let {
+            shopId?.let {
                 findNavController().navigate(DetailFragmentDirections.actionGlobalAdd2wishFragment(it))
             }
         }
 
         return binding.root
+    }
+
+    private fun checkInputStatus(
+        newEventMemberLimit: String,
+        newEventContent: String,
+        createTime: Long
+    ) {
+        if (viewModel.date.value == null) {
+            Toast.makeText(requireContext(), "請輸入開始日期 !", Toast.LENGTH_SHORT).show()
+        } else if (newEventMemberLimit == "") {
+            Toast.makeText(requireContext(), "請輸入人數限制 !", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.newEvent(newEventContent, newEventMemberLimit, createTime)
+        }
+    }
+
+    private fun showDateAndTimePicker() {
+        val builder = SingleDateAndTimePickerDialog.Builder(context)
+            .bottomSheet()
+            .curved()
+            .backgroundColor(resources.getColor(R.color.gray_646464))
+            .mainColor(Color.WHITE)
+            .titleTextColor(Color.WHITE)
+            .displayListener {}
+            .title("選擇時間")
+            .listener { date ->
+                binding.bottomDialog.editTime.text = date.toString()
+                viewModel.date.value = date.time
+            }
+            .build()
+        builder.display()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun businessStatusInit(businessTime: OpenTime) {
+
+        binding.textBusinessTimeContent.text =
+            businessTime.startTime + getString(R.string.hyphen) + businessTime.endTime
+
+        val businessStatus =
+            viewModel.checkBusinessStatus(businessTime, viewModel.getCurrentHourAndMinute())
+
+        if (businessStatus) {
+            binding.textStatus.apply {
+                text = getString(R.string.open)
+                setTextColor(context.getColor(R.color.black_3f3a3a))
+                setBackgroundResource(R.drawable.round_layout)
+            }
+        } else {
+            binding.textStatus.apply {
+                text = getString(R.string.close)
+                setTextColor(context.getColor(R.color.white))
+                setBackgroundResource(R.drawable.round_layout_3)
+            }
+        }
+    }
+
+    private fun getAverageRating(
+        it: List<Comment>
+    ): String {
+        var starTotal = 0.0
+        it.forEach { comment ->
+            starTotal += comment.star
+        }
+        return String.format("%.1f", (starTotal / it.size))
     }
 
     private fun slideUpDownBottomSheet() {

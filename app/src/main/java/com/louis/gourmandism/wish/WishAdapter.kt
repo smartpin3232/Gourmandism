@@ -1,7 +1,6 @@
 package com.louis.gourmandism.wish
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,8 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.louis.gourmandism.data.Favorite
 import com.louis.gourmandism.databinding.ItemWishBinding
-import com.louis.gourmandism.login.UserManager
-
 
 class WishAdapter(private val viewModel: WishViewModel) :
     ListAdapter<Favorite, WishAdapter.ViewHolder>(DiffCallback()) {
@@ -27,7 +24,6 @@ class WishAdapter(private val viewModel: WishViewModel) :
     class ViewHolder private constructor(val binding: ItemWishBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
         fun bind(favorite: Favorite, viewModel: WishViewModel) {
             binding.favorite = favorite
 

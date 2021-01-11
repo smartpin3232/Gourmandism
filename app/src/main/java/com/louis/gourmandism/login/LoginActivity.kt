@@ -33,9 +33,9 @@ class LoginActivity : AppCompatActivity() {
     private val TAG = this.javaClass.name
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var userPhoto : Uri
     private var userUid = ""
     private var userName = ""
-    private lateinit var userPhoto : Uri
 
     val viewModel by viewModels<LoginViewModel> { getVmFactory() }
 
@@ -54,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
         binding.signInButton.setOnClickListener{
             signInButtonEnable(false)
             signIn(mGoogleSignInClient)
@@ -63,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.profile.observe(this, Observer {
             if(it != null){
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else{
                 viewModel.createUser(userUid, userName, userPhoto)
             }
@@ -70,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.createStatus.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         })
 
     }

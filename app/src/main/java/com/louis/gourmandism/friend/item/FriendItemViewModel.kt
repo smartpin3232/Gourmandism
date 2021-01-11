@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-
 class FriendItemViewModel(private val repository: Repository) : ViewModel() {
 
     private val viewModelJob = Job()
@@ -73,7 +72,7 @@ class FriendItemViewModel(private val repository: Repository) : ViewModel() {
         navigateProfile.value = user
     }
 
-    fun onNavigateDone(){
+    fun onNavigated(){
         navigateProfile.value = null
     }
 }

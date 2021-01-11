@@ -1,6 +1,7 @@
 package com.louis.gourmandism.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,44 +26,55 @@ class HomeAdapter(private val viewModel: HomeViewModel) :
     class ViewHolder private constructor(val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Comment, viewModel: HomeViewModel) {
-            binding.data = item
+        fun bind(comment: Comment, viewModel: HomeViewModel) {
+            binding.data = comment
 
+            checkLikeStatus(comment)
+
+            binding.imageFavorite.setOnClickListener {
+                setLike(it, viewModel, comment)
+            }
+            binding.constraintComment.setOnClickListener {
+                viewModel.navigateToComment(comment)
+            }
+
+            binding.constraintShop.setOnClickListener {
+                viewModel.navigationToDetail(comment.shopId)
+            }
+
+            binding.constraintProfile.setOnClickListener {
+                viewModel.navigateToProfile(comment.host!!.id)
+            }
+
+            binding.executePendingBindings()
+        }
+
+        private fun setLike(
+            it: View,
+            viewModel: HomeViewModel,
+            item: Comment
+        ) {
+            if (it.tag == true) {
+                it.tag = false
+                viewModel.setLike(item.commentId, 0)
+                it.setBackgroundResource(R.drawable.good)
+            } else {
+                it.tag = true
+                viewModel.setLike(item.commentId, 1)
+                it.setBackgroundResource(R.drawable.good_select)
+            }
+        }
+
+        private fun checkLikeStatus(item: Comment) {
             item.like?.let {
-                if(it.any {likeList-> likeList == UserManager.userToken }){
+                if (it.any { likeList -> likeList == UserManager.userToken }) {
                     binding.imageFavorite.tag = true
                     binding.imageFavorite.setBackgroundResource(R.drawable.good_select)
-                }else{
+                } else {
                     binding.imageFavorite.tag = false
                     binding.imageFavorite.setBackgroundResource(R.drawable.good)
                 }
             }
-
-
-            binding.imageFavorite.setOnClickListener {
-                if(it.tag == true){
-                    it.tag = false
-                    viewModel.setLike(item.commentId,0)
-                    it.setBackgroundResource(R.drawable.good)
-                }else{
-                    it.tag = true
-                    viewModel.setLike(item.commentId,1)
-                    it.setBackgroundResource(R.drawable.good_select)
-                }
-            }
-            binding.constraintComment.setOnClickListener {
-                viewModel.navigateToComment(item)
-            }
-
-            binding.constraintShop.setOnClickListener {
-                viewModel.navigationToDetail(item.shopId)
-            }
-
-            binding.constraintProfile.setOnClickListener {
-                viewModel.navigateToProfile(item.host!!.id)
-            }
-
-            binding.executePendingBindings()
         }
 
         companion object {

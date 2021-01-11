@@ -21,33 +21,29 @@ class EventItemViewModel(private val repository: Repository, private val status:
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    var liveEventList = MutableLiveData<List<Event>>()
-
     private var _shopInfo = MutableLiveData<Shop>()
-
     val shopInfo: LiveData<Shop>
         get() = _shopInfo
 
-    private var joinStatus = MutableLiveData<Boolean>()
-
     private var _navigateToNewCommentInfo = MutableLiveData<Shop>()
-
     val navigateToNewCommentInfo: LiveData<Shop>
         get() = _navigateToNewCommentInfo
 
-    val join = MutableLiveData<Boolean>()
-
-    val leave = MutableLiveData<Boolean>()
-
     private var _toastStatus = MutableLiveData<Boolean>()
-
     val toastStatus: LiveData<Boolean>
         get() = _toastStatus
 
     private var _notificationInfo = MutableLiveData<Event>()
-
     val notificationInfo: LiveData<Event>
         get() = _notificationInfo
+
+    var liveEventList = MutableLiveData<List<Event>>()
+
+    private var joinStatus = MutableLiveData<Boolean>()
+
+    val join = MutableLiveData<Boolean>()
+
+    val leave = MutableLiveData<Boolean>()
 
     override fun onCleared() {
         super.onCleared()
@@ -100,13 +96,13 @@ class EventItemViewModel(private val repository: Repository, private val status:
         _navigateToNewCommentInfo.value = shop
     }
 
-    fun onNavigationDone() {
-        _shopInfo.value = null
-        _navigateToNewCommentInfo.value = null
-    }
-
     fun setEventNotification(event: Event){
         _notificationInfo.value = event
+    }
+
+    fun onNavigated() {
+        _shopInfo.value = null
+        _navigateToNewCommentInfo.value = null
     }
 
 }

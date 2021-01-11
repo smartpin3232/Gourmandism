@@ -17,15 +17,21 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private var _navigationStatus =MutableLiveData<String>()
-    val navigationStatus: LiveData<String>
-        get() = _navigationStatus
+    private var _commentList =MutableLiveData<List<Comment>>()
+    val commentList: LiveData<List<Comment>>
+        get() = _commentList
 
-    var commentList = MutableLiveData<List<Comment>>()
+    private var _navigateDetailInfo =MutableLiveData<String>()
+    val navigateDetailInfo: LiveData<String>
+        get() = _navigateDetailInfo
 
-    var toCommentStatus = MutableLiveData<Comment>()
+    private var _navigateCommentInfo =MutableLiveData<Comment>()
+    val navigateCommentInfo: LiveData<Comment>
+        get() = _navigateCommentInfo
 
-    var toProfileStatus = MutableLiveData<String>()
+    private var _navigateProfileInfo =MutableLiveData<String>()
+    val navigateProfileInfo: LiveData<String>
+        get() = _navigateProfileInfo
 
     private var _likeStatus =MutableLiveData<Boolean>()
 
@@ -36,31 +42,6 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
 
     init {
         getLiveCommentResult()
-    }
-
-    private fun getLiveCommentResult(isInitial: Boolean = false) {
-        commentList = repository.getLiveComments()
-    }
-
-    fun navigationToDetail(item:String){
-        _navigationStatus.value = item
-    }
-
-    fun onNavigated() {
-        _navigationStatus.value = null
-    }
-
-    fun navigateToComment(comment: Comment) {
-        toCommentStatus.value = comment
-    }
-
-    fun navigateToProfile(userId: String) {
-        toProfileStatus.value = userId
-    }
-
-    fun onNavigationDone() {
-        toCommentStatus.value = null
-        toProfileStatus.value = null
     }
 
     fun setLike(commentId: String, status: Int){
@@ -77,6 +58,28 @@ class HomeViewModel(private val repository: Repository) : ViewModel(){
                 }
             }
         }
+    }
+
+    private fun getLiveCommentResult() {
+        _commentList = repository.getLiveComments()
+    }
+
+    fun navigationToDetail(item:String){
+        _navigateDetailInfo.value = item
+    }
+
+    fun navigateToComment(comment: Comment) {
+        _navigateCommentInfo.value = comment
+    }
+
+    fun navigateToProfile(userId: String) {
+        _navigateProfileInfo.value = userId
+    }
+
+    fun onNavigationDone() {
+        _navigateCommentInfo.value = null
+        _navigateProfileInfo.value = null
+        _navigateDetailInfo.value = null
     }
 
 }

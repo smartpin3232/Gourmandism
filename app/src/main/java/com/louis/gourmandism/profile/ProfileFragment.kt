@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentProfileBinding
+import com.louis.gourmandism.event.EventFragmentDirections
+import com.louis.gourmandism.event.EventJoinDialog
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment : Fragment() {
 
@@ -40,26 +40,6 @@ class ProfileFragment : Fragment() {
 
         val previewAdapter = ProfilePreviewAdapter(viewModel)
         binding.recyclerViewPreview.adapter = previewAdapter
-
-        binding.buttonAddFriend.setOnClickListener {
-
-            if(binding.buttonAddFriend.tag == true){
-                viewModel.addFriend(false)
-                binding.buttonAddFriend.text = getString(R.string.add_friend)
-                binding.buttonAddFriend.tag = false
-            } else{
-                viewModel.addFriend(true)
-                binding.buttonAddFriend.text = getString(R.string.delete_friend)
-                binding.buttonAddFriend.tag = true
-            }
-
-        }
-
-        binding.buttonEdit.setOnClickListener {
-            viewModel.profile.value?.let {
-                findNavController().navigate(NavigationDirections.actionGlobalProfileEditDialog(it))
-            }
-        }
 
         viewModel.comment.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -90,27 +70,48 @@ class ProfileFragment : Fragment() {
         viewModel.commentInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(ProfileFragmentDirections.actionGlobalCommentFragment(it))
-                viewModel.onNavigationDone()
+                viewModel.onNavigated()
             }
         })
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(ProfileFragmentDirections.actionGlobalDetailFragment(it.id))
+                viewModel.onNavigated()
             }
         })
 
         viewModel.masterInfo.observe(viewLifecycleOwner, Observer {
             it.friendList?.let {friendId->
                 if(friendId.any {data-> data == userId }){
-                    binding.buttonAddFriend.text = getString(R.string.delete_friend)
-                    binding.buttonAddFriend.tag = true
+                    changeFriendStatus(true)
                 }else{
-                    binding.buttonAddFriend.text = getString(R.string.add_friend)
-                    binding.buttonAddFriend.tag = false
+                    changeFriendStatus(false)
                 }
             }
         })
+
+        binding.buttonAddFriend.setOnClickListener {
+            if(binding.buttonAddFriend.tag == true){
+                changeFriendStatus(true)
+                viewModel.setFriend(true)
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN)
+                )
+            } else{
+                changeFriendStatus(false)
+                viewModel.setFriend(false)
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.CANCEL)
+                )
+            }
+        }
+
+        binding.buttonEdit.setOnClickListener {
+            viewModel.profile.value?.let {
+                findNavController().navigate(NavigationDirections.actionGlobalProfileEditDialog(it))
+            }
+        }
 
         return binding.root
     }
@@ -126,4 +127,16 @@ class ProfileFragment : Fragment() {
             binding.buttonEdit.visibility = View.GONE
         }
     }
+
+    private fun changeFriendStatus(status: Boolean) {
+        binding.buttonAddFriend.apply {
+            text = if(status){
+                getString(R.string.delete_friend)
+            } else {
+                getString(R.string.add_friend)
+            }
+            tag = !status
+        }
+    }
+
 }

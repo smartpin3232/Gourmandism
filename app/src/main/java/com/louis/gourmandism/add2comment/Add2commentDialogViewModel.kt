@@ -26,19 +26,16 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     private var _shopInfo = MutableLiveData<Shop>().apply {
         value = shop
     }
-
     val shopInfo: LiveData<Shop>
         get() = _shopInfo
 
     private var _setStatus = MutableLiveData<Boolean>()
-
     val setStatus: LiveData<Boolean>
         get() = _setStatus
 
     private var _star = MutableLiveData<Float>().apply {
-        value = 0.toFloat()
+        value = 0F
     }
-
     val star: LiveData<Float>
         get() = _star
 
@@ -79,6 +76,7 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
     fun setComment(comment: String, imageUri: MutableList<String>?){
 
         val imageArray = mutableListOf<String>()
+
         imageUri?.let {
             imageArray.addAll(it)
         }
@@ -114,7 +112,6 @@ class Add2commentDialogViewModel(private val repository: Repository, private val
             list[i].setBackgroundResource(R.drawable.tasty_select)
         }
     }
-
 
     fun getStar(level: Int){
         _star.value = level.toFloat()

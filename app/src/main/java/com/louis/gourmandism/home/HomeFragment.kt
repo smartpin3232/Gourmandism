@@ -41,21 +41,21 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.navigationStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateDetailInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalDetailFragment(it))
-                viewModel.onNavigated()
+                viewModel.onNavigationDone()
             }
         })
 
-        viewModel.toCommentStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateCommentInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(NavigationDirections.actionGlobalCommentFragment(it))
                 viewModel.onNavigationDone()
             }
         })
 
-        viewModel.toProfileStatus.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateProfileInfo.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(HomeFragmentDirections.actionGlobalProfileFragment(it))
                 viewModel.onNavigationDone()

@@ -1,14 +1,11 @@
 package com.louis.gourmandism.search
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.ItemTagBinding
 
 
@@ -34,13 +31,7 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
         ) {
             binding.tag = item
 
-            if(position == viewModel.tagPosition.value){
-                binding.textType.setBackgroundColor(Color.parseColor("#9ebbb3"))
-                binding.textType.setTextColor(Color.parseColor("#ffffff"))
-            }else{
-                binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
-                binding.textType.setTextColor(Color.parseColor("#3f3a3a"))
-            }
+            initTagStatus(position, viewModel)
 
             binding.textType.setOnClickListener {
                 if(item == "＋"){
@@ -52,13 +43,26 @@ class SearchAdapter(private val viewModel: SearchViewModel) :
             }
 
             binding.textType.setOnLongClickListener {
-                if(item != "+"){
+                if(item != "＋"){
                     viewModel.setUserTag(item)
                 }
                 true
             }
 
             binding.executePendingBindings()
+        }
+
+        private fun initTagStatus(
+            position: Int,
+            viewModel: SearchViewModel
+        ) {
+            if (position == viewModel.tagPosition.value) {
+                binding.textType.setBackgroundColor(Color.parseColor("#9ebbb3"))
+                binding.textType.setTextColor(Color.parseColor("#ffffff"))
+            } else {
+                binding.textType.setBackgroundColor(Color.parseColor("#ffe0b2"))
+                binding.textType.setTextColor(Color.parseColor("#3f3a3a"))
+            }
         }
 
         companion object {

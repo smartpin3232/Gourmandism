@@ -9,10 +9,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogAdd2wishBinding
+import com.louis.gourmandism.event.EventFragmentDirections
+import com.louis.gourmandism.event.EventJoinDialog
 import com.louis.gourmandism.extension.add2wishVmFactory
 
 class Add2wishDialog : BottomSheetDialogFragment() {
@@ -43,6 +44,9 @@ class Add2wishDialog : BottomSheetDialogFragment() {
         viewModel.addWishStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
                 dismiss()
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN)
+                )
             }
         })
 

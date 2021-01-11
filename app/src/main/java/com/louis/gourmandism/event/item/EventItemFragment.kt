@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.EventReceiver
+import com.louis.gourmandism.data.Event
 import com.louis.gourmandism.databinding.FragmentEventItemBinding
 import com.louis.gourmandism.event.EventFragmentDirections
 import com.louis.gourmandism.event.EventJoinDialog
@@ -27,64 +27,77 @@ class EventItemFragment(val status: Int) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentEventItemBinding.inflate(inflater,container,false)
-
+        val binding = FragmentEventItemBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
         val adapter = EventItemAdapter(viewModel)
         binding.recyclerViewEvent.adapter = adapter
 
         viewModel.liveEventList.observe(viewLifecycleOwner, Observer {
-
-            adapter.submitList(viewModel.filterList(it))
+            it?.let {
+                adapter.submitList(viewModel.filterList(it))
+            }
         })
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(EventFragmentDirections.actionGlobalDetailFragment(it.id))
-                viewModel.onNavigationDone()
+                viewModel.onNavigated()
             }
-        })
-
-        viewModel.toastStatus.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireContext(),"人數已滿",Toast.LENGTH_SHORT).show()
         })
 
         viewModel.navigateToNewCommentInfo.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(EventFragmentDirections.actionGlobalAdd2commentDialog(it))
-                viewModel.onNavigationDone()
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalAdd2commentDialog(
+                        it
+                    )
+                )
+                viewModel.onNavigated()
             }
         })
 
         viewModel.notificationInfo.observe(viewLifecycleOwner, Observer {
-
-            val intent = Intent(requireContext(), EventReceiver::class.java)
-            intent.action = "Event"
-
-            intent.putExtra("EventId",it.id)
-            intent.putExtra("shopName",it.shop?.name)
-
-            val sender = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
-            val am = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-//            am.set(AlarmManager.RTC_WAKEUP,it.time,sender)
-            am.set(AlarmManager.RTC_WAKEUP,5000,sender)
+            setNotification(it)
         })
 
         viewModel.join.observe(viewLifecycleOwner, Observer {
             it.let {
-                findNavController().navigate(EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN))
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN)
+                )
             }
         })
 
         viewModel.leave.observe(viewLifecycleOwner, Observer {
             it.let {
-                findNavController().navigate(EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.LEAVE))
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.LEAVE)
+                )
+            }
+        })
+
+        viewModel.toastStatus.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.FULL)
+                )
             }
         })
 
         return binding.root
+    }
+
+    private fun setNotification(event: Event) {
+
+        val intent = Intent(requireContext(), EventReceiver::class.java)
+        intent.action = "Event"
+        intent.putExtra("EventId", event.id)
+        intent.putExtra("shopName", event.shop?.name)
+
+        val sender = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
+        val am = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        am.set(AlarmManager.RTC_WAKEUP, event.time, sender)
     }
 
 }

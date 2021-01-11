@@ -1,6 +1,5 @@
 package com.louis.gourmandism.add2comment
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -26,12 +24,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import com.louis.gourmandism.NavigationDirections
-import com.louis.gourmandism.extension.hideKeyboard
+import com.louis.gourmandism.util.CameraUtil
 import java.io.File
 
 class Add2commentDialog : BottomSheetDialogFragment() {
 
-    private val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0
+    private val permissionsRequestRead = 0
     lateinit var binding: DialogAdd2commentBinding
     private var filePath: String = ""
     private val uris = mutableListOf<String>()
@@ -60,19 +58,19 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         val adapter = Add2commentAdapter(viewModel)
         binding.recyclerViewAddCommentImage.adapter = adapter
 
-        val storageFirebase = FirebaseStorage.getInstance().reference
-
         binding.textSend.setOnClickListener {
-
-            if(localImageList.isNullOrEmpty()){
+            if (localImageList.isNullOrEmpty()) {
                 val comment = binding.editCommentContent.text.toString()
-                viewModel.setComment(comment,null)
-            }else{
-                for(localImage in viewModel.localImages.value!!){
-                    uploadImg(storageFirebase, localImage)
+                viewModel.setComment(comment, null)
+            } else {
+                for (localImage in viewModel.localImages.value!!) {
+                    uploadImg(localImage)
                 }
             }
+        }
 
+        binding.imageCamera.setOnClickListener {
+            CameraUtil.checkPermissionAndGetLocalImg(requireContext(), requireActivity(), this)
         }
 
         viewModel.localImages.observe(viewLifecycleOwner, Observer {
@@ -81,16 +79,14 @@ class Add2commentDialog : BottomSheetDialogFragment() {
         })
 
         viewModel.imagesUri.observe(viewLifecycleOwner, Observer {
-            if(it.size == viewModel.localImages.value?.size){
-
+            if (it.size == viewModel.localImages.value?.size) {
                 val comment = binding.editCommentContent.text.toString()
-                viewModel.setComment(comment,it)
+                viewModel.setComment(comment, it)
             }
         })
 
         viewModel.setStatus.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(NavigationDirections.actionGlobalHomeFragment())
-//            this.dismiss()
         })
 
         viewModel.star.observe(viewLifecycleOwner, Observer {
@@ -104,15 +100,12 @@ class Add2commentDialog : BottomSheetDialogFragment() {
             viewModel.setStar(images, it.toInt())
         })
 
-        binding.imageCamera.setOnClickListener {
-            checkPermission()
-        }
-
         return binding.root
     }
 
-    private fun uploadImg(storageFirebase: StorageReference, localFile: String) {
+    private fun uploadImg(localFile: String) {
 
+        val storageFirebase = FirebaseStorage.getInstance().reference
         val metadata = StorageMetadata.Builder()
             .setContentDisposition("food")
             .setContentType("image")
@@ -120,8 +113,8 @@ class Add2commentDialog : BottomSheetDialogFragment() {
 
         val file = Uri.fromFile(File(localFile))
         val storageRef = storageFirebase.child(file.lastPathSegment ?: "")
-        val uploadTask = storageRef.putFile(file,metadata)
-//        val uploadTask=storageRef.listAll()
+        val uploadTask = storageRef.putFile(file, metadata)
+
         uploadTask
             .addOnSuccessListener {
                 downloadImg(storageRef)
@@ -130,57 +123,20 @@ class Add2commentDialog : BottomSheetDialogFragment() {
             .addOnFailureListener { exception ->
                 Log.i("upload", "Failure")
             }
-//            .addOnProgressListener { taskSnapshot ->
-//                val progress =
-//                    (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
-//                upload_progress.progress = progress
-//                if (progress >= 100) {
-//                    upload_progress.visibility = View.GONE
-//                }
-//            }
     }
 
     private fun downloadImg(ref: StorageReference?) {
 
         if (ref == null) {
-            Log.i("downloadImg","null")
+            Log.i("downloadImg", "null")
             return
         }
         ref.downloadUrl.addOnSuccessListener {
             uris.add(it.toString())
             viewModel.imagesUri.value = uris
-        }.addOnFailureListener {
-                exception -> Log.i("downloadImg", "${exception}")
+        }.addOnFailureListener { exception ->
+            Log.i("downloadImg", "${exception}")
         }
-    }
-
-    private fun checkPermission() {
-        val permission = ActivityCompat.checkSelfPermission(
-            this.requireContext(),
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            //未取得權限，向使用者要求允許權限
-            ActivityCompat.requestPermissions(
-                this.requireActivity(), arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                MY_PERMISSIONS_REQUEST_READ_CONTACTS
-            )
-        }
-        getLocalImg()
-    }
-
-    private fun getLocalImg() {
-        ImagePicker.with(this)
-            .crop()                    //Crop image(Optional), Check Customization for more option
-            .compress(1024)            //Final image size will be less than 1 MB(Optional)
-            .maxResultSize(
-                1080,
-                1080
-            )    //Final image resolution will be less than 1080 x 1080(Optional)
-            .start()
     }
 
     override fun onRequestPermissionsResult(
@@ -190,7 +146,7 @@ class Add2commentDialog : BottomSheetDialogFragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
+            permissionsRequestRead -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //get image
                 } else {
@@ -208,9 +164,7 @@ class Add2commentDialog : BottomSheetDialogFragment() {
                 filePath = ImagePicker.getFilePath(data) ?: ""
                 localImageList.add(filePath)
                 viewModel.localImages.value = localImageList
-                if (filePath.isNotEmpty()) {
-
-                } else {
+                if (filePath.isBlank()) {
                     Toast.makeText(this.requireContext(), "Upload failed", Toast.LENGTH_SHORT)
                         .show()
                 }

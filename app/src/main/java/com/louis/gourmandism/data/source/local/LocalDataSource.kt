@@ -5,11 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.DataSource
 
-/**
- * Created by Wayne Chen on 2020-01-15.
- *
- * Concrete implementation of a Publisher source as a db.
- */
 class LocalDataSource(val context: Context) : DataSource {
     override suspend fun getComment(userId: String,mode: Int): Result<List<Comment>> {
         TODO("Not yet implemented")

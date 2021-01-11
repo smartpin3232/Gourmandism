@@ -1,6 +1,5 @@
 package com.louis.gourmandism.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -49,10 +48,6 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         viewModelJob.cancel()
     }
 
-    init {
-
-    }
-
     fun getShop(id: String,mode: Int){
         coroutineScope.launch {
             val result = repository.getShop(id,mode)
@@ -65,11 +60,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                         }
                     }
                     else -> {
-                        Log.i("getComment","Error")
                         null
                     }
             }
-            Log.i("DetailViewModel","${_shopInfo}")
         }
     }
 
@@ -85,11 +78,9 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
                     }
                 }
                 else -> {
-                    Log.i("getComment","Error")
                     null
                 }
             }
-            Log.i("DetailViewModel","${_shopInfo}")
         }
     }
 
@@ -140,12 +131,16 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
         return time.filter { it.day == today }[0]
     }
 
-    fun checkBusinessStatus(businessTime: OpenTime): Boolean {
+    fun getCurrentHourAndMinute(): String{
         val cal = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("HH:mm")
         val hours = cal.get(Calendar.HOUR_OF_DAY)
         val minutes= cal.get(Calendar.MINUTE)
-        val nowTimeFormat = dateFormat.parse("$hours:$minutes")
+        return "$hours:$minutes"
+    }
+
+    fun checkBusinessStatus(businessTime: OpenTime, CurrentTime: String): Boolean {
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val nowTimeFormat = dateFormat.parse(CurrentTime)
         val startTime = dateFormat.parse(businessTime.startTime)
         val endTime = dateFormat.parse(businessTime.endTime)
         return nowTimeFormat in startTime..endTime

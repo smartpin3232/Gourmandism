@@ -31,9 +31,6 @@ class LoginViewModel(private val repository: Repository) : ViewModel(){
         viewModelJob.cancel()
     }
 
-    init {
-
-    }
 
     fun createUser(googleUid: String, name: String, photo: Uri?){
         coroutineScope.launch {

@@ -13,7 +13,7 @@ class Add2commentAdapter(private val viewModel: Add2commentDialogViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel, holder)
+        holder.bind(item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,19 +23,13 @@ class Add2commentAdapter(private val viewModel: Add2commentDialogViewModel) :
     class ViewHolder private constructor(val binding: ItemAdd2commentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(
-            item: String,
-            viewModel: Add2commentDialogViewModel,
-            holder: ViewHolder
-        ) {
+        fun bind(item: String) {
             binding.data = item
-
             binding.executePendingBindings()
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemAdd2commentBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)

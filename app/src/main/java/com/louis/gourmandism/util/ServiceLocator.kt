@@ -8,11 +8,6 @@ import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.data.source.local.LocalDataSource
 import com.louis.gourmandism.data.source.remote.RemoteDataSource
 
-/**
- * Created by Wayne Chen on 2020-01-15.
- *
- * A Service Locator for the [PublisherRepository].
- */
 object ServiceLocator {
 
     @Volatile

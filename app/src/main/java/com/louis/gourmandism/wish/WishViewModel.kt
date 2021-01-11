@@ -1,6 +1,5 @@
 package com.louis.gourmandism.wish
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.louis.gourmandism.data.Shop
 import com.louis.gourmandism.data.User
 import com.louis.gourmandism.data.source.Repository
 import com.louis.gourmandism.login.UserManager
-import com.squareup.okhttp.Dispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,23 +20,14 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private var _myFavorite = MutableLiveData<MutableList<Favorite>>()
-
     val myFavorite: LiveData<MutableList<Favorite>>
         get() = _myFavorite
 
-    private var _newFavorite = MutableLiveData<MutableList<Favorite>>()
-
-    val newFavorite: LiveData<MutableList<Favorite>>
-        get() = _newFavorite
-
-
     private var _user = MutableLiveData<User>()
-
     val user: LiveData<User>
         get() = _user
 
     private var _navigationData = MutableLiveData<Favorite>()
-
     val navigationData: LiveData<Favorite>
         get() = _navigationData
 
@@ -53,7 +42,6 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
 
     init {
         getMyFavorite()
-//        getShop()
     }
 
     private fun getMyFavorite() {
@@ -62,7 +50,6 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
                 val result = repository.getMyFavorite(it)
                 _myFavorite.value = when (result) {
                     is Result.Success -> {
-                        Log.i("favorite",result.data.toString())
                         result.data
                     }
                     else -> {
@@ -100,7 +87,6 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
                     }
                 }
             }
-
         return favoriteShopList
     }
 
@@ -139,13 +125,12 @@ class WishViewModel(private val repository: Repository) : ViewModel() {
         return favoriteShopList
     }
 
-    fun onNavigationDone(){
-        _navigationData.value = null
-    }
-
     fun navigateToDetail(favorite: Favorite) {
         _navigationData.value = favorite
     }
 
+    fun onNavigated(){
+        _navigationData.value = null
+    }
 
 }

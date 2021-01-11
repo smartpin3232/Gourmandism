@@ -3,7 +3,6 @@
     <string name="Comment">最新評論</string>
     <string name="home">HOME</string>
     <string name="title_activity_maps">Map</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_shop">搜尋餐廳…</string>
     <string name="Search">SEARCH</string>
@@ -59,5 +58,33 @@
     <string name="pick_restaurant">餐廳抽選</string>
     <string name="sign_out">登出</string>
     <string name="welcome">Welcome</string>
+    <string name="edit">編輯</string>
 
+    <!--  EventJoinDialog  -->
+    <string name="join_success">加入成功</string>
+    <string name="leave_success">退出成功</string>
+    <string name="new_success">新增成功</string>
+    <string name="full">人數已滿</string>
+    <string name="cancel">取消追蹤</string>
+    <string name="edit_select_time">選擇時間..</string>
+    <string name="edit_input_content">請輸入內容..</string>
+    <string name="edit_select_number">選擇人數..</string>
+
+    <!-- LotteryFragment_Spinner -->
+    <string-array name="food_type">
+        <item>全部</item>
+        <item>中式</item>
+        <item>美式</item>
+        <item>歐式</item>
+        <item>日式</item>
+        <item>泰式</item>
+        <item>韓式</item>
+        <item>飲料</item>
+        <item>咖啡</item>
+        <item>炸物</item>
+        <item>酒吧</item>
+        <item>火鍋</item>
+        <item>燒烤</item>
+        <item>小吃</item>
+    </string-array>
 </resources>

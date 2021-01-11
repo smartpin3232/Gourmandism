@@ -9,7 +9,6 @@ import androidx.fragment.app.DialogFragment
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogJoinBinding
 
-
 class EventJoinDialog : DialogFragment() {
 
     var message: String? = null
@@ -19,9 +18,8 @@ class EventJoinDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.custom_dialog)
+        setStyle(STYLE_NO_FRAME, R.style.custom_dialog)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,21 +42,31 @@ class EventJoinDialog : DialogFragment() {
     }
 
     private fun init() {
-        when (messageType) {
+        message = when (messageType) {
             MessageType.JOIN -> {
-                message = "加入成功"
+                getString(R.string.join_success)
             }
             MessageType.LEAVE -> {
-                message = "退出成功"
-            } else -> {
-
+                getString(R.string.leave_success)
+            }
+            MessageType.FULL -> {
+                getString(R.string.full)
+            }
+            MessageType.CANCEL -> {
+                getString(R.string.cancel)
+            }
+            MessageType.NEW -> {
+                getString(R.string.new_success)
             }
         }
     }
 
     enum class MessageType(val value: Message) {
         JOIN(Message()),
-        LEAVE(Message())
+        LEAVE(Message()),
+        FULL(Message()),
+        CANCEL(Message()),
+        NEW(Message())
     }
 
     interface IMessage {

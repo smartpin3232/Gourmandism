@@ -1,11 +1,8 @@
 package com.louis.gourmandism
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
-import android.content.Context
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,12 +10,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -44,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private var PERMISSION_ID = 8888
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         setupNavController()
         setupDrawer()
+        getLocationPermission()
     }
 
     private fun setupNavController() {
@@ -111,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_sign_out -> {
 
                     UserManager.clear()
+                    Toast.makeText(this, "已登出", Toast.LENGTH_SHORT).show()
                     true
                 }
 
@@ -146,7 +145,6 @@ class MainActivity : AppCompatActivity() {
             )
             actionBarDrawerToggle?.setToolbarNavigationClickListener {
                 when (type) {
-//                    DrawerToggleType.BACK -> onBackPressed()
                     DrawerToggleType.BACK -> findNavController(R.id.myNavHostFragment).navigateUp()
                     else -> {}
                 }
@@ -209,6 +207,16 @@ class MainActivity : AppCompatActivity() {
             }else{
                 super.onBackPressed()
             }
+        }
+    }
+
+    private fun getLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ), PERMISSION_ID)
         }
     }
 }

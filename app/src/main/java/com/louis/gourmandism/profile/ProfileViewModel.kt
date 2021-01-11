@@ -1,12 +1,10 @@
 package com.louis.gourmandism.profile
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.louis.gourmandism.data.*
 import com.louis.gourmandism.data.source.Repository
-import com.louis.gourmandism.data.source.remote.RemoteDataSource
 import com.louis.gourmandism.login.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,7 +76,7 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
             }
         }
     }
-    fun getMasterInfo() {
+    private fun getMasterInfo() {
         coroutineScope.launch {
             UserManager.userToken?.let {
                 val result = repository.getUser(it)
@@ -96,15 +94,13 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
 
     private fun getUserComment() {
         coroutineScope.launch {
-            userId?.let {
+            userId.let {
                 val result = repository.getComment(it, 1)
                 _comment.value = when (result) {
                     is Result.Success -> {
-                        Log.i("getUserComment", "${result.data}")
                         result.data
                     }
                     else -> {
-                        Log.i("getUserComment", "Error")
                         null
                     }
                 }
@@ -118,17 +114,14 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
             val result = repository.getShop("", 0)
             _shop.value = when (result) {
                 is Result.Success -> {
-                    Log.i("getUserComment", "${result.data}")
                     list.sortByDescending { it.time }
                     val shopList = mutableListOf<Shop>()
                     for ((id) in list) {
                         shopList.addAll(result.data.filter { it.id == id })
                     }
-
                     shopList
                 }
                 else -> {
-                    Log.i("getUserComment", "Error")
                     null
                 }
             }
@@ -141,7 +134,6 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
                 val result = repository.getMyFavorite(it)
                 _myFavorite.value = when (result) {
                     is Result.Success -> {
-                        Log.i("favorite",result.data.toString())
                         result.data
                     }
                     else -> {
@@ -153,7 +145,7 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
         }
     }
 
-    fun addFriend(status: Boolean) {
+    fun setFriend(status: Boolean) {
         coroutineScope.launch {
             UserManager.userToken?.let {
                 val result = repository.addFriend(it, userId, status)
@@ -194,13 +186,14 @@ class ProfileViewModel(private val repository: Repository, private val userId: S
         _commentInfo.value = comment
     }
 
-    fun onNavigationDone(){
-        _commentInfo.value = null
-    }
-
-
     fun navigateToShop(shop: Shop){
         _shopInfo.value = shop
     }
+
+    fun onNavigated(){
+        _commentInfo.value = null
+        _shopInfo.value = null
+    }
+
 
 }

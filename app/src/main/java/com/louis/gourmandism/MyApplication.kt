@@ -7,7 +7,6 @@ import kotlin.properties.Delegates
 
 class MyApplication : Application() {
 
-    // Depends on the flavor,
     val repository: Repository
         get() = ServiceLocator.provideRepository(this)
 
@@ -19,6 +18,4 @@ class MyApplication : Application() {
         super.onCreate()
         instance = this
     }
-
-    fun isLiveDataDesign() = true
 }
