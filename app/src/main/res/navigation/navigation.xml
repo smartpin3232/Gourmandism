@@ -135,7 +135,8 @@
 
     <action
         android:id="@+id/action_global_homeFragment"
-        app:destination="@id/homeFragment" />
+        app:destination="@id/homeFragment"
+        />
 
     <action
         android:id="@+id/action_global_searchFragment"

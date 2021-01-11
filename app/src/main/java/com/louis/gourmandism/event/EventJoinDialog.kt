@@ -52,13 +52,21 @@ class EventJoinDialog : DialogFragment() {
             MessageType.FULL -> {
                 getString(R.string.full)
             }
+            MessageType.CANCEL -> {
+                getString(R.string.cancel)
+            }
+            MessageType.NEW -> {
+                getString(R.string.new_success)
+            }
         }
     }
 
     enum class MessageType(val value: Message) {
         JOIN(Message()),
         LEAVE(Message()),
-        FULL(Message())
+        FULL(Message()),
+        CANCEL(Message()),
+        NEW(Message())
     }
 
     interface IMessage {

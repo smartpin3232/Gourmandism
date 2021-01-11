@@ -1,6 +1,7 @@
 package com.louis.gourmandism.detail
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -118,7 +120,8 @@ class DetailFragment : Fragment() {
             val newEventContent = binding.bottomDialog.editContent.text.toString()
             val newEventMemberLimit = binding.bottomDialog.editNumber.text.toString()
             val createTime = Calendar.getInstance().timeInMillis
-            viewModel.newEvent(newEventContent, newEventMemberLimit, createTime)
+
+            checkInputStatus(newEventMemberLimit, newEventContent, createTime)
         }
 
         viewModel.shopInfo.observe(viewLifecycleOwner, Observer {
@@ -170,6 +173,20 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun checkInputStatus(
+        newEventMemberLimit: String,
+        newEventContent: String,
+        createTime: Long
+    ) {
+        if (viewModel.date.value == null) {
+            Toast.makeText(requireContext(), "請輸入開始日期 !", Toast.LENGTH_SHORT).show()
+        } else if (newEventMemberLimit == "") {
+            Toast.makeText(requireContext(), "請輸入人數限制 !", Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.newEvent(newEventContent, newEventMemberLimit, createTime)
+        }
+    }
+
     private fun showDateAndTimePicker() {
         val builder = SingleDateAndTimePickerDialog.Builder(context)
             .bottomSheet()
@@ -192,7 +209,9 @@ class DetailFragment : Fragment() {
 
         binding.textBusinessTimeContent.text =
             businessTime.startTime + getString(R.string.hyphen) + businessTime.endTime
-        val businessStatus = viewModel.checkBusinessStatus(businessTime)
+
+        val businessStatus =
+            viewModel.checkBusinessStatus(businessTime, viewModel.getCurrentHourAndMinute())
 
         if (businessStatus) {
             binding.textStatus.apply {

@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.*
 
 class LotteryViewModel(private val repository: Repository) : ViewModel() {
 
@@ -19,6 +20,12 @@ class LotteryViewModel(private val repository: Repository) : ViewModel() {
     private var _allShop = MutableLiveData<List<Shop>>()
     val allShop: LiveData<List<Shop>>
         get() = _allShop
+
+    private var _filterShopList = MutableLiveData<List<Shop>>()
+    val filterShopList: LiveData<List<Shop>>
+        get() = _filterShopList
+
+
 
     var lotteryShop = MutableLiveData<Shop>()
 
@@ -42,4 +49,24 @@ class LotteryViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
+    fun filterShop(query: String){
+        if(query == "全部"){
+            _filterShopList.value = _allShop.value
+        } else {
+            _allShop.value?.let {
+                val shopList = mutableListOf<Shop>()
+                for(shop in it){
+                    shop.type?.let { type ->
+                        if(type.any { value-> value == query }){
+                            shopList.add(shop)
+                        }
+                    }
+                }
+                _filterShopList.value = shopList
+            }
+        }
+    }
+
+
 }

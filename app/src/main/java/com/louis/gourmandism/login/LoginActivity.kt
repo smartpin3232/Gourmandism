@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.profile.observe(this, Observer {
             if(it != null){
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else{
                 viewModel.createUser(userUid, userName, userPhoto)
             }
@@ -69,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.createStatus.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         })
 
     }

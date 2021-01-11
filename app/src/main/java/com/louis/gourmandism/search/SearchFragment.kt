@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -39,7 +38,7 @@ class SearchFragment : Fragment(){
     private val viewModel by viewModels<SearchViewModel> { getVmFactory() }
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationPermission = false
-    private var PERMISSION_ID = 8787
+    private var PERMISSION_ID = 8888
     private var myMap: GoogleMap? = null
     private var lastKnownLocation: Location? = null
     private var clickMarker : Marker? = null
@@ -103,7 +102,6 @@ class SearchFragment : Fragment(){
 
     private var mapFragment: SupportMapFragment? = null
     lateinit var binding : FragmentSearchBinding
-    private lateinit var bottomBehavior : BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater,

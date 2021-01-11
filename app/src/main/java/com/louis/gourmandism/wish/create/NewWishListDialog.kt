@@ -13,6 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.DialogNewWishListBinding
+import com.louis.gourmandism.event.EventFragmentDirections
+import com.louis.gourmandism.event.EventJoinDialog
 import com.louis.gourmandism.extension.getVmFactory
 
 class NewWishListDialog : BottomSheetDialogFragment() {

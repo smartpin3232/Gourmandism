@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.louis.gourmandism.NavigationDirections
 import com.louis.gourmandism.R
 import com.louis.gourmandism.databinding.FragmentProfileBinding
+import com.louis.gourmandism.event.EventFragmentDirections
+import com.louis.gourmandism.event.EventJoinDialog
 import com.louis.gourmandism.extension.getVmFactory
 import com.louis.gourmandism.login.UserManager
 
@@ -93,9 +95,15 @@ class ProfileFragment : Fragment() {
             if(binding.buttonAddFriend.tag == true){
                 changeFriendStatus(true)
                 viewModel.setFriend(true)
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.JOIN)
+                )
             } else{
                 changeFriendStatus(false)
                 viewModel.setFriend(false)
+                findNavController().navigate(
+                    EventFragmentDirections.actionGlobalEventJoinDialog(EventJoinDialog.MessageType.CANCEL)
+                )
             }
         }
 
@@ -104,7 +112,6 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(NavigationDirections.actionGlobalProfileEditDialog(it))
             }
         }
-
 
         return binding.root
     }

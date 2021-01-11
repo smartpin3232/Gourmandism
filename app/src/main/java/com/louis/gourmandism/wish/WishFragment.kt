@@ -32,7 +32,6 @@ class WishFragment : Fragment() {
         val shareAdapter = WishAdapter(viewModel)
         binding.recyclerViewRecommendWishList.adapter = shareAdapter
 
-
         viewModel.myFavorite.observe(viewLifecycleOwner, Observer {
             viewModel.getShop()
         })
