@@ -33,7 +33,7 @@ Gourmandism 提供:
 - Android minSdk 28
 
 ### Version
-- 1.0.3
+- 1.0.7
 
 ### Contact
 Louis Liu <br>
