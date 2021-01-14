@@ -63,49 +63,19 @@ class DetailFragment : Fragment() {
         val timeAdapter = DetailTimeAdapter(viewModel)
         binding.recyclerOpenTime.adapter = timeAdapter
 
-        val businessTime = mutableListOf<OpenTime>(
-            OpenTime(
-                day = "0",
-                startTime = "09:00",
-                endTime = "22:30"
-            ),
-            OpenTime(
-                day = "1",
-                startTime = "09:00",
-                endTime = "16:00"
-            ),OpenTime(
-                day = "2",
-                startTime = "09:00",
-                endTime = "22:30"
-            ),OpenTime(
-                day = "3",
-                startTime = "09:00",
-                endTime = "22:00"
-            ),OpenTime(
-                day = "4",
-                startTime = "09:00",
-                endTime = "22:30"
-            ),OpenTime(
-                day = "5",
-                startTime = "09:00",
-                endTime = "22:00"
-            ),OpenTime(
-                day = "6",
-                startTime = "09:00",
-                endTime = "22:30"
-            )
-        )
+        val businessTime = getBusinessTime()
         timeAdapter.submitList(businessTime)
 
         binding.recyclerOpenTime.tag = false
-        binding.textBusinessTimeContent.setOnClickListener {
-            binding.recyclerOpenTime.visibility = when(binding.recyclerOpenTime.tag){
+        viewModel.timeUnfoldStatus.value = false
+        binding.constraintBusinessTime.setOnClickListener {
+            binding.recyclerOpenTime.visibility = when(viewModel.timeUnfoldStatus.value){
                 true -> {
-                    binding.recyclerOpenTime.tag = false
+                    viewModel.timeUnfoldStatus.value = false
                     View.GONE
                 }
                 else -> {
-                    binding.recyclerOpenTime.tag = true
+                    viewModel.timeUnfoldStatus.value = true
                     View.VISIBLE
                 }
             }
@@ -171,6 +141,41 @@ class DetailFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun getBusinessTime(): MutableList<OpenTime> {
+        return mutableListOf<OpenTime>(
+            OpenTime(
+                day = "0",
+                startTime = "09:00",
+                endTime = "22:30"
+            ),
+            OpenTime(
+                day = "1",
+                startTime = "09:00",
+                endTime = "16:00"
+            ), OpenTime(
+                day = "2",
+                startTime = "09:00",
+                endTime = "22:30"
+            ), OpenTime(
+                day = "3",
+                startTime = "09:00",
+                endTime = "22:00"
+            ), OpenTime(
+                day = "4",
+                startTime = "09:00",
+                endTime = "22:30"
+            ), OpenTime(
+                day = "5",
+                startTime = "09:00",
+                endTime = "22:00"
+            ), OpenTime(
+                day = "6",
+                startTime = "09:00",
+                endTime = "22:30"
+            )
+        )
     }
 
     private fun checkInputStatus(

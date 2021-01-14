@@ -39,6 +39,8 @@ class DetailViewModel(private val repository: Repository) : ViewModel(){
     val newEventStatus: LiveData<Boolean>
         get() = _newEventStatus
 
+    var timeUnfoldStatus = MutableLiveData<Boolean>()
+
     val date = MutableLiveData<Long>()
 
     var toProfileStatus = MutableLiveData<String>()

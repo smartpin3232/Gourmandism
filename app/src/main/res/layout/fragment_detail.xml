@@ -103,17 +103,38 @@
                     app:layout_constraintStart_toStartOf="@+id/text_address"
                     app:layout_constraintTop_toBottomOf="@+id/text_address" />
 
-                <TextView
-                    android:id="@+id/text_business_time_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_business_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="09:00 ─ 22:00"
-                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/text_business_time"
                     app:layout_constraintStart_toEndOf="@+id/text_business_time"
-                    app:layout_constraintTop_toTopOf="@+id/text_business_time"
-                    tools:text="09:00 ~ 22:00" />
+                    app:layout_constraintTop_toTopOf="@+id/text_business_time">
+
+                    <TextView
+                        android:id="@+id/text_business_time_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="8dp"
+                        android:text="09:00 ─ 22:00"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="09:00 ~ 22:00" />
+
+                    <ImageView
+                        android:id="@+id/image_business"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@{viewModel.timeUnfoldStatus?@drawable/less:@drawable/more}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/text_business_time_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@drawable/more" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/text_phone"
@@ -302,8 +323,8 @@
                     android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="@+id/text_add_event"
-                    app:layout_constraintStart_toStartOf="@+id/text_business_time_content"
-                    app:layout_constraintTop_toBottomOf="@+id/text_business_time_content"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_business_time"
+                    app:layout_constraintTop_toBottomOf="@+id/constraint_business_time"
                     tools:listitem="@layout/item_time" />
 
 

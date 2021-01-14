@@ -69,6 +69,7 @@
     <string name="edit_select_time">選擇時間..</string>
     <string name="edit_input_content">請輸入內容..</string>
     <string name="edit_select_number">選擇人數..</string>
+    <string name="text_new">新增</string>
 
     <!-- LotteryFragment_Spinner -->
     <string-array name="food_type">

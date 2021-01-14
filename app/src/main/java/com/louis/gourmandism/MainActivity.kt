@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -110,6 +111,8 @@ class MainActivity : AppCompatActivity() {
 
                     UserManager.clear()
                     Toast.makeText(this, "已登出", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
                     true
                 }
 
